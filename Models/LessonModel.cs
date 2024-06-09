@@ -5,7 +5,7 @@ namespace e_learning.Models
 {
     public class LessonModel
     {
-        [Key] [Required] public Guid LessonId { get; set; } = new Guid();
+        [Key] [Required] public Guid LessonId { get; set; }
 
         [Required] public string LessonName { get; set; }
 

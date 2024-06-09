@@ -31,10 +31,6 @@
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Services\Interfaces\" />
-	</ItemGroup>
-
 	<Target Name="Tailwind" BeforeTargets="Build">
 		<Exec Command="npm run build-tailwind" />
 	</Target>

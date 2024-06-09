@@ -1,13 +1,19 @@
 using e_learning.Data;
+using e_learning.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+//Register ELearning Business Logic Services
+
+builder.Services.AddELearningBusinessServices();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 
-//Add services for Dbcontext
+//Add services for DbContext
 
 builder.Services.AddDbContext<ELearningDbContext>(options =>
 {
