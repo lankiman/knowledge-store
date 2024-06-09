@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace e_learning.Models
 {
@@ -13,15 +14,14 @@ namespace e_learning.Models
         [Required] public string LessonCategory { get; set; }
 
 
-        public int? LessonViews { get; set; }
+        public int LessonViews { get; set; }
 
 
-        public int? LessonLikes { get; set; }
+        public int LessonLikes { get; set; }
 
         [Required] public byte[] LessonVideo { get; set; }
 
-
-        [Required] public string LessonOwnerId { get; set; }
+        [ForeignKey("LessonOwner")] [Required] public string LessonOwnerId { get; set; }
 
         [Required] public AdminModel LessonOwner { get; set; } = null!;
     }
