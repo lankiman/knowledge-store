@@ -4,7 +4,7 @@ namespace e_learning.Models
 {
     public class UserModel
     {
-        [Key][Required] public Guid Id { get; set; } = new Guid();
+        [Key] [Required] public Guid Id { get; set; } = new Guid();
         [Required] public string UserName { get; set; }
         [Required] public string FirstName { get; set; }
         [Required] public string LastName { get; set; }
@@ -16,5 +16,7 @@ namespace e_learning.Models
         [Required] public string Password { get; set; }
 
         [Required] public string PhoneNumber { get; set; }
+
+        public ICollection<LessonModel> UserPaidLessons { get; set; } = new List<LessonModel>();
     }
 }

@@ -22,6 +22,12 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 
+var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ELearningDbContext>();
+
+// context.Database.Migrate();
+
+context.Database.EnsureCreated();
+
 app.UseStaticFiles();
 
 app.UseRouting();
