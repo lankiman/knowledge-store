@@ -4,8 +4,7 @@ namespace e_learning.Models
 {
     public class UserModel
     {
-        [Required] public int Id { get; set; }
-
+        [Key] [Required] public Guid Id { get; set; } = new Guid();
         [Required] public string UserName { get; set; }
         [Required] public string FirstName { get; set; }
         [Required] public string LastName { get; set; }

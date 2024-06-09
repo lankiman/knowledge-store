@@ -1,17 +1,28 @@
-﻿namespace e_learning.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace e_learning.Models
 {
     public class LessonModel
     {
-        public string LessonName { get; set; }
+        [Key] [Required] public Guid LessonId { get; set; } = new Guid();
 
-        public string LessonDescription { get; set; }
+        [Required] public string LessonName { get; set; }
 
-        public string LessonCategory { get; set; }
+        [Required] public string LessonDescription { get; set; }
 
-        public int LessonViews { get; set; }
+        [Required] public string LessonCategory { get; set; }
 
-        public int LessonLikes { get; set; }
 
-        public byte LessonVidoo { get; set; }
+        public int? LessonViews { get; set; }
+
+
+        public int? LessonLikes { get; set; }
+
+        [Required] public byte[] LessonVideo { get; set; }
+
+
+        [Required] public string LessonOwnerId { get; set; }
+
+        [Required] public AdminModel LessonOwner { get; set; } = null!;
     }
 }
