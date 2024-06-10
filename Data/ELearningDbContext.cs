@@ -18,6 +18,11 @@ namespace e_learning.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<UserModel>().HasIndex(u => u.Email).IsUnique();
+
+            modelBuilder.Entity<UserModel>().HasIndex(u => u.Username).IsUnique();
+
+
             base.OnModelCreating(modelBuilder);
         }
     }

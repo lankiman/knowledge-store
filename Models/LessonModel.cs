@@ -21,8 +21,8 @@ namespace e_learning.Models
 
         [Required] public byte[] LessonVideo { get; set; }
 
-        [ForeignKey("LessonOwner")] [Required] public string LessonOwnerId { get; set; }
+        [ForeignKey("LessonOwner")] [Required] public Guid LessonOwnerId { get; set; }
 
-        [Required] public AdminModel LessonOwner { get; set; } = null!;
+        [Required] public AdminModel LessonOwner { get; set; }
     }
 }
