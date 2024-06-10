@@ -2,9 +2,17 @@
 
 namespace e_learning.Models
 {
-    public class AdminModel : UserModel
+    public class AdminModel
     {
-        [Required] public bool IsAdmin { get; set; }
+        [Key] [Required] public Guid Id { get; set; }
+        [Required] [MaxLength(50)] public string Username { get; set; }
+
+        [Required] public string FirstName { get; set; }
+        [Required] public string LastName { get; set; }
+
+        [Required] [EmailAddress] public string Email { get; set; }
+
+        [Required] public string Password { get; set; }
 
         public ICollection<UserModel> Users { get; set; } = new List<UserModel>();
 
