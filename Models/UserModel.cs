@@ -1,22 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace e_learning.Models
 {
-    public class UserModel
+    public class UserModel : IdentityUser
     {
-        [Key] [Required] public Guid Id { get; set; }
-        [Required] [MaxLength(50)] public string Username { get; set; }
-
         [Required] public string FirstName { get; set; }
         [Required] public string LastName { get; set; }
 
         public string? MiddleName { get; set; }
-        [Required] [EmailAddress] public string Email { get; set; }
 
-        [Required] public string Password { get; set; }
+        public ICollection<UserPaidLessonsModel>? UserPaidLessons { get; set; } = new List<UserPaidLessonsModel>();
 
-        [Required] public string PhoneNumber { get; set; }
-
-        public ICollection<LessonModel> UserPaidLessons { get; set; } = new List<LessonModel>();
+        public ICollection<LessonModel>? UserOwnedLessons { get; set; } = new List<LessonModel>();
     }
 }

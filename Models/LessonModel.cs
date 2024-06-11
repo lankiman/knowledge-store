@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 namespace e_learning.Models
 {
     public class LessonModel
     {
-        [Key] [Required] public Guid LessonId { get; set; }
+        [Key] [Required] public string LessonId { get; set; } = Guid.NewGuid().ToString();
+
 
         [Required] public string LessonName { get; set; }
 
@@ -21,8 +23,10 @@ namespace e_learning.Models
 
         [Required] public byte[] LessonVideo { get; set; }
 
-        [ForeignKey("LessonOwner")] [Required] public Guid LessonOwnerId { get; set; }
+        [ForeignKey("LessonOwner")] [Required] public string LessonOwnerId { get; set; }
 
-        [Required] public AdminModel LessonOwner { get; set; }
+        [Required] public UserModel LessonOwner { get; set; }
+
+        public ICollection<UserPaidLessonsModel> UserPaidLessons { get; set; }
     }
 }
