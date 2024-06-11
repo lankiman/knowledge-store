@@ -3,13 +3,34 @@ using Microsoft.AspNetCore.Identity;
 
 namespace e_learning.Services.Default
 {
-    public class AdminUserInitializerService
+    public class AdminUserInitializerService(IServiceProvider serviceProvider, IConfiguration configuration)
     {
-        private readonly UserManager<UserModel> _userManager;
-
-        public AdminUserInitializerService(UserManager<UserModel> userManager)
+        public async Task InitializeAdmin()
         {
-            _userManager = userManager;
+            string email = configuration["Admin:DefaultAdminEmail"];
+            string password = configuration["Admin:DefaultAdminPassword"];
+
+
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserModel>>();
+
+                if (await userManager.FindByEmailAsync(email) == null)
+                {
+                    var user = new UserModel();
+
+                    user.Email = email;
+                    user.UserName = email;
+
+                    user.FirstName = "lankiman";
+                    user.LastName = "admin";
+
+
+                    await userManager.CreateAsync(user, password);
+
+                    await userManager.AddToRoleAsync(user, "Admin");
+                }
+            }
         }
     }
 }

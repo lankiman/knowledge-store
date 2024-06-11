@@ -2,34 +2,25 @@
 
 namespace e_learning.Services.Default
 {
-    public class RoleInitializerService
+    public class RoleInitializerService(IServiceProvider serviceProvider)
     {
-        private readonly RoleManager<IdentityRole> _roleManager;
-
-        public RoleInitializerService(RoleManager<IdentityRole> roleManager)
+        public async Task InitializeRoles()
         {
-            _roleManager = roleManager;
-        }
-
-        public async void InitializeRoles()
-        {
-            var roles = new[] { "Admin", "SuperUser", "Learner" };
-
-            foreach (var roleName in roles)
+            using (var scope = serviceProvider.CreateScope())
             {
-                if (!_roleManager.RoleExistsAsync(roleName).Result)
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                var roles = new[] { "Admin", "SuperUser", "Learner" };
+
+                foreach (var roleName in roles)
                 {
-                    var role = new IdentityRole(roleName);
-                    var result = _roleManager.CreateAsync(role).Result;
-                    if (!result.Succeeded)
+                    if (!roleManager.RoleExistsAsync(roleName).Result)
                     {
-                        throw new InvalidOperationException();
+                        var role = new IdentityRole(roleName);
+                        await roleManager.CreateAsync(role);
                     }
                 }
             }
-
-            // Dispose of the RoleManager after initialization
-            _roleManager.Dispose();
         }
     }
 }

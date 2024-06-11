@@ -24,7 +24,8 @@ builder.Services.AddDbContext<ELearningDbContext>(options =>
 });
 
 //Add Identity Service 
-builder.Services.AddIdentity<UserModel, IdentityRole>().AddEntityFrameworkStores<ELearningDbContext>()
+builder.Services.AddIdentity<UserModel, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<ELearningDbContext>()
     .AddDefaultTokenProviders();
 
 
@@ -33,11 +34,16 @@ var app = builder.Build();
 
 //Initialize Identity User Roles
 
-var roleInitializer = app.Services.GetRequiredService<RoleInitializerService>();
+var roleInitializer = new RoleInitializerService(app.Services);
 
-roleInitializer.InitializeRoles();
+await roleInitializer.InitializeRoles();
 
 //Initialize Default Admin User
+
+var adminInitializer = new AdminUserInitializerService(app.Services, builder.Configuration);
+
+await adminInitializer.InitializeAdmin();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -49,9 +55,9 @@ var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ELea
 
 // context.Database.Migrate();
 
-context.Database.EnsureDeleted();
+// context.Database.EnsureDeleted();
 
-// context.Database.EnsureCreated();
+context.Database.EnsureCreated();
 
 app.UseStaticFiles();
 
