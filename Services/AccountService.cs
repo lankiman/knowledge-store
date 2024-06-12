@@ -13,14 +13,7 @@ public class AccountService(SignInManager<UserModel> signInManager, UserManager<
     {
         var result = await signInManager.PasswordSignInAsync(loginIdentifier, password, rememberMe, false);
 
-        if (result.Succeeded)
-        {
-            return new OkResult(); // Successful login
-        }
-        else
-        {
-            return new UnauthorizedResult(); // Failed login
-        }
+        return new OkResult();
     }
 
     public async Task<IActionResult> LogoutUser()

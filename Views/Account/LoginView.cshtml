@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model e_learning.ViewModels.LoginViewModel
+
+    <h1>Please Log in</h1>
+
+    <form asp-action="Login" asp-controller="Account">
+        <input asp-for="LoginIdentifier" />
+        <input asp-for="Password"/>
+        <input asp-for="RememberMe"/>
+        <input type="submit"/>
+    </form>

@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using e_learning.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace e_learning.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController(ILessonService lessonService, IUserService userService) : Controller
     {
         // GET: AdminModels
-        // public async Task<IActionResult> Index()
-        // {
-        //     return View(await _lessonService.GetAllLessonAsync());
-        // }
+        public async Task<IActionResult> AdminDashboard()
+        {
+            return View();
+        }
 
         //     // GET: AdminModels/Details/5
         //     public async Task<IActionResult> Details(Guid? id)

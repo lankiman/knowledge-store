@@ -7,10 +7,12 @@ namespace e_learning.Controllers
 {
     public class AccountController(IAccountService accountService) : Controller
     {
-        public IActionResult Login(LoginViewModel UserLoginInfo)
+        public IActionResult Login(LoginViewModel userLoginInfo)
         {
-            accountService.LoginUser(UserLoginInfo.LoginIdentifier, UserLoginInfo.Password,
-                UserLoginInfo.RememberMe);
+            accountService.LoginUser(userLoginInfo.LoginIdentifier, userLoginInfo.Password,
+                userLoginInfo.RememberMe);
+
+            var user = await userManager.GetUserAsync(User);
             return View();
         }
 
