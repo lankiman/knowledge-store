@@ -24,10 +24,17 @@ namespace e_learning.Controllers
         }
 
         // GET: AdminModels
+<<<<<<< HEAD
         //public async Task<IActionResult> Index()
         //{
         //    return View(await _lessonService.GetAllLessonAsync());
         //}
+=======
+        // public async Task<IActionResult> Index()
+        // {
+        //     return View(await _lessonService.GetAllLessonAsync());
+        // }
+>>>>>>> main
 
         //     // GET: AdminModels/Details/5
         //     public async Task<IActionResult> Details(Guid? id)

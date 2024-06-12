@@ -1,5 +1,8 @@
 using e_learning.Data;
 using e_learning.Extensions;
+using e_learning.Models;
+using e_learning.Services.Default;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +23,27 @@ builder.Services.AddDbContext<ELearningDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ELearningConnectionString"));
 });
 
+//Add Identity Service 
+builder.Services.AddIdentity<UserModel, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<ELearningDbContext>()
+    .AddDefaultTokenProviders();
+
+
 var app = builder.Build();
+
+
+//Initialize Identity User Roles
+
+var roleInitializer = new RoleInitializerService(app.Services);
+
+await roleInitializer.InitializeRoles();
+
+//Initialize Default Admin User
+
+var adminInitializer = new AdminUserInitializerService(app.Services, builder.Configuration);
+
+await adminInitializer.InitializeAdmin();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -37,6 +60,8 @@ var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ELea
 context.Database.EnsureCreated();
 
 app.UseStaticFiles();
+
+app.UseAuthentication();
 
 app.UseRouting();
 

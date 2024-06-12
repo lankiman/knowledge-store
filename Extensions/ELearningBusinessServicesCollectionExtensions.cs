@@ -1,4 +1,5 @@
 ﻿using e_learning.Services;
+using e_learning.Services.Default;
 using e_learning.Services.Interfaces;
 
 namespace e_learning.Extensions
@@ -10,6 +11,10 @@ namespace e_learning.Extensions
             services.AddScoped<ILessonService, LessonService>();
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IUserService, UserService>();
+
+
+            services.AddScoped<RoleInitializerService>();
+            services.AddScoped<AdminUserInitializerService>();
         }
     }
 }
