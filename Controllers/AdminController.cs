@@ -1,28 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using e_learning.Data;
-using e_learning.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using e_learning.Services.Interfaces;
-using Microsoft.Identity.Client;
+
 
 namespace e_learning.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController(ILessonService lessonService, IUserService userService) : Controller
     {
-        private readonly ILessonService _lessonService;
-        private readonly IUserService _userService;
-
-        public AdminController(ILessonService lessonService, IUserService userService)
-        {
-            _lessonService = lessonService;
-            _userService = userService;
-        }
-
         // GET: AdminModels
         // public async Task<IActionResult> Index()
         // {
