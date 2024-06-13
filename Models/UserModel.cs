@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace e_learning.Models
@@ -10,8 +11,8 @@ namespace e_learning.Models
 
         public string? MiddleName { get; set; }
 
-        public ICollection<UserPaidLessonsModel>? UserPaidLessons { get; set; } = new List<UserPaidLessonsModel>();
+        public ICollection<UserPaidLessonsModel> UserPaidLessons { get; set; } = new List<UserPaidLessonsModel>();
 
-        public ICollection<LessonModel>? UserOwnedLessons { get; set; } = new List<LessonModel>();
+        public ICollection<LessonModel> UserOwnedLessons { get; set; } = new List<LessonModel>();
     }
 }

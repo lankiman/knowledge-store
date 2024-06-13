@@ -20,15 +20,25 @@ namespace e_learning.Services.Default
                     var user = new UserModel();
 
                     user.Email = email;
-                    user.UserName = email;
-
+                    user.UserName = "lankiman";
                     user.FirstName = "lankiman";
                     user.LastName = "admin";
+                    user.EmailConfirmed= true;
 
+                    var result = await userManager.CreateAsync(user, password);
 
-                    await userManager.CreateAsync(user, password);
-
-                    await userManager.AddToRoleAsync(user, "Admin");
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(user, "Admin");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            Console.WriteLine(error.Description, error.Code);
+                            return;
+                        }
+                    }
                 }
             }
         }
