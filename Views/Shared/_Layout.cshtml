@@ -1,0 +1,81 @@
+﻿﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> @ViewData["Title"] E LESSON</title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+</head>
+<body  class="h-full w-full bg-gray-200">
+    <header>
+        <nav>
+            <div class="flex" >
+                <ul class="flex w-full justify-evenly gap-4">
+                    <li>
+                        Home
+                    </li>
+                    <li>
+                        Courses
+                    </li>
+                    <li>
+                        Contact
+                    </li>
+                    <li>
+                        Pricing
+                    </li>
+                    <li>
+                        Login
+                    </li>
+                    <li>
+                        SignUp
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+        <main role="main" class="w-full">
+
+@RenderBody()
+</main>
+
+
+<footer class="h-fit">
+    <div class="flex">
+        <div class="flex-1">
+            <h4>E-LESSON</h4>
+            <ul>
+                <li><a>FAQs</a></li>
+                <li><a>Contact</a></li>
+                <li><a>Login</a></li>
+                <li><a>SignUp</a></li>
+                <li><a>Team</a></li>
+            </ul>
+        </div>
+        <div class="flex-1">
+            <h4>Courses</h4>
+            <ul>
+                <li>Chemistry</li>
+                <li>Physics</li>
+                <li>Mathematics</li>
+                <li>Pharmaceutical chemistry</li>
+                <li>CHM 221</li>
+                <li>CHM 333</li>
+                <li>CHM 321</li>
+                <li>BCM 201</li>
+            </ul>
+        </div>
+        <div class="flex-1">
+            <a>Sign Up</a>
+        </div>
+    </div>
+    <div class="container">
+        &copy; E-LESSON INSTITUTE 2024 <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+</footer>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

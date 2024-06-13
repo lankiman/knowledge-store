@@ -2,7 +2,11 @@
 module.exports = {
     content: ["./Views/**/*.cshtml", "./Views/*.cshtml"],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                'primary': ['Nunito']
+            }
+        },
     },
     plugins: [
         //        require('@tailwindcss/forms'),

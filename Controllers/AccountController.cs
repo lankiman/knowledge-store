@@ -12,10 +12,9 @@ namespace e_learning.Controllers
             accountService.LoginUser(userLoginInfo.LoginIdentifier, userLoginInfo.Password,
                 userLoginInfo.RememberMe);
 
-            var user = await userManager.GetUserAsync(User);
+            //var user = await userManager.GetUserAsync(User);
             return View();
         }
-
 
         public IActionResult Logout()
         {
