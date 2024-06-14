@@ -52,7 +52,8 @@ public class AccountService(SignInManager<UserModel> signInManager, UserManager<
     }
 
 
-    public async Task<LoginResultDTO> LoginUser(string loginIdentifier, string password,
+    [HttpPost]
+    public async Task<LoginResultDto> LoginUser(string loginIdentifier, string password,
         bool rememberMe)
     {
         try
@@ -68,18 +69,18 @@ public class AccountService(SignInManager<UserModel> signInManager, UserManager<
                     var roles = await GetUserRoles(user);
                     if (roles != null)
                     {
-                        return new LoginResultDTO(new OkResult(), user,
+                        return new LoginResultDto(new OkResult(), user,
                             roles);
                     }
                 }
             }
 
-            return new LoginResultDTO(new UnauthorizedResult(), null, null);
+            return new LoginResultDto(new UnauthorizedResult(), null, null);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Exception in LoginUser: {ex.Message}");
-            return new LoginResultDTO(
+            return new LoginResultDto(
                 new ObjectResult(new { Message = $"An error occurred: {ex.Message}" })
                     { StatusCode = 500 }, null, null);
         }

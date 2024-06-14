@@ -1,29 +1,51 @@
-﻿using e_learning.Models;
+﻿using e_learning.DataTransfersObjects;
+using e_learning.Models;
 using e_learning.Services.Interfaces;
 using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+
 
 namespace e_learning.Controllers
 {
     public class AccountController(IAccountService accountService, UserManager<UserModel> userManager) : Controller
     {
-        public IActionResult Login(LoginViewModel userLoginInfo)
+        [HttpGet]
+        public async Task<IActionResult> Login()
         {
-            var result = accountService.LoginUser(userLoginInfo.LoginIdentifier, userLoginInfo.Password,
-                userLoginInfo.RememberMe);
-
-            var roles = result.Result.Roles;
-
-            var user = result.Result.User;
+            return View();
+        }
 
 
-            if (roles != null && roles.Contains("Admin"))
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel userLoginInfo)
+        {
+            if (ModelState.IsValid)
             {
+                var result = await accountService.LoginUser(userLoginInfo.LoginIdentifier, userLoginInfo.Password,
+                    userLoginInfo.RememberMe);
+
+                switch (result.ActionResult)
+                {
+                    case OkResult:
+                        var userDto = new UserDto(result.User!);
+                        TempData["UserDto"] = JsonConvert.SerializeObject(userDto);
+                        return RedirectToAction("AdminDashboard", "Admin");
+
+                    case UnauthorizedResult:
+                        ModelState.AddModelError(string.Empty, "Invalid Username or Password");
+                        break;
+
+                    case ObjectResult { StatusCode: 500 }:
+                        ModelState.AddModelError(string.Empty, "Server error occurred.");
+                        break;
+                }
             }
 
 
-            return View();
+            return View(userLoginInfo);
         }
 
 

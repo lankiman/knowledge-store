@@ -8,7 +8,7 @@ namespace e_learning.Services.Interfaces
 {
     public interface IAccountService
     {
-        public Task<LoginResultDTO> LoginUser(string loginIdentifier, string password,
+        public Task<LoginResultDto> LoginUser(string loginIdentifier, string password,
             bool rememberMe);
 
         public Task<IActionResult> LogoutUser();

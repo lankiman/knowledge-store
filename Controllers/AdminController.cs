@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using e_learning.DataTransfersObjects;
+using Microsoft.AspNetCore.Mvc;
 using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 
 namespace e_learning.Controllers
@@ -11,7 +13,13 @@ namespace e_learning.Controllers
         // GET: AdminModels
         public async Task<IActionResult> AdminDashboard()
         {
-            return View();
+            var adminUserDto = TempData["UserDto"].ToString();
+
+            var adminUser = JsonConvert.DeserializeObject<UserDto>(adminUserDto);
+
+            TempData.Keep();
+
+            return View(adminUser);
         }
 
         //     // GET: AdminModels/Details/5

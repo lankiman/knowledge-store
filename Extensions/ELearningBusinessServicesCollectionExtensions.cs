@@ -11,8 +11,7 @@ namespace e_learning.Extensions
             services.AddScoped<ILessonService, LessonService>();
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IUserService, UserService>();
-
-            services.AddHttpContextAccessor();
+            services.AddScoped<IAccountService, AccountService>();
 
 
             services.AddScoped<RoleInitializerService>();
