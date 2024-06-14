@@ -4,13 +4,13 @@
 @{
     Layout = null;
 }
-@model e_learning.DataTransfersObjects.UserDto
+@model e_learning.Models.UserModel
 
 <h1>Welcome to Admin Dashboard</h1>
 
 @if (Model != null)
 {
-    <p>Admin User ID: @Model.Id</p>
+    <p class="">Admin User ID: @Model.Id</p>
     <p>Admin User Name: @Model.UserName</p>
     <!-- Add other properties as needed -->
 }

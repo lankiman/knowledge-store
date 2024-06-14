@@ -30,10 +30,12 @@ namespace e_learning.Controllers
                 switch (result.ActionResult)
                 {
                     case OkResult:
-                        var userDto = new UserDto(result.User!);
-                        TempData["UserDto"] = JsonConvert.SerializeObject(userDto);
-                        return RedirectToAction("AdminDashboard", "Admin");
+                        if (result.Roles != null && result.Roles.Contains("Admin"))
+                        {
+                            return RedirectToAction("AdminDashboard", "Admin");
+                        }
 
+                        break;
                     case UnauthorizedResult:
                         ModelState.AddModelError(string.Empty, "Invalid Username or Password");
                         break;

@@ -7,15 +7,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace e_learning.Services;
 
-public class AccountService(SignInManager<UserModel> signInManager, UserManager<UserModel> userManager)
-    : IAccountService
+public class AccountService(
+    UserManager<UserModel> userManager,
+    SignInManager<UserModel> signInManager,
+    IHttpContextAccessor httpContextAccessor)
+    : BaseService(signInManager, userManager, httpContextAccessor), IAccountService
 {
     private async Task<UserModel?> GetLoggedInUserDetails(string loginIdentifier)
     {
         try
         {
-            var user = await userManager.FindByEmailAsync(loginIdentifier) ??
-                       await userManager.FindByNameAsync(loginIdentifier);
+            var user = await userManager!.GetUserAsync(HttpContext.User);
+
 
             if (user != null)
             {
@@ -35,7 +38,7 @@ public class AccountService(SignInManager<UserModel> signInManager, UserManager<
     {
         try
         {
-            var roles = await userManager.GetRolesAsync(user);
+            var roles = await userManager!.GetRolesAsync(user);
 
             if (roles.Count > 0)
             {
@@ -58,7 +61,7 @@ public class AccountService(SignInManager<UserModel> signInManager, UserManager<
     {
         try
         {
-            var result = await signInManager.PasswordSignInAsync(loginIdentifier, password, rememberMe, false);
+            var result = await signInManager!.PasswordSignInAsync(loginIdentifier, password, rememberMe, false);
 
             if (result.Succeeded)
             {
