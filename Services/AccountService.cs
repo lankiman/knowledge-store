@@ -13,7 +13,7 @@ public class AccountService(
     IHttpContextAccessor httpContextAccessor)
     : BaseService(signInManager, userManager, httpContextAccessor), IAccountService
 {
-    private async Task<UserModel?> GetLoggedInUserDetails(string loginIdentifier)
+    private async Task<UserModel?> GetLoggedInUserDetails()
     {
         try
         {
@@ -65,7 +65,7 @@ public class AccountService(
 
             if (result.Succeeded)
             {
-                var user = await GetLoggedInUserDetails(loginIdentifier);
+                var user = await GetLoggedInUserDetails();
 
                 if (user != null)
                 {
@@ -92,7 +92,8 @@ public class AccountService(
 
     public async Task<IActionResult> LogoutUser()
     {
-        throw new NotImplementedException();
+        await signInManager!.SignOutAsync();
+        return null!;
     }
 
     public async Task<IActionResult> RegisterUser()

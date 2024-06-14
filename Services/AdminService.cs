@@ -1,4 +1,5 @@
 ﻿using e_learning.Data;
+using e_learning.DataTransfersObjects;
 using e_learning.Models;
 using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -11,11 +12,11 @@ namespace e_learning.Services
         IHttpContextAccessor httpContextAccessor)
         : BaseService(eLearningContext, userManager, httpContextAccessor), IAdminService
     {
-        public async Task<UserModel> GetAuthenticatedAdmin()
+        public async Task<UserDto> GetAuthenticatedAdmin()
         {
             var user = await userManager!.GetUserAsync(HttpContext.User);
 
-            return user!;
+            return new UserDto(user!);
         }
     }
 }

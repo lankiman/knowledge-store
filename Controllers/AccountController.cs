@@ -51,9 +51,10 @@ namespace e_learning.Controllers
         }
 
 
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            return View();
+            await accountService.LogoutUser();
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Register()
