@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,11 +6,13 @@
 html {
     position: relative;
     min-height: 100%;
-    font-size: 14px;
 }
+
 
 body {
     margin: 0;
     box-sizing: border-box;
     padding: 0;
+    height:100%;
+    width:100%;
 }

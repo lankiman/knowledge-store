@@ -7,14 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 //Register ELearning Business Logic Services
 
 builder.Services.AddELearningBusinessServices();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 
 //Add services for DbContext
 
@@ -23,14 +21,12 @@ builder.Services.AddDbContext<ELearningDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ELearningConnectionString"));
 });
 
-//Add Identity Service 
+//Add Identity Service
 builder.Services.AddIdentity<UserModel, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ELearningDbContext>()
     .AddDefaultTokenProviders();
 
-
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -42,10 +38,9 @@ var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ELea
 
 // context.Database.Migrate();
 
-// context.Database.EnsureDeleted();
+//context.Database.EnsureDeleted();
 
 context.Database.EnsureCreated();
-
 
 //Initialize Identity User Roles
 

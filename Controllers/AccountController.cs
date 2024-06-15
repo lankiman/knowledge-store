@@ -1,11 +1,10 @@
-﻿using e_learning.DataTransfersObjects;
+using e_learning.DataTransfersObjects;
 using e_learning.Models;
 using e_learning.Services.Interfaces;
 using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-
 
 namespace e_learning.Controllers
 {
@@ -17,15 +16,13 @@ namespace e_learning.Controllers
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel userLoginInfo)
         {
             if (ModelState.IsValid)
             {
-                var result = await accountService.LoginUser(userLoginInfo.LoginIdentifier, userLoginInfo.Password,
-                    userLoginInfo.RememberMe);
+                var result = await accountService.LoginUser(userLoginInfo.LoginIdentifier, userLoginInfo.Password, userLoginInfo.RememberMe);
 
                 switch (result.ActionResult)
                 {
@@ -34,22 +31,18 @@ namespace e_learning.Controllers
                         {
                             return RedirectToAction("AdminDashboard", "Admin");
                         }
-
                         break;
                     case UnauthorizedResult:
                         ModelState.AddModelError(string.Empty, "Invalid Username or Password");
                         break;
-
                     case ObjectResult { StatusCode: 500 }:
                         ModelState.AddModelError(string.Empty, "Server error occurred.");
                         break;
                 }
             }
 
-
             return View(userLoginInfo);
         }
-
 
         public async Task<IActionResult> Logout()
         {

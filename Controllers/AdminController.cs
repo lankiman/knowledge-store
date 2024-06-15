@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 
-
 namespace e_learning.Controllers
 {
     [Authorize(Roles = "Admin")]
@@ -23,6 +22,12 @@ namespace e_learning.Controllers
 
             return View(user);
         }
+
+        // GET: AdminModels
+        // public async Task<IActionResult> Index()
+        // {
+        //     return View(await _lessonService.GetAllLessonAsync());
+        // }
 
         //     // GET: AdminModels/Details/5
         //     public async Task<IActionResult> Details(Guid? id)
