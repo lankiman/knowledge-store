@@ -4,10 +4,19 @@
 @{
     Layout = null;
 }
-@model UserModel;
+@model e_learning.DataTransfersObjects.UserDto
 
-@if (User.Identity.IsAuthenticated)
+<h1>Welcome to Admin Dashboard</h1>
+
+@if (Model != null)
 {
-    <h1>Welome to your dashboard</h1>
+    <p class="">Admin User ID: @Model.Id</p>
+    <p>Admin User Name: @Model.UserName</p>
+    <button onclick="location.href='@Url.Action("Logout", "Account")'">Logout</button>
+
+}
+else
+{
+    <p>No admin user data available.</p>
 }
 
