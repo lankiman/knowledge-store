@@ -9,9 +9,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Remove="ViewModel\**" />
 		<Compile Remove="wwwroot\lib\**" />
+		<Content Remove="ViewModel\**" />
 		<Content Remove="wwwroot\lib\**" />
+		<EmbeddedResource Remove="ViewModel\**" />
 		<EmbeddedResource Remove="wwwroot\lib\**" />
+		<None Remove="ViewModel\**" />
 		<None Remove="wwwroot\lib\**" />
 	</ItemGroup>
 
@@ -36,10 +40,6 @@
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
 	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="ViewModel\" />
 	</ItemGroup>
 
 	<Target Name="Tailwind" BeforeTargets="Build">

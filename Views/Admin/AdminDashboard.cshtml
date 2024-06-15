@@ -10,7 +10,7 @@
 
 @if (Model != null)
 {
-    <p class="">Admin User ID: @Model.Id</p>
+    <p>Admin User ID: @Model.Id</p>
     <p>Admin User Name: @Model.UserName</p>
     <button onclick="location.href='@Url.Action("Logout", "Account")'">Logout</button>
 
