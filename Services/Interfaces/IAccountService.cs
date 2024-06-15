@@ -1,4 +1,6 @@
-﻿using e_learning.ViewModels;
+﻿using e_learning.DataTransfersObjects;
+using e_learning.Models;
+using e_learning.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Operations;
 
@@ -6,7 +8,8 @@ namespace e_learning.Services.Interfaces
 {
     public interface IAccountService
     {
-        public Task<IActionResult> LoginUser(string loginIdentifier, string password, bool rememberMe);
+        public Task<LoginResultDto> LoginUser(string loginIdentifier, string password,
+            bool rememberMe);
 
         public Task<IActionResult> LogoutUser();
 

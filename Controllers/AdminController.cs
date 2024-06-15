@@ -1,16 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using e_learning.DataTransfersObjects;
+using e_learning.Models;
+using Microsoft.AspNetCore.Mvc;
 using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
 namespace e_learning.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class AdminController(ILessonService lessonService, IUserService userService) : Controller
+    public class AdminController(
+        ILessonService lessonService,
+        IUserService userService,
+        IAdminService adminService,
+        UserManager<UserModel> userManager) : Controller
     {
         // GET: AdminModels
         public async Task<IActionResult> AdminDashboard()
         {
-            return View();
+            var user = await adminService.GetAuthenticatedAdmin();
+
+            return View(user);
         }
 
         // GET: AdminModels
