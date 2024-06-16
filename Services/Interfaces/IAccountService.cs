@@ -1,8 +1,6 @@
 ﻿using e_learning.DataTransfersObjects;
-using e_learning.Models;
-using e_learning.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Operations;
+
 
 namespace e_learning.Services.Interfaces
 {
