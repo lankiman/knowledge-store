@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,5 +15,11 @@ body {
     padding: 0;
     height:100%;
     width:100%;
-    background-color: #000300;
+}
+
+.card{
+    @apply relative overflow-hidden rounded bg-white shadow-md;
+}
+.btn{
+    @apply cursor-pointer rounded-full px-3 py-2 text-xs font-bold tracking-wider;
 }
