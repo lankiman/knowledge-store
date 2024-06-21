@@ -4,9 +4,14 @@ namespace e_learning.ViewModels
 {
     public class LoginViewModel
     {
-        [Required] public string LoginIdentifier { get; set; }
+        
+        [Required(ErrorMessage ="Please Enter your username or email address")]
+        public string LoginIdentifier { get; set; }
 
-        [Required] public string Password { get; set; }
+        
+        [Required (ErrorMessage ="Please Enter your Password")]
+        public string Password { get; set; }
+
 
         public bool RememberMe { get; set; }
     }

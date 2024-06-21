@@ -3,7 +3,7 @@ using e_learning.Models;
 using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Text.RegularExpressions;
 
 namespace e_learning.Services;
 
@@ -18,7 +18,6 @@ public class AccountService(
         try
         {
             var user = await userManager!.GetUserAsync(HttpContext.User);
-
 
             if (user != null)
             {
@@ -54,14 +53,42 @@ public class AccountService(
         }
     }
 
+    private bool IsValidEmail(string email)
+    {
+        string pattern = @"^[^\s@]+@[^\s@]+\.[^\s@]+$";
+        Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+        return regex.IsMatch(email);
+    }
 
     [HttpPost]
     public async Task<LoginResultDto> LoginUser(string loginIdentifier, string password,
         bool rememberMe)
     {
+        var userName = loginIdentifier;
+
+        if (IsValidEmail(loginIdentifier))
+        {
+            try
+            {
+                var result = await userManager!.FindByEmailAsync(loginIdentifier);
+
+                if (result != null)
+                {
+                    userName = result.UserName;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in LoginUser: {ex.Message}");
+                return new LoginResultDto(
+                    new ObjectResult(new { Message = $"An error occurred: {ex.Message}" })
+                    { StatusCode = 500 }, null, null);
+            }
+        }
+
         try
         {
-            var result = await signInManager!.PasswordSignInAsync(loginIdentifier, password, rememberMe, false);
+            var result = await signInManager!.PasswordSignInAsync(userName, password, rememberMe, false);
 
             if (result.Succeeded)
             {
@@ -85,10 +112,9 @@ public class AccountService(
             Console.WriteLine($"Exception in LoginUser: {ex.Message}");
             return new LoginResultDto(
                 new ObjectResult(new { Message = $"An error occurred: {ex.Message}" })
-                    { StatusCode = 500 }, null, null);
+                { StatusCode = 500 }, null, null);
         }
     }
-
 
     public async Task<IActionResult> LogoutUser()
     {

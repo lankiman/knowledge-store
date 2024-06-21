@@ -1,0 +1,43 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> @ViewData["Title"] </title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="flex w-full flex-row items-center justify-between p-4">
+            <a asp-action="Index" asp-controller="Home">
+                <div class="flex items-center justify-between px-2">
+                    <img src="~/images/logo.svg" class="h-[28px] mr-3.5" />
+                    <h1 class="font-sans text-xl font-bold">E-LESSON</h1>
+                </div>
+            </a>
+            <div>
+                @if (ViewData["Tittle"] == "Login")
+                {
+                    <a asp-action="Login" asp-controller="Account" class="btn mr-3.5 text-blue-600 outline outline-blue-500">Login</a>
+                }
+                else
+                {
+                    <a asp-action="Register" asp-controller="Account" class="btn bg-blue-500 text-white outline outline-white">Sign up</a>
+                }
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="h-[100svh] w-full">
+        @RenderBody()
+    </main>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+

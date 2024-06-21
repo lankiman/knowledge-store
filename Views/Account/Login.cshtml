@@ -1,38 +1,39 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
 
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+
 @model e_learning.ViewModels.LoginViewModel
+
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Login"; 
+    
+    Layout = "_LoginAndRegisterLayout";
 }
 
-<h1>Login</h1>
-
-<form class="flex flex-col" asp-action="Login" asp-controller="Account" method="post">
-    <div>
-        <label asp-for="LoginIdentifier">Username or Email</label>
-        <input asp-for="LoginIdentifier" class="form-control" />
-        <span asp-validation-for="LoginIdentifier"></span>
+<div class="flex h-full w-full items-center justify-evenly gap-4 px-8">
+    <div class="w-full md:w-[30%]">
+        <form class="flex flex-col gap-4" asp-action="Login" asp-controller="Account" method="post">
+            <h4 class="font-bold text-blue-700">Login to your account</h4>
+            <div class="font-bold text-red-700" asp-validation-summary="ModelOnly"></div>
+            <input class="h-10 rounded-sm bg-gray-200 p-2 font-bold outline-none" placeholder="Email or Username" asp-for="LoginIdentifier" type="text" />
+            <span class="font-bold text-red-700" asp-validation-for="LoginIdentifier"></span>
+            <input class="h-10 rounded-sm bg-gray-200 p-2 font-bold outline-none" placeholder="Password" asp-for="Password" type="password" />
+            <span class="font-bold text-red-700" asp-validation-for="Password"></span>
+            <div class="">
+                <label>
+                    <input asp-for="RememberMe" /> Remember me
+                </label>
+            </div>
+            <div class="flex justify-between">
+                <a asp-action="Register" asp-controller="Account" class="text-blue-700">Forgot Password?</a>
+                <button type="submit" class="btn bg-blue-500 text-white hover:bg-black">Login</button>
+            </div>
+        </form>
     </div>
-
-    <div>
-        <label asp-for="Password">Password</label>
-        <input asp-for="Password" type="password"/>
-        <span asp-validation-for="Password"></span>
+    <div  class="w-[30%] hidden md:flex">
+        <img class="" src="~/images/ELerning.png" />
     </div>
+</div>
 
-    <div>
-        <div>
-            <label>
-                <input asp-for="RememberMe" /> Remember me
-            </label>
-        </div>
-    </div>
 
-    <button type="submit" class="">Login</button>
-</form>
 

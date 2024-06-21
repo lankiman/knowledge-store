@@ -4,7 +4,6 @@ using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace e_learning.Controllers
 {
     public class AccountController(IAccountService accountService, UserManager<UserModel> userManager) : Controller
@@ -33,15 +32,18 @@ namespace e_learning.Controllers
                         }
 
                         break;
+
                     case UnauthorizedResult:
-                        ModelState.AddModelError(string.Empty, "Invalid Username or Password");
+                        ModelState.AddModelError("", "Invalid Username/Email or Password");
                         break;
+
                     case ObjectResult { StatusCode: 500 }:
-                        ModelState.AddModelError(string.Empty, "Server error occurred.");
+                        ModelState.AddModelError("", "Server error occurred.");
                         break;
                 }
             }
 
+            userLoginInfo.LoginIdentifier = "";
             return View(userLoginInfo);
         }
 
