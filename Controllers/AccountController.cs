@@ -43,7 +43,6 @@ namespace e_learning.Controllers
                 }
             }
 
-            userLoginInfo.LoginIdentifier = "";
             return View(userLoginInfo);
         }
 
@@ -53,6 +52,7 @@ namespace e_learning.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
         public IActionResult Register()
         {
             return View();

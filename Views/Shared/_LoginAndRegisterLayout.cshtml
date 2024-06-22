@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,7 +6,7 @@
     <title> @ViewData["Title"] </title>
     <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
 </head>
-<body>
+<body class="overflow-auto md:overflow-hidden">
     <header>
         <nav class="flex w-full flex-row items-center justify-between p-4">
             <a asp-action="Index" asp-controller="Home">
@@ -17,13 +16,13 @@
                 </div>
             </a>
             <div>
-                @if (ViewData["Tittle"] == "Login")
+                @if (ViewData["Title"]?.ToString() == "Login")
                 {
-                    <a asp-action="Login" asp-controller="Account" class="btn mr-3.5 text-blue-600 outline outline-blue-500">Login</a>
+                    <a asp-action="Register" asp-controller="Account" class="btn mr-3.5 text-blue-600 outline outline-blue-500">Signup</a>
                 }
                 else
                 {
-                    <a asp-action="Register" asp-controller="Account" class="btn bg-blue-500 text-white outline outline-white">Sign up</a>
+                    <a asp-action="Login" asp-controller="Account" class="btn bg-blue-500 text-white outline outline-white">Login</a>
                 }
             </div>
         </nav>
@@ -38,6 +37,3 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
-
-

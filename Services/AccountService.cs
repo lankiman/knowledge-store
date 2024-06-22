@@ -60,12 +60,8 @@ public class AccountService(
         return regex.IsMatch(email);
     }
 
-    [HttpPost]
-    public async Task<LoginResultDto> LoginUser(string loginIdentifier, string password,
-        bool rememberMe)
+    private async Task<string> UseEmailLogin(string loginIdentifier)
     {
-        var userName = loginIdentifier;
-
         if (IsValidEmail(loginIdentifier))
         {
             try
@@ -74,16 +70,29 @@ public class AccountService(
 
                 if (result != null)
                 {
-                    userName = result.UserName;
+                    return result.UserName!;
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception in LoginUser: {ex.Message}");
-                return new LoginResultDto(
-                    new ObjectResult(new { Message = $"An error occurred: {ex.Message}" })
-                    { StatusCode = 500 }, null, null);
+                return $"An error occurred: {ex.Message}";
             }
+        }
+        return "";
+    }
+
+    [HttpPost]
+    public async Task<LoginResultDto> LoginUser(string loginIdentifier, string password,
+        bool rememberMe)
+    {
+        var userName = loginIdentifier;
+
+        var checkForUsername = UseEmailLogin(loginIdentifier);
+
+        if (checkForUsername != null && checkForUsername.Result != "")
+        {
+            userName = checkForUsername.Result;
         }
 
         try
