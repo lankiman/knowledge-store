@@ -13,7 +13,6 @@ namespace e_learning.DataTransfersObjects
 
         public string Lastname { get; set; } = user.LastName;
 
-
-        public ICollection<LessonModel> UserOwnedLessons { get; set; } = user.UserOwnedLessons;
+        public ICollection<UserPaidLessonsModel> UserPaidLessons { get; set; } = user.UserPaidLessons;
     }
 }

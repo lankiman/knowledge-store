@@ -12,11 +12,11 @@ namespace e_learning.Services
         IHttpContextAccessor httpContextAccessor)
         : BaseService(eLearningContext, userManager, httpContextAccessor), IAdminService
     {
-        public async Task<UserDto> GetAuthenticatedAdmin()
+        public async Task<AdminUserDto> GetAuthenticatedAdmin()
         {
             var user = await userManager!.GetUserAsync(HttpContext.User);
 
-            return new UserDto(user!);
+            return new AdminUserDto(user!);
         }
     }
 }

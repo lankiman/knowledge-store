@@ -38,7 +38,7 @@ var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ELea
 
 // context.Database.Migrate();
 
-//context.Database.EnsureDeleted();
+// context.Database.EnsureDeleted();
 
 context.Database.EnsureCreated();
 

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
 </head>
 <body>
+<<<<<<< HEAD
     <header>
         <nav class="z-[1000] fixed top-0 flex h-20 w-full flex-row items-center justify-between bg-white px-6">
             <a asp-action="Index" asp-controller="Home">
@@ -39,6 +40,36 @@
                 </svg>
             </div>
         </nav>
+=======
+<header>
+    <nav class="h-[80px] fixed top-0 z-50 flex w-full flex-row items-center justify-between px-6">
+        <a asp-action="Index" asp-controller="Home">
+            <div class="flex items-center justify-between px-2">
+                <img src="~/images/logo.svg" class="h-[28px] mr-3.5"/>
+                <h1 class="font-sans text-xl font-bold">E-LESSON</h1>
+            </div>
+        </a>
+
+        <div class="hidden md:flex md:items-center">
+            <ul class="hidden md:flex md:flex-row md:items-center md:justify-center">
+                <li class="px-5"><a asp-action="Index" asp-controller="Home" active>Home</a></li>
+                <li class="px-5"><a asp-action="" asp-controller="">Lessons</a></li>
+                <li class="px-5"><a asp-action="" asp-controller="">About Us</a></li>
+                <li class="px-5"><a asp-action="" asp-controller="">Plans</a></li>
+            </ul>
+        </div> 
+
+        <div class="hidden md:flex">
+            <a asp-action="Login" asp-controller="Account" class="btn mr-3.5 text-blue-600 outline outline-blue-500">Login</a>
+            <a asp-action="Register" asp-controller="Account" class="btn bg-blue-500 text-white outline outline-white">Sign in</a>
+             
+        </div>
+    </nav> 
+    <div>
+
+    </div>
+</header>
+>>>>>>> e82b538f48900f1c983f84cabc622e48e42521e4
 
         <div class="z-[900] fixed top-0 hidden w-full bg-white pt-20 md:hidden" id="menu">
             <ul>

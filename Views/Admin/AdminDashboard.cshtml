@@ -4,13 +4,13 @@
 @{
     Layout = null;
 }
-@model e_learning.DataTransfersObjects.UserDto
+@model e_learning.DataTransfersObjects.AdminUserDto
 
 <h1>Welcome to Admin Dashboard</h1>
 
 @if (Model != null)
 {
-    <p class="">Admin User ID: @Model.Id</p>
+    <p>Admin User ID: @Model.Id</p>
     <p>Admin User Name: @Model.UserName</p>
     <button onclick="location.href='@Url.Action("Logout", "Account")'">Logout</button>
 
