@@ -3,6 +3,7 @@ using e_learning.Services.Interfaces;
 using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace e_learning.Controllers
 {
@@ -53,9 +54,39 @@ namespace e_learning.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel userRegistrationInfo)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await accountService.RegisterUser(userRegistrationInfo);
+
+                switch (result.ActionResult)
+                {
+                    case OkResult:
+
+                        //return RedirectToAction("AdminDashboard", "Admin");
+                        break;
+
+                    case BadRequestResult:
+                        foreach (var error in result.Result.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+                        break;
+
+                    case ObjectResult { StatusCode: 500 }:
+                        ModelState.AddModelError("", "Server error occurred.");
+                        break;
+                }
+            }
+
+            return View(userRegistrationInfo);
         }
     }
 }
