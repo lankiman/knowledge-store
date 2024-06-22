@@ -23,3 +23,7 @@ body {
 .btn{
     @apply cursor-pointer rounded-full px-3 py-2 text-xs font-bold tracking-wider;
 }
+
+@media only screen and (min-width: 920px){
+
+}
