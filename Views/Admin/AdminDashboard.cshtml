@@ -1,36 +1,5 @@
-﻿@{
-    Layout = null;
+﻿@model e_learning.DataTransfersObjects.AdminUserDto
+
+@{
+    Layout = "_AdminLayout";
 }
-
-@model e_learning.DataTransfersObjects.AdminUserDto
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Creator </title>
-    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
-</head>
-<body class="h-[100svh] overflow-auto md:overflow-hidden">
-    <header>
-        <!-- Sidebar -->
-        <div class="h-[100svh] w-[20%] hidden flex-col bg-blue-700 md:flex">
-            <a asp-action="Index" asp-controller="Home">
-                <div class="flex items-center p-4 text-white">
-                    <img src="~/images/logo.svg" class="h-[28px] mr-3.5" />
-                    <h1 class="font-sans text-xl font-bold">E-LESSON</h1>
-                </div>
-            </a>
-            <hr class="w-full p-2 text-white" />
-        </div>
-        <nav class="flex w-full flex-row items-center justify-between p-4">            
-        </nav>
-    </header>
-
-    <main role="main" class="w-full">
-    </main>
-
-    <script src="~/js/site.js" asp-append-version="true"></script>
-</body>
-</html>

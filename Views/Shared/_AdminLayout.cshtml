@@ -1,0 +1,42 @@
+﻿@model e_learning.DataTransfersObjects.AdminUserDto
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Creator </title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+</head>
+<body class="h-[100svh] overflow-auto bg-amber-50 md:overflow-hidden">
+    <header class="flex">
+        <!-- Sidebar navigation -->
+        <div class="h-[100svh] w-[20%] hidden flex-col bg-blue-700 md:flex">
+            <a asp-action="Index" asp-controller="Home">
+                <div class="flex items-center p-4 text-white">
+                    <img src="~/images/logo.svg" class="h-[28px] mr-3.5" />
+                    <h1 class="font-sans text-xl font-bold">E-LESSON</h1>
+                </div>
+            </a>
+            <hr class="w-full p-2 text-white" />
+        </div>
+        <!--Navbar-->
+        <nav class="h-[4rem] flex w-full flex-row items-center justify-between bg-white p-4 text-black drop-shadow-md">
+            <div class="ml-auto" >
+                <div class="flex gap-2">
+                    <h2 class="self-center font-bold text-blue-800">@Model.UserName</h2>
+                    <img id="profilePicBurger" class="size-10 cursor-pointer" src="~/images/profile-pic.png" alt="profile piture" />
+                </div>
+                <div id="profileBurger" class="top-[4.5rem] absolute right-2 hidden size-40 rounded-md bg-white p-2">This shit is Fucked up</div>   
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="w-full">
+        @RenderBody()
+    </main>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
