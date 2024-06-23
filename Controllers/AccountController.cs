@@ -3,7 +3,7 @@ using e_learning.Services.Interfaces;
 using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.CodeAnalysis.Operations;
 
 namespace e_learning.Controllers
 {
@@ -78,6 +78,10 @@ namespace e_learning.Controllers
                         {
                             ModelState.AddModelError("", error.Description);
                         }
+                        break;
+
+                    case ConflictObjectResult { StatusCode: 409 } conflictObjectResult:
+                        ModelState.AddModelError("", conflictObjectResult.Value!.ToString()!);
                         break;
 
                     case ObjectResult { StatusCode: 500 }:

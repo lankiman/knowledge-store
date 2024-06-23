@@ -4,6 +4,7 @@ using e_learning.Services.Interfaces;
 using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Text.RegularExpressions;
 
@@ -183,11 +184,22 @@ public class AccountService(
 
             return new RegisterResultDto(new BadRequestResult(), result);
         }
+        catch (DbUpdateException ex)
+        {
+            Console.WriteLine($"Exception in RegisterUser: {ex.InnerException.Message}");
+
+            if (ex.InnerException.Message.Contains("IX_AspNetUsers_PhoneNumber"))
+            {
+                return new RegisterResultDto(new ConflictObjectResult(new string("The Phone number is already in use") ) { StatusCode = 409 }, null!);
+            }
+
+            return new RegisterResultDto(new ObjectResult(new { Message = "An Error Occured" }) { StatusCode = 409 }, null!);
+        }
         catch (Exception ex)
         {
-            Console.WriteLine($"Exception in LoginUser: {ex.Message}");
+            Console.WriteLine($"Exception in RegisterUser: {ex.InnerException.Message}");
             return new RegisterResultDto(
-                new ObjectResult(new { Message = $"An error occurred: {ex.Message}" })
+                new ObjectResult(new { Message = "Server Error Occured" })
                 { StatusCode = 500 }, null!);
         }
     }
