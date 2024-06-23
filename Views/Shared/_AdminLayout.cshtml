@@ -22,12 +22,19 @@
         </div>
         <!--Navbar-->
         <nav class="h-[4rem] flex w-full flex-row items-center justify-between bg-white p-4 text-black drop-shadow-md">
-            <div class="ml-auto" >
+            <div class="ml-auto">
                 <div class="flex gap-2">
                     <h2 class="self-center font-bold text-blue-800">@Model.UserName</h2>
                     <img id="profilePicBurger" class="size-10 cursor-pointer" src="~/images/profile-pic.png" alt="profile piture" />
                 </div>
-                <div id="profileBurger" class="top-[4.5rem] absolute right-2 hidden size-40 rounded-md bg-white p-2">This shit is Fucked up</div>   
+                <div id="profileBurger" class="top-[4.5rem] absolute right-2 hidden size-40 flex-col items-center rounded-md bg-white p-2">
+                    
+                        <button class="btn flex w-full items-center justify-center gap-1 bg-gray-50 hover:bg-amber-100" onclick="location.href='@Url.Action("Logout", "Account")'">
+                        <img src="~/images/logout_svg.svg" />
+                        <span>Logout</span>
+                        </button>
+                    
+                </div>
             </div>
         </nav>
     </header>
