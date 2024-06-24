@@ -7,42 +7,60 @@
     <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
 </head>
 <body>
-<header>
-    <nav class="h-[80px] fixed top-0 z-50 flex w-full flex-row items-center justify-between px-6">
-        <a asp-action="Index" asp-controller="Home">
-            <div class="flex items-center justify-between px-2">
-                <img src="~/images/logo.svg" class="h-[28px] mr-3.5"/>
-                <h1 class="font-sans text-xl font-bold">E-LESSON</h1>
+    <header>
+        <nav class="z-[1000] fixed top-0 flex h-20 w-full flex-row items-center justify-between bg-white px-6">
+            <a asp-action="Index" asp-controller="Home">
+                <div class="flex items-center justify-between px-2">
+                    <img src="~/images/logo.svg" class="mr-3.5 size-6" />
+                    <h1 class="font-sans text-xl font-bold">E-LESSON</h1>
+                </div>
+            </a>
+
+            <div class="hidden md:flex md:items-center">
+                <ul class="hidden md:flex md:flex-row md:items-center md:justify-center">
+                    <li class="px-5"><a asp-action="Index" asp-controller="Home" active>Home</a></li>
+                    <li class="px-5"><a asp-action="" asp-controller="">Lessons</a></li>
+                    <li class="px-5"><a asp-action="" asp-controller="">About Us</a></li>
+                    <li class="px-5"><a asp-action="" asp-controller="">Plans</a></li>
+                </ul>
             </div>
-        </a>
 
-        <div class="hidden md:flex md:items-center">
-            <ul class="hidden md:flex md:flex-row md:items-center md:justify-center">
-                <li class="px-5"><a asp-action="Index" asp-controller="Home" active>Home</a></li>
-                <li class="px-5"><a asp-action="" asp-controller="">Lessons</a></li>
-                <li class="px-5"><a asp-action="" asp-controller="">About Us</a></li>
-                <li class="px-5"><a asp-action="" asp-controller="">Plans</a></li>
+            <div class="hidden md:flex">
+                <a asp-action="Login" asp-controller="Account" class="btn mr-3.5 text-blue-600 outline outline-blue-500">Login</a>
+                <a asp-action="Register" asp-controller="Account" class="btn bg-blue-500 text-white outline outline-white">Sign Up</a>
+            </div>
+
+            <div class="flex items-center justify-center transition md:hidden" id="burger">
+                <svg class="size-6" id="first" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+                <svg class="hidden size-6" id="second" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </div>
+        </nav>
+
+        <div class="z-[900] fixed top-0 hidden w-full bg-white pt-20 md:hidden" id="menu">
+            <ul>
+                <li class="w-full"><a class="flex w-full justify-center py-3" asp-action="Index" asp-controller="Home" active>Home</a></li>
+                <li class="w-full"><a class="flex w-full justify-center py-3" asp-action="" asp-controller="">Lessons</a></li>
+                <li class="w-full"><a class="flex w-full justify-center py-3" asp-action="" asp-controller="">About Us</a></li>
+                <li class="w-full"><a class="flex w-full justify-center py-3" asp-action="" asp-controller="">Plans</a></li>
             </ul>
-        </div> 
-
-        <div class="hidden md:flex">
-            <a asp-action="Login" asp-controller="Account" class="btn mr-3.5 text-blue-600 outline outline-blue-500">Login</a>
-            <a asp-action="Register" asp-controller="Account" class="btn bg-blue-500 text-white outline outline-white">Sign in</a>
-             
+            <div class="mt-5 flex flex-col justify-center">
+                <a class="mx-10 my-3 flex justify-center rounded-full border border-blue-500 p-2 font-bold" asp-action="Login" asp-controller="Account">Login</a>
+                <a class="mx-10 flex justify-center rounded-full border border-blue-400 bg-blue-400 p-2 font-bold text-white" asp-action="Register" asp-controller="Account">Sign in</a>
+            </div>
         </div>
-    </nav> 
-    <div>
+    </header>
 
-    </div>
-</header>
+    <main role="main" class="w-full">
 
-<main role="main" class="w-full">
+        @RenderBody()
+    </main>
 
-    @RenderBody()
-</main>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
-<script src="~/js/site.js" asp-append-version="true"></script>
-
-@await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
