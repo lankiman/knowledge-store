@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace e_learning.Controllers
 {
+    [Route("splendid/")]
     [Authorize(Roles = "Admin")]
     public class AdminController(
         IAdminService adminService,

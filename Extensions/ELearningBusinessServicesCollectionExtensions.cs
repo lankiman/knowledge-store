@@ -12,6 +12,7 @@ namespace e_learning.Extensions
             services.AddScoped<ICreatorService, CreatorService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAdminService, AdminService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

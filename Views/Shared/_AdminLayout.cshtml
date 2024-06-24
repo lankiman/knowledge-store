@@ -1,15 +1,15 @@
-﻿@model e_learning.DataTransfersObjects.CreatorDto
+﻿@model e_learning.DataTransfersObjects.AdminDto
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Creator </title>
+    <title> Admin </title>
     <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
 </head>
 <body class="h-[100svh] flex overflow-auto bg-amber-50 md:overflow-hidden">
-    <!-- Sidebar navigation -->
+    <!-- Sidebar Menu Desktop -->
     <div class="h-[100svh] w-[20%] hidden flex-col bg-blue-700 md:flex">
         <a asp-action="Index" asp-controller="Home">
             <div class="flex items-center p-4 text-white">
@@ -18,10 +18,41 @@
             </div>
         </a>
         <hr class="w-full p-2 text-white" />
-        <a asp-action="CreatorDashboard" asp-controller="Creator">
+        <a asp-action="AdminDashboard" asp-controller="Admin">
             <div class="flex items-center p-4 text-white">
                 <img src="~/images/dashboard_svg.svg" class="h-[28px] mr-2" />
                 <h1 class="font-bold">Dashboard</h1>
+            </div>
+        </a>
+        <hr class="w-full p-2 text-white" />
+        <a asp-action="CreatorDashboard" asp-controller="Creator">
+            <div class="flex items-center p-4 text-white">
+                <img src="~/images/creator_dashboard_icon.svg" class="h-[28px] mr-2" />
+                <h1 class="font-bold">Creator</h1>
+            </div>
+        </a>
+    </div>
+
+    <!-- Sidebar Menu Mobile -->
+    <div id="mobileBurger" class="h-[100svh] w-[50%] hidden flex-col bg-blue-700">
+        <a asp-action="Index" asp-controller="Home">
+            <div class="flex items-center p-4 text-white">
+                <img src="~/images/logo.svg" class="h-[28px] mr-3.5" />
+                <h1 class="font-sans text-xl font-bold">E-LESSON</h1>
+            </div>
+        </a>
+        <hr class="w-full p-2 text-white" />
+        <a asp-action="AdminDashboard" asp-controller="Admin">
+            <div class="flex items-center p-4 text-white">
+                <img src="~/images/dashboard_svg.svg" class="h-[28px] mr-2" />
+                <h1 class="font-bold">Dashboard</h1>
+            </div>
+        </a>
+        <hr class="w-full p-2 text-white" />
+        <a asp-action="CreatorDashboard" asp-controller="Creator">
+            <div class="flex items-center p-4 text-white">
+                <img src="~/images/creator_dashboard_icon.svg" class="h-[28px] mr-2" />
+                <h1 class="font-bold">Creator</h1>
             </div>
         </a>
     </div>
@@ -30,7 +61,8 @@
         <header class="flex">
             <!--Navbar-->
             <nav class="h-[4rem] flex w-full flex-row items-center justify-between bg-white p-4 text-black drop-shadow-md">
-                <h1 class="font-bold text-blue-500">Welcome Creator</h1>
+                <div class="md:hidden"><img id="menuBurger" class="size-10 cursor-pointer" src="~/images/burger_menu_open.svg" alt="burger menu" /></div>
+                <h1 class="font-bold text-blue-500">Welcome Administrator</h1>
                 <div class="ml-auto">
                     <div class="flex gap-2">
                         <h2 class="self-center font-bold text-blue-800">@Model.UserName</h2>
@@ -42,7 +74,6 @@
                             <img src="~/images/logout_svg.svg" />
                             <span>Logout</span>
                         </button>
-
                     </div>
                 </div>
             </nav>

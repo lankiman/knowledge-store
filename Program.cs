@@ -72,8 +72,8 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "admin",
-    pattern: "splendid/{action=Index}/{id?}",
-    defaults: new { controller = "Admin", action = "AdminDashboard" });
+    pattern: "splendid/{action=AdminDashboard}/{id?}",
+    defaults: new { controller = "Admin" });
 
 
 app.Run();
