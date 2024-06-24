@@ -7,6 +7,10 @@ const menu = document.querySelector("#menu");
 
 const first = document.querySelector("#first");
 const second = document.querySelector("#second");
+
+const profileBurger = document.querySelector("#profileBurger")
+const profilePicBruger = document.querySelector("#profilePicBurger")
+
 //burger.addEventListener('click', () => {
 //    if (menu.classList.contains('hidden')) {
 //        menu.classList.remove('hidden');
@@ -16,8 +20,21 @@ const second = document.querySelector("#second");
 //    }
 //});
 
+/*burger.addEventListener('click', toogle);*/
 
-burger.addEventListener('click', toogle);
+function genericToggle() {
+    if (profileBurger.classList.contains("hidden")) {
+        profileBurger.classList.remove("hidden")
+        profileBurger.classList.add("flex")
+    }
+
+    else {
+        profileBurger.classList.remove("flex")
+        profileBurger.classList.add("hidden")
+    }
+}
+
+profilePicBruger.addEventListener("click", genericToggle)
 
 function toogle() {
     if (menu.classList.contains('hidden')) {

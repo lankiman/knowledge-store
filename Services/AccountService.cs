@@ -1,8 +1,11 @@
 ﻿using e_learning.DataTransfersObjects;
 using e_learning.Models;
 using e_learning.Services.Interfaces;
+using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Text.RegularExpressions;
 
 namespace e_learning.Services;
@@ -82,6 +85,30 @@ public class AccountService(
         return "";
     }
 
+    private async Task<UserModel?> GetUser(string userSearchParam)
+    {
+        var user = await userManager!.FindByNameAsync(userSearchParam);
+
+        if (user != null)
+        {
+            return user;
+        }
+
+        return null;
+    }
+
+    [HttpPost]
+    private async Task<ActionResult> AssignNewUserRole(UserModel user, string roleName)
+    {
+        var result = await userManager!.AddToRoleAsync(user, roleName);
+
+        if (result.Succeeded)
+        {
+            return new OkResult();
+        }
+        return new BadRequestResult();
+    }
+
     [HttpPost]
     public async Task<LoginResultDto> LoginUser(string loginIdentifier, string password,
         bool rememberMe)
@@ -131,8 +158,49 @@ public class AccountService(
         return null!;
     }
 
-    public async Task<IActionResult> RegisterUser()
+    [HttpPost]
+    public async Task<RegisterResultDto> RegisterUser(RegisterViewModel newUserEnteredDetails)
     {
-        throw new NotImplementedException();
+        UserModel newUser = new UserModel();
+        newUser.UserName = newUserEnteredDetails.Username;
+        newUser.FirstName = newUserEnteredDetails.FirstName!;
+        newUser.LastName = newUserEnteredDetails.LastName!;
+        newUser.Email = newUserEnteredDetails.Email!;
+        newUser.MiddleName = newUserEnteredDetails.MiddleName;
+        newUser.PhoneNumber = newUserEnteredDetails.PhoneNumber;
+
+        try
+        {
+            var result = await userManager!.CreateAsync(newUser, newUserEnteredDetails.Password!);
+
+            if (result.Succeeded)
+            {
+                var user = GetUser(newUserEnteredDetails.Username!);
+
+                await AssignNewUserRole(user.Result!, "Learner");
+
+                return new RegisterResultDto(new OkResult(), result);
+            }
+
+            return new RegisterResultDto(new BadRequestResult(), result);
+        }
+        catch (DbUpdateException ex)
+        {
+            Console.WriteLine($"Exception in RegisterUser: {ex.InnerException.Message}");
+
+            if (ex.InnerException.Message.Contains("IX_AspNetUsers_PhoneNumber"))
+            {
+                return new RegisterResultDto(new ConflictObjectResult(new string("The Phone number is already in use") ) { StatusCode = 409 }, null!);
+            }
+
+            return new RegisterResultDto(new ObjectResult(new { Message = "An Error Occured" }) { StatusCode = 409 }, null!);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception in RegisterUser: {ex.InnerException.Message}");
+            return new RegisterResultDto(
+                new ObjectResult(new { Message = "Server Error Occured" })
+                { StatusCode = 500 }, null!);
+        }
     }
 }

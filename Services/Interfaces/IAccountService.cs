@@ -1,6 +1,6 @@
 ﻿using e_learning.DataTransfersObjects;
+using e_learning.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace e_learning.Services.Interfaces
 {
@@ -11,6 +11,6 @@ namespace e_learning.Services.Interfaces
 
         public Task<IActionResult> LogoutUser();
 
-        public Task<IActionResult> RegisterUser();
+        public Task<RegisterResultDto> RegisterUser(RegisterViewModel newUserEnteredDetails);
     }
 }

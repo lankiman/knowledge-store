@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using e_learning.CustomValidations;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 namespace e_learning.ViewModels
@@ -18,10 +19,12 @@ namespace e_learning.ViewModels
         public string? Email { get; set; }
 
         [Required(ErrorMessage = "Passoword is required")]
+        //[RegularExpression(@"^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}|:""<>?~`-=\[\]\\;',./]).{8,}$", ErrorMessage = "Password Too weak")]
         [DataType(DataType.Password)]
         public string? Password { get; set; }
 
         [Required(ErrorMessage = "Confirm Password Field is required")]
+        [ConfirmPasswordValidation]
         [DataType(DataType.Password)]
         public string? ConfirmPassword { get; set; }
 

@@ -22,7 +22,11 @@ builder.Services.AddDbContext<ELearningDbContext>(options =>
 });
 
 //Add Identity Service
-builder.Services.AddIdentity<UserModel, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddIdentity<UserModel, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+    options.User.RequireUniqueEmail = true;
+})
     .AddEntityFrameworkStores<ELearningDbContext>()
     .AddDefaultTokenProviders();
 
@@ -57,7 +61,6 @@ await adminInitializer.InitializeAdmin();
 app.UseStaticFiles();
 
 app.UseAuthentication();
-
 
 app.UseRouting();
 

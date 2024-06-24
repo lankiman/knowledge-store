@@ -17,11 +17,11 @@ namespace e_learning.Data
 
         // public DbSet<AdminModel> Administrators { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<UserModel>().HasIndex(u => u.PhoneNumber).IsUnique();
 
             // Configure the one-to-many relationship for lesson ownership
             modelBuilder.Entity<LessonModel>()
