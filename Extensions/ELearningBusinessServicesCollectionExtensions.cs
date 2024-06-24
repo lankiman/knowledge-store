@@ -9,7 +9,7 @@ namespace e_learning.Extensions
         public static void AddELearningBusinessServices(this IServiceCollection services)
         {
             services.AddScoped<ILessonService, LessonService>();
-            services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<ICreatorService, CreatorService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAccountService, AccountService>();
 

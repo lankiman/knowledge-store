@@ -2,8 +2,8 @@
 
 namespace e_learning.Services.Interfaces
 {
-    public interface IAdminService
+    public interface ICreatorService
     {
-        public Task<AdminDto> GetAuthenticatedAdmin();
+        public Task<CreatorDto> GetAuthenticatedCreator();
     }
 }

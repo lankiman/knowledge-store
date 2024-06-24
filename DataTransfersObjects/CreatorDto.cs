@@ -2,7 +2,7 @@
 
 namespace e_learning.DataTransfersObjects
 {
-    public class AdminUserDto(UserModel user)
+    public class CreatorDto(UserModel user)
     {
         public string? Id { get; set; } = user.Id;
         public string? UserName { get; set; } = user.UserName;

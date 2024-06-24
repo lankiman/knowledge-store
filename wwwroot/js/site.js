@@ -20,7 +20,7 @@ const profilePicBruger = document.querySelector("#profilePicBurger")
 //    }
 //});
 
-/*burger.addEventListener('click', toogle);*/
+burger.addEventListener('click', toogle);
 
 function genericToggle() {
     if (profileBurger.classList.contains("hidden")) {

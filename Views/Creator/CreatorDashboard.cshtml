@@ -1,0 +1,42 @@
+﻿@model e_learning.DataTransfersObjects.CreatorDto
+
+@{
+    Layout = "_CreatorLayout";
+}
+
+<h1 class="mb-4 text-xl font-bold text-blue-800">Dashboard</h1>
+
+<div class="h-[6rem] flex w-full flex-col justify-evenly gap-2 md:flex-row md:gap-0">
+    <div class="flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
+        <div class="w-[0.5rem] h-full rounded bg-blue-600"></div>
+        <div class="flex w-full items-center justify-between p-2">
+            <div class="">
+                <p class="font-bold text-blue-700">My Lessons</p>
+                <p class="text-3xl">@Model.UserOwnedLessons.Count</p>
+            </div>
+            <div>
+                <img src="~/images/local_library.svg" class="size-[4rem] text-blue-400" />
+            </div>
+        </div>
+    </div>
+    <div class="flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
+        <div class="w-[0.5rem] h-full rounded bg-blue-400"></div>
+        <div class="flex w-full items-center justify-between p-2">
+            <div class="">
+                <p class="font-bold text-blue-700">Subscriptions</p>
+                <p class="text-3xl">@Model.UserOwnedLessons.Count</p>
+            </div>
+            <div>
+                <img src="~/images/subscription_svg.svg" class="size-[4rem] text-blue-400" />
+            </div>
+        </div>
+    </div>
+    <div class="flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
+        <div class="w-[0.5rem] h-full rounded bg-blue-300"></div>
+        <div class="p-2">Most Viewed Video</div>
+    </div>
+    <div class="flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
+        <div class="w-[0.5rem] h-full rounded bg-blue-200"></div>
+        <div class="p-2">Most Liked Video</div>
+    </div>
+</div>

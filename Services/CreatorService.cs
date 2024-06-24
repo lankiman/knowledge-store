@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Identity;
 
 namespace e_learning.Services
 {
-    public class AdminService(
+    public class CreatorService(
         ELearningDbContext eLearningContext,
         UserManager<UserModel> userManager,
         IHttpContextAccessor httpContextAccessor)
-        : BaseService(eLearningContext, userManager, httpContextAccessor), IAdminService
+        : BaseService(eLearningContext, userManager, httpContextAccessor), ICreatorService
     {
-        public async Task<AdminDto> GetAuthenticatedAdmin()
+        public async Task<CreatorDto> GetAuthenticatedCreator()
         {
             var user = await userManager!.GetUserAsync(HttpContext.User);
 
-            return new AdminDto(user!);
+            return new CreatorDto(user!);
         }
     }
 }
