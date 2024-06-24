@@ -8,6 +8,7 @@
 node_modules/*
 
 wwwroot/css/output.css
+
 wwwroot/css/site.output.css
 
 tailwind.extension.json
@@ -16,6 +17,8 @@ tailwind.extension.json
 css/app.css.map
 css/app.min.css
 js/app.min.js
+
+
 
 # dotenv files
 .env
