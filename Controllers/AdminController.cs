@@ -17,7 +17,17 @@ namespace e_learning.Controllers
         public async Task<IActionResult> AdminDashboard()
         {
             var user = await adminService.GetAuthenticatedAdmin();
+            var usersCount = await adminService.GetAllUsers();
+
+            ViewData["UsersCount"] = usersCount.Count;
             return View(user);
+        }
+
+        public async Task<IActionResult> AllUsers()
+        {
+            var users = await adminService.GetAllUsers();
+
+            return View(users);
         }
     }
 }
