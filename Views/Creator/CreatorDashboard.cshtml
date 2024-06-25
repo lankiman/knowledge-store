@@ -4,39 +4,42 @@
     Layout = "_CreatorLayout";
 }
 
-<h1 class="mb-4 text-xl font-bold text-blue-800">Dashboard</h1>
-
-<div class="h-[6rem] flex w-full flex-col justify-evenly gap-2 md:flex-row md:gap-0">
-    <div class="flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
-        <div class="w-[0.5rem] h-full rounded bg-blue-600"></div>
-        <div class="flex w-full items-center justify-between p-2">
-            <div class="">
-                <p class="font-bold text-blue-700">My Lessons</p>
-                <p class="text-3xl">@Model.UserOwnedLessons.Count</p>
-            </div>
-            <div>
-                <img src="~/images/local_library.svg" class="size-[4rem] text-blue-400" />
-            </div>
-        </div>
-    </div>
-    <div class="flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
-        <div class="w-[0.5rem] h-full rounded bg-blue-400"></div>
-        <div class="flex w-full items-center justify-between p-2">
-            <div class="">
-                <p class="font-bold text-blue-700">Subscriptions</p>
-                <p class="text-3xl">@Model.UserOwnedLessons.Count</p>
-            </div>
-            <div>
-                <img src="~/images/subscription_svg.svg" class="size-[4rem] text-blue-400" />
+    <h1 class="mb-4 text-xl font-bold text-blue-800">Dashboard</h1>
+    <div class="flex h-fit w-full flex-col justify-evenly gap-2 md:flex-row md:gap-0">
+        <div class="h-[6rem] flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
+            <div class="w-[0.5rem] h-full rounded-md bg-blue-600"></div>
+            <div class="flex w-full items-center justify-between p-2">
+                <div class="">
+                    <p class="font-bold text-blue-700">My Lessons</p>
+                    <p class="text-3xl">@Model.UserOwnedLessons.Count</p>
+                </div>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="4rem" viewBox="0 -960 960 960" width="4rem" fill="gray">
+                    <path d="M480-60q-72-68-165-104t-195-36v-440q101 0 194 36.5T480-498q73-69 166-105.5T840-640v440q-103 0-195.5 36T480-60Zm0-104q63-47 134-75t146-37v-276q-73 13-143.5 52.5T480-394q-66-66-136.5-105.5T200-552v276q75 9 146 37t134 75Zm0-436q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T560-760q0-33-23.5-56.5T480-840q-33 0-56.5 23.5T400-760q0 33 23.5 56.5T480-680Zm0-80Zm0 366Z" />
+                    </svg>
+                </div>
             </div>
         </div>
+        <div class="h-[6rem] flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
+            <div class="w-[0.5rem] h-full rounded bg-blue-400"></div>
+            <div class="flex w-full items-center justify-between p-2">
+                <div class="">
+                    <p class="font-bold text-blue-700">Subscriptions</p>
+                    <p class="text-3xl">@Model.UserOwnedLessons.Count</p>
+                </div>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="4rem" viewBox="0 -960 960 960" width="4rem" fill="gray">
+                        <path d="M160-80q-33 0-56.5-23.5T80-160v-400q0-33 23.5-56.5T160-640h640q33 0 56.5 23.5T880-560v400q0 33-23.5 56.5T800-80H160Zm0-80h640v-400H160v400Zm240-40 240-160-240-160v320ZM160-680v-80h640v80H160Zm120-120v-80h400v80H280ZM160-160v-400 400Z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="h-[6rem] flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
+            <div class="w-[0.5rem] h-full rounded bg-blue-300"></div>
+            <div class="p-2">Most Viewed Video</div>
+        </div>
+        <div class="h-[6rem] flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
+            <div class="w-[0.5rem] h-full rounded bg-blue-200"></div>
+            <div class="p-2">Most Liked Video</div>
+        </div>
     </div>
-    <div class="flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
-        <div class="w-[0.5rem] h-full rounded bg-blue-300"></div>
-        <div class="p-2">Most Viewed Video</div>
-    </div>
-    <div class="flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
-        <div class="w-[0.5rem] h-full rounded bg-blue-200"></div>
-        <div class="p-2">Most Liked Video</div>
-    </div>
-</div>
