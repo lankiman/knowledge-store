@@ -100,7 +100,7 @@
                 <h1 class="hidden text-xl font-bold text-blue-600 md:flex">Administrator</h1>
                 <div class="ml-auto">
                     <div class="flex gap-2">
-                        <h2 class="self-center font-bold text-blue-800">@TempData["Username"]</h2>
+                        <h2 class="self-center font-bold text-blue-800">@User.Identity.Name</h2>
                         <img id="profilePicBurger" class="size-10 cursor-pointer" src="~/images/profile-pic.png" alt="profile piture" />
                     </div>
                     <div id="profileBurger" class="top-[4.5rem] absolute right-2 hidden size-40 flex-col items-center rounded-md bg-white p-2">

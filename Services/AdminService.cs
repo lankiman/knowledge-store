@@ -26,7 +26,12 @@ namespace e_learning.Services
         {
             var users = await eLearningContext!.Users.ToListAsync();
 
-            return users;
+            var user = await userManager!.GetUserAsync(HttpContext.User);
+
+
+            var userList = users.Where(u => u.Id != user!.Id).ToList();
+
+            return userList;
         }
     }
 }
