@@ -8,13 +8,12 @@ namespace e_learning.Services
 {
     public class CreatorService(
         ELearningDbContext eLearningContext,
-        UserManager<UserModel> userManager,
-        IHttpContextAccessor httpContextAccessor)
-        : BaseService(eLearningContext, userManager, httpContextAccessor), ICreatorService
+        ICurrentUserService currentUserService)
+        : BaseService(eLearningContext, currentUserService), ICreatorService
     {
         public async Task<CreatorDto> GetAuthenticatedCreator()
         {
-            var user = await userManager!.GetUserAsync(HttpContext.User);
+            var user = await currentUserService!.GetCurrentUser();
 
             return new CreatorDto(user!);
         }
