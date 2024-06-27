@@ -4,7 +4,7 @@
     Layout = "_AdminLayout";
 }
 
-<h1 class="mb-4 text-xl font-bold text-blue-800">Welcome Administrator @Model.UserName</h1>
+<h1 class="mb-4 text-xl font-bold text-blue-800">Welcome</h1>
 <div class="flex h-fit w-full flex-col justify-evenly gap-2 md:flex-row md:gap-0">
     <div class="h-[6rem] flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
         <div class="w-[0.5rem] h-full rounded-md bg-blue-600"></div>
@@ -24,7 +24,8 @@
         <div class="w-[0.5rem] h-full rounded bg-blue-400"></div>
         <div class="flex w-full items-center justify-between p-2">
             <div class="">
-                <p class="font-bold text-blue-700">Subscriptions</p>
+                <p class="font-bold text-blue-700">Creators</p>
+                <p class="text-3xl">@ViewData["CreatorsCount"]</p>
             </div>
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" height="4rem" viewBox="0 -960 960 960" width="4rem" fill="gray">

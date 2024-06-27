@@ -12,14 +12,14 @@ namespace e_learning.Services;
 public class AccountService(
     UserManager<UserModel> userManager,
     SignInManager<UserModel> signInManager,
-    ICurrentUserService currentUserService)
-    : BaseService(signInManager, userManager, currentUserService), IAccountService
+    IUserDetailsService userDetailsService)
+    : BaseService(signInManager, userManager, userDetailsService), IAccountService
 {
     private async Task<UserModel?> GetLoggedInUserDetails()
     {
         try
         {
-            var user = await currentUserService.GetCurrentUser();
+            var user = await UserDetailsService.GetUser();
 
             if (user != null)
             {
@@ -39,7 +39,7 @@ public class AccountService(
     {
         try
         {
-            var roles = await currentUserService.GetCurrentUserRole();
+            var roles = await UserDetailsService.GetUserRole();
 
             if (roles.Count > 0)
             {

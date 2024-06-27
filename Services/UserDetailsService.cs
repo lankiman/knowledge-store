@@ -5,21 +5,28 @@ using Microsoft.AspNetCore.Identity;
 
 namespace e_learning.Services
 {
-    public class CurrentUserService(
+    public class UserDetailsService(
         UserManager<UserModel> userManager,
         IHttpContextAccessor httpContextAccessor)
-        : BaseService(userManager, httpContextAccessor), ICurrentUserService
+        : BaseService(userManager, httpContextAccessor), IUserDetailsService
     {
-        public async Task<UserModel?> GetCurrentUser()
+        public async Task<UserModel?> GetUser()
         {
             var user = await userManager!.GetUserAsync(httpContextAccessor!.HttpContext!.User);
             return user;
         }
 
-        public async Task<IList<string>?> GetCurrentUserRole()
+        public async Task<IList<string>?> GetUserRole()
         {
-            var user = await GetCurrentUser();
+            var user = await GetUser();
 
+            var userRoles = await userManager!.GetRolesAsync(user!);
+
+            return userRoles;
+        }
+
+        public async Task<IList<string>?> GetUserRole(UserModel user)
+        {
             var userRoles = await userManager!.GetRolesAsync(user!);
 
             return userRoles;

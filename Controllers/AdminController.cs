@@ -18,8 +18,10 @@ namespace e_learning.Controllers
         {
             var user = await adminService.GetAuthenticatedAdmin();
             var usersCount = await adminService.GetAllUsers();
+            var creatorsCount = await adminService.GetCreators();
 
             ViewData["UsersCount"] = usersCount.Count;
+            ViewData["CreatorsCount"] = creatorsCount.Count;
 
             return View(user);
         }

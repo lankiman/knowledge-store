@@ -9,5 +9,7 @@ namespace e_learning.Services.Interfaces
         public Task<AdminDto> GetAuthenticatedAdmin();
 
         public Task<List<UserModel>> GetAllUsers();
+
+        public Task<List<UserModel>> GetCreators();
     }
 }
