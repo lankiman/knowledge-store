@@ -11,14 +11,12 @@ namespace e_learning.Services
     public class AdminService(
         ELearningDbContext eLearningContext,
         UserManager<UserModel> userManager,
-        IHttpContextAccessor httpContextAccessor)
-        : BaseService(eLearningContext, userManager, httpContextAccessor), IAdminService
+        ICurrentUserService currentUserService)
+        : BaseService(eLearningContext, userManager, currentUserService), IAdminService
     {
         public async Task<AdminDto> GetAuthenticatedAdmin()
         {
-            var user = await userManager!.GetUserAsync(HttpContext.User);
-
-
+            var user = await currentUserService.GetCurrentUser();
             return new AdminDto(user!);
         }
 
@@ -26,8 +24,7 @@ namespace e_learning.Services
         {
             var users = await eLearningContext!.Users.ToListAsync();
 
-            var user = await userManager!.GetUserAsync(HttpContext.User);
-
+            var user = await currentUserService.GetCurrentUser();
 
             var userList = users.Where(u => u.Id != user!.Id).ToList();
 

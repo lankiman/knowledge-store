@@ -1,5 +1,6 @@
 ﻿using e_learning.Data;
 using e_learning.Models;
+using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace e_learning.Services
@@ -9,7 +10,9 @@ namespace e_learning.Services
         protected readonly ELearningDbContext? eLearningContext;
         protected readonly UserManager<UserModel>? userManager;
         protected readonly SignInManager<UserModel>? signInManager;
-        protected readonly IHttpContextAccessor? httpContextAccessor;
+        protected readonly ICurrentUserService currentUserService;
+        protected readonly IHttpContextAccessor httpContextAccessor;
+
 
         /// <summary>
         /// Constructor for services Requiring all dependencies
@@ -17,42 +20,48 @@ namespace e_learning.Services
         /// <param name="eLearningContext"></param>
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
-        /// <param name="httpContextAccessor"></param>
         protected BaseService(ELearningDbContext eLearningContext, UserManager<UserModel> userManager,
-            SignInManager<UserModel> signInManager, IHttpContextAccessor httpContextAccessor)
+            SignInManager<UserModel> signInManager, ICurrentUserService currentUserService)
         {
             this.eLearningContext = eLearningContext;
             this.signInManager = signInManager;
             this.userManager = userManager;
-            this.httpContextAccessor = httpContextAccessor;
+            this.currentUserService = currentUserService;
         }
 
         /// <summary>
-        /// constructor for services requiring signin, user, httpContext
+        /// constructor for services requiring signin, user, current user service
         /// </summary>
         /// <param name="signInManager"></param>
         /// <param name="userManager"></param>
-        /// <param name="httpContextAccessor"></param>
         protected BaseService(SignInManager<UserModel> signInManager, UserManager<UserModel> userManager,
-            IHttpContextAccessor httpContextAccessor)
+            ICurrentUserService currentUserService)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
-            this.httpContextAccessor = httpContextAccessor;
+            this.currentUserService = currentUserService;
         }
 
         /// <summary>
-        /// Constructor for services requiring eLearningContext, userManger and httpContextAccessor
+        /// Constructor for services requiring eLearningContext, userManger and currentuserservice
         /// </summary>
         /// <param name="eLearningContext"></param>
         /// <param name="userManager"></param>
-        /// <param name="httpContextAccessor"></param>
         protected BaseService(ELearningDbContext eLearningContext, UserManager<UserModel> userManager,
-            IHttpContextAccessor httpContextAccessor)
+            ICurrentUserService currentUserService)
         {
             this.eLearningContext = eLearningContext;
             this.userManager = userManager;
-            this.httpContextAccessor = httpContextAccessor;
+            this.currentUserService = currentUserService;
+        }
+
+        /// <summary>
+        /// Constructor for services requiring only usermanger
+        /// </summary>
+        /// <param name="userManager"></param>
+        protected BaseService(UserManager<UserModel> userManager)
+        {
+            this.userManager = userManager;
         }
 
 

@@ -21,9 +21,7 @@ namespace e_learning.Controllers
 
             ViewData["UsersCount"] = usersCount.Count;
 
-            ViewData["Username"] = user.UserName;
-
-            TempData["Username"] = user.UserName;
+            ViewData["CreatorsCount"]
 
             return View(user);
         }
@@ -31,8 +29,7 @@ namespace e_learning.Controllers
         public async Task<IActionResult> AllUsers()
         {
             var users = await adminService.GetAllUsers();
-
-
+            
             return View(users);
         }
     }

@@ -13,6 +13,7 @@ namespace e_learning.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

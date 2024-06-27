@@ -5,7 +5,6 @@ using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Text.RegularExpressions;
 
 namespace e_learning.Services;
@@ -13,14 +12,14 @@ namespace e_learning.Services;
 public class AccountService(
     UserManager<UserModel> userManager,
     SignInManager<UserModel> signInManager,
-    IHttpContextAccessor httpContextAccessor)
-    : BaseService(signInManager, userManager, httpContextAccessor), IAccountService
+    ICurrentUserService currentUserService)
+    : BaseService(signInManager, userManager, currentUserService), IAccountService
 {
     private async Task<UserModel?> GetLoggedInUserDetails()
     {
         try
         {
-            var user = await userManager!.GetUserAsync(HttpContext.User);
+            var user = await currentUserService.GetCurrentUser();
 
             if (user != null)
             {
@@ -36,11 +35,11 @@ public class AccountService(
         }
     }
 
-    private async Task<IList<string>?> GetUserRoles(UserModel user)
+    private async Task<IList<string>?> GetUserRoles()
     {
         try
         {
-            var roles = await userManager!.GetRolesAsync(user);
+            var roles = await currentUserService.GetCurrentUserRole();
 
             if (roles.Count > 0)
             {
@@ -82,6 +81,7 @@ public class AccountService(
                 return $"An error occurred: {ex.Message}";
             }
         }
+
         return "";
     }
 
@@ -106,6 +106,7 @@ public class AccountService(
         {
             return new OkResult();
         }
+
         return new BadRequestResult();
     }
 
@@ -132,7 +133,7 @@ public class AccountService(
 
                 if (user != null)
                 {
-                    var roles = await GetUserRoles(user);
+                    var roles = await GetUserRoles();
                     if (roles != null)
                     {
                         return new LoginResultDto(new OkResult(), user,
@@ -148,7 +149,7 @@ public class AccountService(
             Console.WriteLine($"Exception in LoginUser: {ex.Message}");
             return new LoginResultDto(
                 new ObjectResult(new { Message = $"An error occurred: {ex.Message}" })
-                { StatusCode = 500 }, null, null);
+                    { StatusCode = 500 }, null, null);
         }
     }
 
@@ -190,17 +191,20 @@ public class AccountService(
 
             if (ex.InnerException.Message.Contains("IX_AspNetUsers_PhoneNumber"))
             {
-                return new RegisterResultDto(new ConflictObjectResult(new string("The Phone number is already in use") ) { StatusCode = 409 }, null!);
+                return new RegisterResultDto(
+                    new ConflictObjectResult(new string("The Phone number is already in use")) { StatusCode = 409 },
+                    null!);
             }
 
-            return new RegisterResultDto(new ObjectResult(new { Message = "An Error Occured" }) { StatusCode = 409 }, null!);
+            return new RegisterResultDto(new ObjectResult(new { Message = "An Error Occured" }) { StatusCode = 409 },
+                null!);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Exception in RegisterUser: {ex.InnerException.Message}");
             return new RegisterResultDto(
                 new ObjectResult(new { Message = "Server Error Occured" })
-                { StatusCode = 500 }, null!);
+                    { StatusCode = 500 }, null!);
         }
     }
 }
