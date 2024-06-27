@@ -3,7 +3,7 @@ using e_learning.Services.Interfaces;
 using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Operations;
+
 
 namespace e_learning.Controllers
 {
@@ -27,6 +27,11 @@ namespace e_learning.Controllers
                 switch (result.ActionResult)
                 {
                     case OkResult:
+                        if (result.Roles != null && result.Roles.Contains("Creator") && !result.Roles.Contains("Admin"))
+                        {
+                            return RedirectToAction("CreatorDashboard", "Creator");
+                        }
+
                         if (result.Roles != null && result.Roles.Contains("Admin"))
                         {
                             return RedirectToAction("AdminDashboard", "Admin");
@@ -70,7 +75,7 @@ namespace e_learning.Controllers
                 {
                     case OkResult:
 
-                        //return RedirectToAction("AdminDashboard", "Admin");
+                        //return RedirectToAction("CreatorDashboard", "Admin");
                         break;
 
                     case BadRequestResult:
@@ -78,6 +83,7 @@ namespace e_learning.Controllers
                         {
                             ModelState.AddModelError("", error.Description);
                         }
+
                         break;
 
                     case ConflictObjectResult { StatusCode: 409 } conflictObjectResult:

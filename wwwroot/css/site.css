@@ -16,6 +16,11 @@ body {
     width: 100%;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+
 .card {
     @apply relative overflow-hidden rounded bg-white shadow-md;
 }

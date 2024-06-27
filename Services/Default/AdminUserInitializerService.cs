@@ -10,7 +10,6 @@ namespace e_learning.Services.Default
             string email = configuration["Admin:DefaultAdminEmail"];
             string password = configuration["Admin:DefaultAdminPassword"];
 
-
             using (var scope = serviceProvider.CreateScope())
             {
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserModel>>();
@@ -23,13 +22,13 @@ namespace e_learning.Services.Default
                     user.UserName = "lankiman";
                     user.FirstName = "lankiman";
                     user.LastName = "admin";
-                    user.EmailConfirmed= true;
+                    user.EmailConfirmed = true;
 
                     var result = await userManager.CreateAsync(user, password);
 
                     if (result.Succeeded)
                     {
-                        await userManager.AddToRoleAsync(user, "Admin");
+                        await userManager.AddToRolesAsync(user, new List<string> { "Admin", "Creator" });
                     }
                     else
                     {

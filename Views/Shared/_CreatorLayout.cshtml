@@ -1,12 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@model e_learning.DataTransfersObjects.CreatorDto
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Admin </title>
+    <title> @ViewData["Title"] </title>
     <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
 </head>
-<body class="h-[100svh] flex overflow-auto bg-amber-50 md:overflow-hidden">
+<body class="h-[100svh] flex overflow-auto bg-amber-50">
+
     <!-- Sidebar Menu Desktop -->
     <div class="h-[100svh] w-[20%] hidden flex-col bg-blue-700 md:flex">
         <a asp-action="Index" asp-controller="Home">
@@ -16,35 +19,25 @@
             </div>
         </a>
         <hr class="w-full p-2 text-white" />
-        <a asp-action="AdminDashboard" asp-controller="Admin">
-            <div class="flex items-center gap-2 p-4 text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white">
-                    <path d="M520-600v-240h320v240H520ZM120-440v-400h320v400H120Zm400 320v-400h320v400H520Zm-400 0v-240h320v240H120Zm80-400h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z" />
-                </svg>
-                <h1 class="font-bold">Dashboard</h1>
-            </div>
-        </a>
-        <hr class="w-full p-2 text-white" />
         <a asp-action="CreatorDashboard" asp-controller="Creator">
             <div class="flex items-center gap-2 p-4 text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
                     <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm200-80v-240H200v240h200Zm80 0h280v-240H480v240ZM200-520h560v-240H200v240Z" />
                 </svg>
-                <h1 class="font-bold">Creator</h1>
+                <h1 class="font-bold">Dashboard</h1>
             </div>
         </a>
         <hr class="w-full p-2 text-white" />
-        <a asp-action="AllUsers" asp-controller="Admin">
-            <div class="flex items-center gap-2 p-4 text-white">
+        <a asp-action="CreateLesson" asp-controller="Creator">
+            <div class="flex items-center gap-2 p-4 text-white hover:bg-blue-500">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
-                    <path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z" />
+                    <path d="M160-120v-170l527-526q12-12 27-18t30-6q16 0 30.5 6t25.5 18l56 56q12 11 18 25.5t6 30.5q0 15-6 30t-18 27L330-120H160Zm80-80h56l393-392-28-29-29-28-392 393v56Zm560-503-57-57 57 57Zm-139 82-29-28 57 57-28-29ZM560-120q74 0 137-37t63-103q0-36-19-62t-51-45l-59 59q23 10 36 22t13 26q0 23-36.5 41.5T560-200q-17 0-28.5 11.5T520-160q0 17 11.5 28.5T560-120ZM183-426l60-60q-20-8-31.5-16.5T200-520q0-12 18-24t76-37q88-38 117-69t29-70q0-55-44-87.5T280-840q-45 0-80.5 16T145-785q-11 13-9 29t15 26q13 11 29 9t27-13q14-14 31-20t42-6q41 0 60.5 12t19.5 28q0 14-17.5 25.5T262-654q-80 35-111 63.5T120-520q0 32 17 54.5t46 39.5Z" />
                 </svg>
-                <h1 class="font-bold">Users</h1>
+                <h1 class="font-bold">CreateLesson</h1>
             </div>
         </a>
     </div>
-
-    <!-- Sidebar Menu Mobile -->
+    <!-- Sidebar menu mobile -->
     <div id="mobileBurger" class="h-[100svh] z-10 w-[12rem] -translate-x-full fixed left-0 transform flex-col bg-blue-700 text-sm transition-transform duration-300 ease-in-out md:hidden">
         <div class="flex w-full justify-between">
             <a asp-action="Index" asp-controller="Home">
@@ -60,36 +53,28 @@
             </div>
         </div>
         <hr class="w-full p-2 text-white" />
-        <a asp-action="AdminDashboard" asp-controller="Admin">
-            <div class="flex items-center gap-2 p-4 text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white">
-                    <path d="M520-600v-240h320v240H520ZM120-440v-400h320v400H120Zm400 320v-400h320v400H520Zm-400 0v-240h320v240H120Zm80-400h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z" />
+        <a asp-action="CreatorDashboard" asp-controller="Creator">
+            <div class="flex items-center gap-2 p-4 text-white hover:bg-gray-300">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                    <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm200-80v-240H200v240h200Zm80 0h280v-240H480v240ZM200-520h560v-240H200v240Z" />
                 </svg>
                 <h1 class="font-bold">Dashboard</h1>
             </div>
         </a>
         <hr class="w-full p-2 text-white" />
-        <a asp-action="CreatorDashboard" asp-controller="Creator">
-            <div class="flex items-center gap-2 p-4 text-white">
+        <a asp-action="CreateLesson" asp-controller="Creator">
+            <div class="flex items-center gap-2 p-4 text-white hover:bg-gray-300">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
-                    <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm200-80v-240H200v240h200Zm80 0h280v-240H480v240ZM200-520h560v-240H200v240Z" />
+                    <path d="M160-120v-170l527-526q12-12 27-18t30-6q16 0 30.5 6t25.5 18l56 56q12 11 18 25.5t6 30.5q0 15-6 30t-18 27L330-120H160Zm80-80h56l393-392-28-29-29-28-392 393v56Zm560-503-57-57 57 57Zm-139 82-29-28 57 57-28-29ZM560-120q74 0 137-37t63-103q0-36-19-62t-51-45l-59 59q23 10 36 22t13 26q0 23-36.5 41.5T560-200q-17 0-28.5 11.5T520-160q0 17 11.5 28.5T560-120ZM183-426l60-60q-20-8-31.5-16.5T200-520q0-12 18-24t76-37q88-38 117-69t29-70q0-55-44-87.5T280-840q-45 0-80.5 16T145-785q-11 13-9 29t15 26q13 11 29 9t27-13q14-14 31-20t42-6q41 0 60.5 12t19.5 28q0 14-17.5 25.5T262-654q-80 35-111 63.5T120-520q0 32 17 54.5t46 39.5Z" />
                 </svg>
-                <h1 class="font-bold">Creator Dashboard</h1>
-            </div>
-        </a>
-        <a asp-action="AllUsers" asp-controller="Admin">
-            <div class="flex items-center gap-2 p-4 text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
-                    <path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z" />
-                </svg>
-                <h1 class="font-bold">All Users</h1>
+                <h1 class="font-bold">CreateLesson</h1>
             </div>
         </a>
     </div>
 
     <div class="flex w-full flex-col">
+        <!--Navbar-->
         <header class="flex">
-            <!--Navbar-->
             <nav class="h-[4rem] flex w-full flex-row items-center justify-between bg-white p-4 text-black drop-shadow-md">
                 <div id="sidebar-burger-open" class="w-fit cursor-pointer self-end md:hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
@@ -97,15 +82,15 @@
                         <path d="M120-240v-80h520v80H120Zm664-40L584-480l200-200 56 56-144 144 144 144-56 56ZM120-440v-80h400v80H120Zm0-200v-80h520v80H120Z" />
                     </svg>
                 </div>
-                <h1 class="hidden text-xl font-bold text-blue-600 md:flex">Administrator</h1>
+                <h1 class="hidden text-xl font-bold text-blue-600 md:flex">Creator</h1>
                 <div class="ml-auto">
                     <div class="flex gap-2">
-                        <h2 class="self-center font-bold text-blue-800">@User.Identity.Name</h2>
-                        <img id="profilePicBurger" class="size-10 cursor-pointer" src="~/images/profile-pic.png" alt="profile picture" />
+                        <h2 class="self-center font-bold text-blue-800">@Model.UserName</h2>
+                        <img id="profilePicBurger" class="size-10 cursor-pointer" src="~/images/profile-pic.png" alt="profile piture" />
                     </div>
                     <div id="profileBurger" class="top-[4.5rem] absolute right-2 hidden size-40 flex-col items-center rounded-md bg-white p-2">
 
-                        <button class="btn flex w-full items-center justify-center gap-1 bg-gray-50 hover:bg-amber-100" onclick="location.href = '@Url.Action("Logout", "Account")'">
+                        <button class="btn flex w-full items-center justify-center gap-1 bg-gray-50 hover:bg-amber-100" onclick="location.href='@Url.Action("Logout", "Account")'">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black">
                                 <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
                             </svg>

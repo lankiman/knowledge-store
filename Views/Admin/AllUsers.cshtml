@@ -1,0 +1,10 @@
+﻿@model List<UserModel>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+@foreach (var user in Model)
+{
+    <div><p>@user.FirstName @user.LastName</p></div>
+}

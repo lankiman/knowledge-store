@@ -23,10 +23,10 @@ builder.Services.AddDbContext<ELearningDbContext>(options =>
 
 //Add Identity Service
 builder.Services.AddIdentity<UserModel, IdentityRole>(options =>
-{
-    options.SignIn.RequireConfirmedAccount = false;
-    options.User.RequireUniqueEmail = true;
-})
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+        options.User.RequireUniqueEmail = true;
+    })
     .AddEntityFrameworkStores<ELearningDbContext>()
     .AddDefaultTokenProviders();
 
@@ -69,5 +69,10 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "admin",
+    pattern: "splendid/{action}",
+    defaults: new { controller = "Admin" });
 
 app.Run();
