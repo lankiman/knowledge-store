@@ -21,15 +21,13 @@ namespace e_learning.Controllers
 
             ViewData["UsersCount"] = usersCount.Count;
 
-            ViewData["CreatorsCount"]
-
             return View(user);
         }
 
         public async Task<IActionResult> AllUsers()
         {
             var users = await adminService.GetAllUsers();
-            
+
             return View(users);
         }
     }
