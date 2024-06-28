@@ -25,9 +25,9 @@
                 </ul>
             </div>
 
-            <div class="hidden md:flex">
-                <a asp-action="Login" asp-controller="Account" class="btn mr-3.5 text-blue-600 outline outline-blue-500">Login</a>
-                <a asp-action="Register" asp-controller="Account" class="btn bg-blue-500 text-white outline outline-white">Sign Up</a>
+            <div class="hidden md:flex md:gap-x-3.5">
+                <a asp-action="Login" asp-controller="Account" class="btn text-blue-700 outline outline-blue-700">Login</a>
+                <a asp-action="Register" asp-controller="Account" class="btn bg-blue-700 text-white outline outline-white">SignUp</a>
             </div>
 
             <div class="flex items-center justify-center transition md:hidden" id="burger">
@@ -47,9 +47,9 @@
                 <li class="w-full"><a class="flex w-full justify-center py-3" asp-action="" asp-controller="">About Us</a></li>
                 <li class="w-full"><a class="flex w-full justify-center py-3" asp-action="" asp-controller="">Plans</a></li>
             </ul>
-            <div class="mt-5 flex flex-col justify-center">
-                <a class="mx-10 my-3 flex justify-center rounded-full border border-blue-500 p-2 font-bold" asp-action="Login" asp-controller="Account">Login</a>
-                <a class="mx-10 flex justify-center rounded-full border border-blue-400 bg-blue-400 p-2 font-bold text-white" asp-action="Register" asp-controller="Account">Sign in</a>
+            <div class="mt-5 flex flex-col justify-center gap-y-3.5">
+                <a class="mx-10 flex justify-center rounded-full border border-blue-500 p-2 font-bold" asp-action="Login" asp-controller="Account">Login</a>
+                <a class="mx-10 my-2 flex justify-center rounded-full border border-blue-400 bg-blue-400 p-2 font-bold text-white" asp-action="Register" asp-controller="Account">Sign in</a>
             </div>
         </div>
     </header>
@@ -59,6 +59,10 @@
         @RenderBody()
     </main>
 
+    <footer>
+        <div class="">
+        </div>
+    </footer>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

@@ -20,11 +20,10 @@ body {
     box-sizing: border-box;
 }
 
-
 .card {
-    @apply relative overflow-hidden rounded bg-white shadow-md;
+    @apply relative overflow-hidden rounded bg-blue-200 shadow-md;
 }
 
 .btn {
-    @apply cursor-pointer rounded-full px-3 py-2 text-xs font-bold tracking-wider;
+    @apply cursor-pointer rounded-full px-3 py-2 text-sm font-bold tracking-wider;
 }
