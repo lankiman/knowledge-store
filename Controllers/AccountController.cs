@@ -37,6 +37,11 @@ namespace e_learning.Controllers
                             return RedirectToAction("AdminDashboard", "Admin");
                         }
 
+                        if (result.Roles != null && result.Roles.Contains("Learner"))
+                        {
+                            return RedirectToAction("LearnerDashboard", "Learner");
+                        }
+
                         break;
 
                     case UnauthorizedResult:
