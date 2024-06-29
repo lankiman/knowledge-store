@@ -4,6 +4,6 @@ namespace e_learning.Services.Interfaces
 {
     public interface IInstructorService
     {
-        public Task<CreatorDto> GetAuthenticatedInstructor();
+        public Task<InstructorDto> GetAuthenticatedInstructor();
     }
 }

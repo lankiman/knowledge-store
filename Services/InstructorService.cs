@@ -11,11 +11,11 @@ namespace e_learning.Services
         IUserDetailsService userDetailsService)
         : BaseService(eLearningContext, userDetailsService), IInstructorService
     {
-        public async Task<CreatorDto> GetAuthenticatedInstructor()
+        public async Task<InstructorDto> GetAuthenticatedInstructor()
         {
             var user = await UserDetailsService!.GetUser();
 
-            return new CreatorDto(user!);
+            return new InstructorDto(user!);
         }
     }
 }

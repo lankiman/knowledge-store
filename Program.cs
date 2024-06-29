@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddELearningBusinessServices();
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -60,9 +61,16 @@ await adminInitializer.InitializeAdmin();
 
 app.UseStaticFiles();
 
+app.MapGet("/environment", async context =>
+{
+    var envName = app.Environment.EnvironmentName;
+    await context.Response.WriteAsync(envName);
+});
+
 app.UseAuthentication();
 
 app.UseRouting();
+
 
 app.UseAuthorization();
 
