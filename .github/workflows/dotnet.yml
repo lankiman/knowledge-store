@@ -33,7 +33,7 @@ jobs:
         uses: talunzhang/auto-web-deploy@v1.0.1
         with:
           website-name: lankiman-001-site1  # Replace with your SmarterASP.NET site name
-          server-computer-name: https://win6145.site4now.net:8172/MsDeploy.axd?site=lankiman-001-site1
+          server-computer-name: https://win6145.site4now.net:8172
           server-username: lankiman-001
           server-password: ${{ secrets.ELESSON_PASSWORD }}  # Replace with your secret for SmarterASP.NET password
           source-path: './publish'
