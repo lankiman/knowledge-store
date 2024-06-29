@@ -34,5 +34,8 @@ jobs:
           server-username: lankiman-001
           server-password: ${{ secrets.ELESSON_PASSWORD }}  # Replace with your secret for SmarterASP.NET password
           target-delete: true
+        env:
+          ASPNETCORE_ENVIRONMENT: 'Staging'
+
       
           
