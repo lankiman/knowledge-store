@@ -37,6 +37,7 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
+    app.UseHttpsRedirection();
 }
 
 var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ELearningDbContext>();
@@ -58,6 +59,8 @@ await roleInitializer.InitializeRoles();
 var adminInitializer = new AdminUserInitializerService(app.Services, builder.Configuration);
 
 await adminInitializer.InitializeAdmin();
+
+app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 

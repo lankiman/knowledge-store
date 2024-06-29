@@ -6,6 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RootNamespace>e_learning</RootNamespace>
 		<UserSecretsId>f9eb83da-1103-476a-aa84-f53ba4497381</UserSecretsId>
+		<IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
 	</PropertyGroup>
 
 	<ItemGroup>
