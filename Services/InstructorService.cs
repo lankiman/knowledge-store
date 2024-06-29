@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Identity;
 
 namespace e_learning.Services
 {
-    public class CreatorService(
+    public class InstructorService(
         ELearningDbContext eLearningContext,
         IUserDetailsService userDetailsService)
-        : BaseService(eLearningContext, userDetailsService), ICreatorService
+        : BaseService(eLearningContext, userDetailsService), IInstructorService
     {
-        public async Task<CreatorDto> GetAuthenticatedCreator()
+        public async Task<CreatorDto> GetAuthenticatedInstructor()
         {
             var user = await UserDetailsService!.GetUser();
 

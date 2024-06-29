@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Authorization;
 namespace e_learning.Controllers
 {
     [Authorize(Roles = "Creator")]
-    public class CreatorController(
+    public class InstructorController(
         ILessonService lessonService,
-        ICreatorService creatorService) : Controller
+        IInstructorService instructorService) : Controller
     {
         // GET:Creator
-        public async Task<IActionResult> CreatorDashboard()
+        public async Task<IActionResult> InstructorDashboard()
         {
-            var user = await creatorService.GetAuthenticatedCreator();
+            var user = await instructorService.GetAuthenticatedInstructor();
 
             return View(user);
         }

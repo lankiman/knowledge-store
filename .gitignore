@@ -13,6 +13,8 @@ wwwroot/css/site.output.css
 
 tailwind.extension.json
 
+/appsettings.Development.json
+
 # These are needed, however, they're generated so don't need/want to track
 css/app.css.map
 css/app.min.css

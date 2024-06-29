@@ -28,7 +28,7 @@ namespace e_learning.Services.Default
 
                     if (result.Succeeded)
                     {
-                        await userManager.AddToRolesAsync(user, new List<string> { "Admin", "Creator" });
+                        await userManager.AddToRolesAsync(user, new List<string> { "Admin", "Instructor" });
                     }
                     else
                     {
