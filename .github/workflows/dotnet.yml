@@ -27,7 +27,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish --configuration Release --output ./publish --no-build
+        run: dotnet publish --configuration Release --output ./app --no-build
 
       - name: Deploy to SmarterASP.NET
         uses: talunzhang/auto-web-deploy@v1.0.1
@@ -36,4 +36,4 @@ jobs:
           server-computer-name: https://win6145.site4now.net:8172
           server-username: lankiman-001
           server-password: ${{ secrets.ELESSON_PASSWORD }}  # Replace with your secret for SmarterASP.NET password
-          source-path: './publish'
+          source-path: './app'
