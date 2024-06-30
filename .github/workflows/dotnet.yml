@@ -24,7 +24,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish --configuration Release --output publish --no-build 
+        run: dotnet publish --configuration Release -o publish --no-build 
 
       - name: Deploy to SmarterASP.NET
         uses: talunzhang/auto-web-deploy@v1.0.1
@@ -34,8 +34,6 @@ jobs:
           server-username: lankiman-001
           server-password: ${{ secrets.ELESSON_PASSWORD }}  # Replace with your secret for SmarterASP.NET password
           target-delete: true
-        env:
-          ASPNETCORE_ENVIRONMENT: 'Staging'
 
       
           

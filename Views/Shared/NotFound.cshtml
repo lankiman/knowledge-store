@@ -1,0 +1,27 @@
+﻿@model ErrorViewModel
+
+
+@{
+    ViewData["Title"] = "Page Not Found";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+</head>
+<body class="h-[100svh] flex overflow-auto bg-amber-50 md:overflow-hidden">
+
+    <main role="main" class="w-full p-4">
+        <div>
+            This is the custom 404 not found page
+        </div>
+    </main>
+
+    <script src="~/js/script.js" asp-append-version="true"></script>
+</body>
+</html>

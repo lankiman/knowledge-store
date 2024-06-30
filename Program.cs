@@ -37,6 +37,8 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
+    app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
+    app.UseHsts();
     app.UseHttpsRedirection();
 }
 
@@ -46,23 +48,23 @@ var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ELea
 
 // context.Database.EnsureDeleted();
 
-context.Database.EnsureCreated();
+// context.Database.EnsureCreated();
+//
+// //Initialize Identity User Roles
+//
+// var roleInitializer = new RoleInitializerService(app.Services);
+//
+// await roleInitializer.InitializeRoles();
+//
+// //Initialize Default Admin User
+//
+// var adminInitializer = new AdminUserInitializerService(app.Services, builder.Configuration);
+//
+// await adminInitializer.InitializeAdmin();
 
-//Initialize Identity User Roles
-
-var roleInitializer = new RoleInitializerService(app.Services);
-
-await roleInitializer.InitializeRoles();
-
-//Initialize Default Admin User
-
-var adminInitializer = new AdminUserInitializerService(app.Services, builder.Configuration);
-
-await adminInitializer.InitializeAdmin();
-
-app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
 
 app.MapGet("/environment", async context =>
 {
@@ -73,7 +75,6 @@ app.MapGet("/environment", async context =>
 app.UseAuthentication();
 
 app.UseRouting();
-
 
 app.UseAuthorization();
 
