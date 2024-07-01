@@ -49,7 +49,7 @@ namespace e_learning.Controllers
                         break;
 
                     case ObjectResult { StatusCode: 500 }:
-                        ModelState.AddModelError("", "Server error occurred.");
+                        ModelState.AddModelError("", "An Error Occured");
                         break;
                 }
             }
@@ -96,7 +96,7 @@ namespace e_learning.Controllers
                         break;
 
                     case ObjectResult { StatusCode: 500 }:
-                        ModelState.AddModelError("", "Server error occurred.");
+                        ModelState.AddModelError("", "An Error Occured");
                         break;
                 }
             }
