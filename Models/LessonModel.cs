@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using e_learning.Enums;
 using Microsoft.AspNetCore.Authorization;
 
 
@@ -14,7 +15,7 @@ namespace e_learning.Models
 
         [Required] public string LessonDescription { get; set; }
 
-        [Required] public string LessonCategory { get; set; }
+        [Required] public LessonCategory LessonCategory { get; set; }
 
         public int LessonViews { get; set; }
 

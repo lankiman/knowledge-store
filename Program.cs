@@ -44,11 +44,11 @@ if (!app.Environment.IsDevelopment())
 
 var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ELearningDbContext>();
 
-// context.Database.Migrate();
+context.Database.Migrate();
 
 // context.Database.EnsureDeleted();
 
-context.Database.EnsureCreated();
+// context.Database.EnsureCreated();
 
 //Initialize Identity User Roles
 
