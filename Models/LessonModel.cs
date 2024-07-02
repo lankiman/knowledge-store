@@ -16,13 +16,11 @@ namespace e_learning.Models
 
         [Required] public string LessonCategory { get; set; }
 
-
         public int LessonViews { get; set; }
-
 
         public int LessonLikes { get; set; }
 
-        [Required] public byte[] LessonVideo { get; set; }
+        [Required] public string LessonVideoUrl { get; set; }
 
         [ForeignKey("LessonOwner")] [Required] public string LessonOwnerId { get; set; }
 

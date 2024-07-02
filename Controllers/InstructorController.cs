@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using e_learning.ViewModels;
 
 
 namespace e_learning.Controllers
 {
-    [Authorize(Roles = "Creator")]
+    [Authorize(Roles = "Instructor")]
     public class InstructorController(
         ILessonService lessonService,
         IInstructorService instructorService) : Controller
@@ -23,5 +24,11 @@ namespace e_learning.Controllers
         {
             return View();
         }
+
+        // [HttpPost]
+        // public async Task<IActionResult> CreateLesson(CreateLessonViewModel lessonData)
+        // {
+        //     return View();
+        // }
     }
 }
