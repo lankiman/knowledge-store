@@ -38,8 +38,8 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
-    // app.UseHsts();
-    // app.UseHttpsRedirection();
+    app.UseHsts();
+    app.UseHttpsRedirection();
 }
 
 var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ELearningDbContext>();
