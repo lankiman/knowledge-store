@@ -1,6 +1,7 @@
 using e_learning.Data;
 using e_learning.Extensions;
 using e_learning.Models;
+using e_learning.Services.Default;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,7 +43,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
-
 
 app.MapGet("/environment", async context =>
 {
