@@ -22,6 +22,8 @@ jobs:
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
+      - name: Migrate
+        run: dotnet ef database update --connection ${{secreets.ELEARNING_CONNECTION_STRING}}
 
       - name: Publish
         run: dotnet publish --configuration Release -o publish --no-build 
@@ -34,6 +36,7 @@ jobs:
           server-username: lankiman-001
           server-password: ${{ secrets.ELESSON_PASSWORD }}  # Replace with your secret for SmarterASP.NET password
           target-delete: true
+
 
       
           

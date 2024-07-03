@@ -1,7 +1,6 @@
 using e_learning.Data;
 using e_learning.Extensions;
 using e_learning.Models;
-using e_learning.Services.Default;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,27 +40,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
     app.UseHttpsRedirection();
 }
-
-var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ELearningDbContext>();
-
-context.Database.Migrate();
-
-// context.Database.EnsureDeleted();
-
-// context.Database.EnsureCreated();
-
-//Initialize Identity User Roles
-
-var roleInitializer = new RoleInitializerService(app.Services);
-
-await roleInitializer.InitializeRoles();
-
-//Initialize Default Admin User
-
-var adminInitializer = new AdminUserInitializerService(app.Services, builder.Configuration);
-
-await adminInitializer.InitializeAdmin();
-
 
 app.UseStaticFiles();
 
