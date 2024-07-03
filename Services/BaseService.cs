@@ -12,6 +12,7 @@ namespace e_learning.Services
         protected readonly SignInManager<UserModel>? signInManager;
         protected readonly IUserDetailsService? UserDetailsService;
         protected readonly IHttpContextAccessor? httpContextAccessor;
+        protected readonly IWebHostEnvironment webHostEnvironment;
 
 
         /// <summary>
@@ -68,14 +69,17 @@ namespace e_learning.Services
         }
 
         /// <summary>
-        /// Constructor for Creator Service (or services requiring only db context and current user service
+        /// Constructor for Instructor Service (or for services requiring only Db Context, Web host Environment and User detials service)
         /// </summary>
-        /// <param name="eLearningDbContext"></param>
+        /// <param name="eLearningContext"></param>
+        /// <param name="webHostEnvironment"></param>
         /// <param name="userDetailsService"></param>
-        protected BaseService(ELearningDbContext eLearningContext, IUserDetailsService userDetailsService)
+        protected BaseService(ELearningDbContext eLearningContext, IWebHostEnvironment webHostEnvironment,
+            IUserDetailsService userDetailsService)
         {
             this.eLearningContext = eLearningContext;
             this.UserDetailsService = userDetailsService;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
 
