@@ -18,12 +18,16 @@ jobs:
           dotnet-version: '8.0'
           
       - name: Install dependencies
-        run: dotnet restore
+        run: |
+            dotnet restore
+            dotnet tool restore
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Migrate
-        run: dotnet ef database update --connection "${{secrets.ELEARNING_CONNECTION_STRING}}"
+        run: |
+           dotnet tool install --global dotnet-ef 
+           dotnet ef database update --connection "${{secrets.ELEARNING_CONNECTION_STRING}}"
 
       - name: Publish
         run: dotnet publish --configuration Release -o publish --no-build 
