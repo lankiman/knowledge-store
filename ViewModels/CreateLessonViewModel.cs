@@ -1,5 +1,6 @@
 ﻿using e_learning.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 
 namespace e_learning.ViewModels
 {
@@ -15,5 +16,8 @@ namespace e_learning.ViewModels
         public LessonCategory LessonCategory { get; set; }
 
         [DataType(DataType.Date)] public string? CreatedAt { get; set; }
+
+        [Required(ErrorMessage = "Please Choose a Video File")]
+        public IFormFile? LessonVideo { get; set; }
     }
 }
