@@ -20,7 +20,7 @@ namespace e_learning.ViewModels
         [DataType(DataType.Date)] public string? CreatedAt { get; set; }
 
         [Required(ErrorMessage = "Please Choose a Video File")]
-        [CustomFileExtensionValidation]
+        // [CustomFileExtensionValidation]
         public IFormFile? LessonVideo { get; set; }
     }
 }

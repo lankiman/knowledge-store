@@ -13,14 +13,14 @@
             <input class="h-10 rounded-md bg-gray-200 p-2 font-bold outline-none" placeholder="Lesson Name" asp-for="LessonName" type="text" />
             <span class="font-bold text-red-700" asp-validation-for="LessonName"></span>
             <label asp-for="LessonVideo">Select Video</label>
-            <input class="h-10 rounded-md bg-gray-200 p-2 font-bold outline-none" accept=".mp4" asp-for="LessonVideo" type="file" />
             <span class="font-bold text-red-700" asp-validation-for="LessonVideo"></span>
+            <input class="h-10 rounded-md bg-gray-200 p-2 font-bold outline-none" accept=".mp4" asp-for="LessonVideo" type="file" />
+            <span class="font-bold text-red-700" asp-validation-for="LessonDescription"></span>
             <textarea class="rounded-md bg-gray-200 p-2 font-bold outline-none" placeholder="Description" asp-for="LessonDescription" type="text"></textarea>
             <span class="font-bold text-red-700" asp-validation-for="LessonCategory"></span>
             <select class="rounded-md bg-gray-200 p-2 font-bold outline-none" asp-for="LessonCategory" asp-items="@Html.GetEnumSelectList(typeof(e_learning.Enums.LessonCategory))">
                 <option value="">Select Lesson Category</option>
             </select>
-            <span class="font-bold text-red-700" asp-validation-for="LessonDescription"></span>
             <div class="flex justify-between">
                 <button type="submit" class="btn bg-blue-500 text-white hover:bg-black">Add Lesson</button>
             </div>

@@ -2,6 +2,7 @@
 using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using e_learning.ViewModels;
+using Microsoft.CodeAnalysis.CSharp;
 
 
 namespace e_learning.Controllers
@@ -25,10 +26,25 @@ namespace e_learning.Controllers
             return View();
         }
 
-        // [HttpPost]
-        // public async Task<IActionResult> CreateLesson(CreateLessonViewModel lessonData)
-        // {
-        //     return View();
-        // }
+        [HttpPost]
+        public async Task<IActionResult> CreateLesson(CreateLessonViewModel lessonData)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await instructorService.CreateLesson(lessonData);
+
+                switch (result)
+                {
+                    case OkObjectResult:
+                        break;
+
+                    case ObjectResult { StatusCode: 500 }:
+                        ModelState.AddModelError("", "An Error Occured");
+                        break;
+                }
+            }
+
+            return View(lessonData);
+        }
     }
 }

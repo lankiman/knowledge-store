@@ -8,6 +8,6 @@ namespace e_learning.Services.Interfaces
     {
         public Task<InstructorDto> GetAuthenticatedInstructor();
 
-        public Task<IActionResult> CreateLesson();
+        public Task<IActionResult> CreateLesson(CreateLessonViewModel model);
     }
 }
