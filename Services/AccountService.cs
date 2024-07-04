@@ -15,11 +15,11 @@ public class AccountService(
     IUserDetailsService userDetailsService)
     : BaseService(signInManager, userManager, userDetailsService), IAccountService
 {
-    private async Task<UserModel?> GetLoggedInUserDetails()
+    private async Task<UserDto?> GetLoggedInUserDetails()
     {
         try
         {
-            var user = await UserDetailsService.GetUser();
+            var user = await UserDetailsService.GetUserDetails();
 
             if (user != null)
             {

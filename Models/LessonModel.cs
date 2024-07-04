@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using e_learning.DataTransfersObjects;
 using e_learning.Enums;
 using Microsoft.AspNetCore.Authorization;
 
@@ -25,7 +26,7 @@ namespace e_learning.Models
 
         [ForeignKey("LessonOwner")] [Required] public string LessonOwnerId { get; set; }
 
-        [Required] public UserModel LessonOwner { get; set; }
+        [Required] public LessonOwnerDto LessonOwner { get; set; }
 
         public ICollection<UserPaidLessonsModel> UserPaidLessons { get; set; }
     }

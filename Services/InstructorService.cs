@@ -6,6 +6,7 @@ using e_learning.ViewModels;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.EntityFrameworkCore;
 
 namespace e_learning.Services
 {
@@ -21,6 +22,13 @@ namespace e_learning.Services
         public async Task<InstructorDto> GetAuthenticatedInstructor()
         {
             var user = await UserDetailsService!.GetUser();
+
+            var userLessons = await GetAuthenticatedInstructorLessons();
+
+            if (user != null)
+            {
+                user.UserOwnedLessons = userLessons;
+            }
 
             return new InstructorDto(user!);
         }
@@ -111,6 +119,17 @@ namespace e_learning.Services
 
             return new ObjectResult(new { Message = "Server Error Occured" })
                 { StatusCode = 500 };
+        }
+
+        public async Task<List<LessonModel>> GetAuthenticatedInstructorLessons()
+        {
+            var authenticatedInstructorId = await UserDetailsService!.GetUser();
+
+            var lessons =
+                await eLearningContext.Lessons.Where(lesson => lesson.LessonOwnerId == authenticatedInstructorId.Id)
+                    .ToListAsync();
+
+            return lessons;
         }
     }
 }

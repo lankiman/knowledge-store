@@ -20,7 +20,13 @@ namespace e_learning.Services
             return new AdminDto(user!);
         }
 
-        public async Task<List<UserModel>> GetAllUsers()
+        private async Task<List<UserModel>> GetAllUsersModel()
+        {
+            var users = await eLearningContext!.Users.ToListAsync();
+            return users;
+        }
+
+        public async Task<List<UserDto>> GetAllUsers()
         {
             var users = await eLearningContext!.Users.ToListAsync();
 
@@ -28,13 +34,21 @@ namespace e_learning.Services
 
             var userList = users.Where(u => u.Id != user!.Id).ToList();
 
-            return userList;
+            var result = new List<UserDto>();
+
+            foreach (var person in userList)
+            {
+                var personDto = new UserDto(person);
+                result.Add(personDto);
+            }
+
+            return result;
         }
 
-        public async Task<List<UserModel>> GetCreators()
+        public async Task<List<UserDto>> GetInstructors()
         {
-            var users = await GetAllUsers();
-            var creators = new List<UserModel>();
+            var users = await GetAllUsersModel();
+            var instructors = new List<UserDto>();
 
             foreach (var user in users)
             {
@@ -42,11 +56,17 @@ namespace e_learning.Services
 
                 if (userRoles != null)
                 {
-                    creators = users.Where(c => userRoles.Contains("Creator")).ToList();
+                    var usersList = users.Where(c => userRoles.Contains("Creator")).ToList();
+
+                    foreach (var person in usersList)
+                    {
+                        var personDto = new UserDto(person);
+                        instructors.Add(personDto);
+                    }
                 }
             }
 
-            return creators;
+            return instructors;
         }
     }
 }

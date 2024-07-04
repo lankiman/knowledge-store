@@ -20,6 +20,13 @@ namespace e_learning.Controllers
             return View(user);
         }
 
+        public async Task<IActionResult> InstructorLessons()
+        {
+            var lessons = await instructorService.GetAuthenticatedInstructorLessons();
+
+            return View(user);
+        }
+
         [HttpGet]
         public async Task<IActionResult> CreateLesson()
         {
