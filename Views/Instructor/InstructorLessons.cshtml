@@ -11,3 +11,11 @@
         <p class="animate-pulse text-xl font-bold text-blue-600">You Currently Have No Lessons!</p>
     </div>
 }
+
+@foreach (var lesson in Model)
+{
+    <div>
+        <p>@lesson.LessonCategory</p>
+        <p>@lesson.LessonOwner.</p>
+    </div>
+}

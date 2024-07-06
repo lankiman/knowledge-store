@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace e_learning.Controllers
 {
-    [Authorize(Roles = "Instructor")]
+    [Authorize(Roles = "InstructorModel")]
     public class InstructorController(
         ILessonService lessonService,
         IInstructorService instructorService) : Controller
@@ -24,7 +24,7 @@ namespace e_learning.Controllers
         {
             var lessons = await instructorService.GetAuthenticatedInstructorLessons();
 
-            return View(user);
+            return View(lessons);
         }
 
         [HttpGet]

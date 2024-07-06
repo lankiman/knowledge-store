@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace e_learning.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class remodellingMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,9 +30,11 @@ namespace e_learning.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Firstname = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Lastname = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Discriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
+                    Rating = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -163,14 +165,14 @@ namespace e_learning.Migrations
                 name: "Lessons",
                 columns: table => new
                 {
-                    LessonId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LessonName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LessonDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LessonCategory = table.Column<int>(type: "int", nullable: false),
+                    LessonId = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    LessonName = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    LessonDescription = table.Column<string>(type: "nvarchar(1000)", nullable: false),
+                    LessonCategory = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     LessonViews = table.Column<int>(type: "int", nullable: false),
                     LessonLikes = table.Column<int>(type: "int", nullable: false),
-                    LessonVideoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LessonOwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    LessonVideoUrl = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    LessonOwnerId = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -180,30 +182,6 @@ namespace e_learning.Migrations
                         column: x => x.LessonOwnerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserPaidLessonsModel",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LessonId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserPaidLessonsModel", x => new { x.UserId, x.LessonId });
-                    table.ForeignKey(
-                        name: "FK_UserPaidLessonsModel_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserPaidLessonsModel_Lessons_LessonId",
-                        column: x => x.LessonId,
-                        principalTable: "Lessons",
-                        principalColumn: "LessonId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -257,16 +235,6 @@ namespace e_learning.Migrations
                 name: "IX_Lessons_LessonOwnerId",
                 table: "Lessons",
                 column: "LessonOwnerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserPaidLessonsModel_LessonId",
-                table: "UserPaidLessonsModel",
-                column: "LessonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserPaidLessonsModel_UserId",
-                table: "UserPaidLessonsModel",
-                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -288,13 +256,10 @@ namespace e_learning.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "UserPaidLessonsModel");
+                name: "Lessons");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Lessons");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

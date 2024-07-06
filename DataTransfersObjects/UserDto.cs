@@ -9,10 +9,10 @@ namespace e_learning.DataTransfersObjects
 
         public string? Email { get; set; } = user.Email;
 
-        public string? Firstname { get; set; } = user.FirstName;
+        public string? Firstname { get; set; } = user.Firstname;
 
-        public string Lastname { get; set; } = user.LastName;
+        public string? Lastname { get; set; } = user.Lastname;
 
-        public ICollection<UserPaidLessonsModel>? UserPaidLessons { get; set; } = user.UserPaidLessons;
+        public string? MiddleName { get; set; } = user.MiddleName;
     }
 }

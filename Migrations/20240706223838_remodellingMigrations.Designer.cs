@@ -12,8 +12,8 @@ using e_learning.Data;
 namespace e_learning.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    [Migration("20240702215634_initialMigration")]
-    partial class initialMigration
+    [Migration("20240706223838_remodellingMigrations")]
+    partial class remodellingMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -161,29 +161,30 @@ namespace e_learning.Migrations
             modelBuilder.Entity("e_learning.Models.LessonModel", b =>
                 {
                     b.Property<string>("LessonId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("LessonCategory")
-                        .HasColumnType("int");
+                    b.Property<string>("LessonCategory")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LessonDescription")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("LessonLikes")
                         .HasColumnType("int");
 
                     b.Property<string>("LessonName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LessonOwnerId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LessonVideoUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("LessonViews")
                         .HasColumnType("int");
@@ -207,6 +208,11 @@ namespace e_learning.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -214,13 +220,13 @@ namespace e_learning.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("Firstname")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("Lastname")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -229,7 +235,7 @@ namespace e_learning.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("MiddleName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -273,25 +279,21 @@ namespace e_learning.Migrations
                         .HasFilter("[PhoneNumber] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("UserModel");
+
+                    b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("e_learning.Models.UserPaidLessonsModel", b =>
+            modelBuilder.Entity("e_learning.Models.InstructorModel", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnOrder(0);
+                    b.HasBaseType("e_learning.Models.UserModel");
 
-                    b.Property<string>("LessonId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnOrder(1);
+                    b.Property<decimal>("Rating")
+                        .HasPrecision(3, 2)
+                        .HasColumnType("decimal(3,2)");
 
-                    b.HasKey("UserId", "LessonId");
-
-                    b.HasIndex("LessonId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserPaidLessonsModel");
+                    b.HasDiscriminator().HasValue("InstructorModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -347,44 +349,18 @@ namespace e_learning.Migrations
 
             modelBuilder.Entity("e_learning.Models.LessonModel", b =>
                 {
-                    b.HasOne("e_learning.Models.UserModel", "LessonOwner")
-                        .WithMany("UserOwnedLessons")
+                    b.HasOne("e_learning.Models.InstructorModel", "LessonOwner")
+                        .WithMany("InstructorLessons")
                         .HasForeignKey("LessonOwnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("LessonOwner");
                 });
 
-            modelBuilder.Entity("e_learning.Models.UserPaidLessonsModel", b =>
+            modelBuilder.Entity("e_learning.Models.InstructorModel", b =>
                 {
-                    b.HasOne("e_learning.Models.LessonModel", "Lesson")
-                        .WithMany("UserPaidLessons")
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("e_learning.Models.UserModel", "User")
-                        .WithMany("UserPaidLessons")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lesson");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("e_learning.Models.LessonModel", b =>
-                {
-                    b.Navigation("UserPaidLessons");
-                });
-
-            modelBuilder.Entity("e_learning.Models.UserModel", b =>
-                {
-                    b.Navigation("UserOwnedLessons");
-
-                    b.Navigation("UserPaidLessons");
+                    b.Navigation("InstructorLessons");
                 });
 #pragma warning restore 612, 618
         }

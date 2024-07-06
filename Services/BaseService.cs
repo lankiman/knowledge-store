@@ -69,7 +69,7 @@ namespace e_learning.Services
         }
 
         /// <summary>
-        /// Constructor for Instructor Service (or for services requiring only Db Context, Web host Environment and User detials service)
+        /// Constructor for InstructorModel Service (or for services requiring only Db Context, Web host Environment and User detials service)
         /// </summary>
         /// <param name="eLearningContext"></param>
         /// <param name="webHostEnvironment"></param>

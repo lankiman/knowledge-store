@@ -19,18 +19,19 @@ namespace e_learning.Services
         private readonly string _contentRoot = webHostEnvironment.ContentRootPath;
 
 
-        public async Task<InstructorDto> GetAuthenticatedInstructor()
+        public async Task<UserDto> GetAuthenticatedInstructor()
         {
-            var user = await UserDetailsService!.GetUser();
+            var instructor = await UserDetailsService!.GetUser();
 
-            var userLessons = await GetAuthenticatedInstructorLessons();
 
-            if (user != null)
-            {
-                user.UserOwnedLessons = userLessons;
-            }
+            // var instructorLessons = await GetAuthenticatedInstructorLessons();
 
-            return new InstructorDto(user!);
+            // if (instructor != null)
+            // {
+            //     user.
+            // }
+
+            return new UserDto(instructor);
         }
 
         private string CreateVideoFileStorageDirectory()
@@ -53,9 +54,7 @@ namespace e_learning.Services
                 newLesson.LessonName = model.LessonName;
                 newLesson.LessonCategory = model.LessonCategory;
                 newLesson.LessonVideoUrl = modelVideoUrl;
-                newLesson.LessonOwnerId = lessonOwnerId.Id;
                 newLesson.LessonDescription = model.LessonDescription;
-
                 await eLearningContext.Lessons.AddAsync(newLesson);
 
 

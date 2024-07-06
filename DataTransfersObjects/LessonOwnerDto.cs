@@ -3,14 +3,25 @@ using System.Security.Policy;
 
 namespace e_learning.DataTransfersObjects
 {
-    public class LessonOwnerDto(InstructorDto instructor)
+    public class LessonOwnerDto
     {
-        public string? Firstname = instructor.Firstname;
-
-        public string? Lastname = instructor.Lastname;
-
-        public string? Id = instructor.Id;
-
-        public IEnumerable<LessonModel> InstructorOwnedLessons = instructor.UserOwnedLessons;
+        // public string? Firstname { get; set; }
+        //
+        // public string? Lastname { get; set; }
+        //
+        // public string? Id { get; set; }
+        //
+        // public IEnumerable<LessonModel> InstructorOwnedLessons { get; set; }
+        //
+        // public LessonOwnerDto(InstructorDto instructor)
+        // {
+        //     Firstname = instructor.Firstname;
+        //
+        //     Lastname = instructor.Lastname;
+        //
+        //     Id = instructor.Id;
+        //
+        //     InstructorOwnedLessons = instructor.UserOwnedLessons;
+        // }
     }
 }

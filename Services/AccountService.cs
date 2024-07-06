@@ -19,11 +19,11 @@ public class AccountService(
     {
         try
         {
-            var user = await UserDetailsService.GetUserDetails();
+            var user = await UserDetailsService.GetUser();
 
             if (user != null)
             {
-                return user;
+                return new UserDto(user);
             }
 
             return null;
@@ -164,8 +164,8 @@ public class AccountService(
     {
         UserModel newUser = new UserModel();
         newUser.UserName = newUserEnteredDetails.Username;
-        newUser.FirstName = newUserEnteredDetails.FirstName!;
-        newUser.LastName = newUserEnteredDetails.LastName!;
+        newUser.Firstname = newUserEnteredDetails.FirstName!;
+        newUser.Lastname = newUserEnteredDetails.LastName!;
         newUser.Email = newUserEnteredDetails.Email!;
         newUser.MiddleName = newUserEnteredDetails.MiddleName;
         newUser.PhoneNumber = newUserEnteredDetails.PhoneNumber;

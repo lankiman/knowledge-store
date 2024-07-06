@@ -16,6 +16,7 @@ namespace e_learning.Services
             return user;
         }
 
+
         public async Task<IList<string>?> GetUserRole()
         {
             var user = await GetUser();
