@@ -16,7 +16,7 @@ namespace e_learning.Models
         [Required]
         public string? LessonName { get; set; }
 
-        [Column(TypeName = "nvarchar(1000)")]
+        [Column(TypeName = "nvarchar(2000)")]
         [Required]
         public string? LessonDescription { get; set; }
 
@@ -32,10 +32,8 @@ namespace e_learning.Models
         [Required]
         public string? LessonVideoUrl { get; set; }
 
-        [Column(TypeName = "nvarchar(50)")]
-        [ForeignKey("LessonOwner")]
-        [Required]
-        public string? LessonOwnerId { get; set; }
+
+        [ForeignKey("LessonOwner")] [Required] public string? LessonOwnerId { get; set; }
 
         [Required] public InstructorModel? LessonOwner { get; set; }
     }

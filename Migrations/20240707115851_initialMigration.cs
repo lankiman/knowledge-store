@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace e_learning.Migrations
 {
     /// <inheritdoc />
-    public partial class remodellingMigrations : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -167,12 +167,12 @@ namespace e_learning.Migrations
                 {
                     LessonId = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     LessonName = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    LessonDescription = table.Column<string>(type: "nvarchar(1000)", nullable: false),
+                    LessonDescription = table.Column<string>(type: "nvarchar(2000)", nullable: false),
                     LessonCategory = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     LessonViews = table.Column<int>(type: "int", nullable: false),
                     LessonLikes = table.Column<int>(type: "int", nullable: false),
                     LessonVideoUrl = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    LessonOwnerId = table.Column<string>(type: "nvarchar(50)", nullable: false)
+                    LessonOwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {

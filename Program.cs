@@ -1,7 +1,6 @@
 using e_learning.Data;
 using e_learning.Extensions;
 using e_learning.Models;
-using e_learning.Services.Default;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,6 +41,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
 }
 
+//db context
+
+// var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ELearningDbContext>();
+//
+// context.Database.EnsureDeleted();
+
 app.UseStaticFiles();
 
 app.MapGet("/environment", async context =>
@@ -50,9 +55,10 @@ app.MapGet("/environment", async context =>
     await context.Response.WriteAsync(envName);
 });
 
-app.UseAuthentication();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
