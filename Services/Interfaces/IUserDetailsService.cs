@@ -4,6 +4,7 @@ namespace e_learning.Services.Interfaces
 {
     public interface IUserDetailsService
     {
+        public Task<string> GetUserId();
         public Task<UserModel?> GetUser();
 
         public Task<IList<string>?> GetUserRole();

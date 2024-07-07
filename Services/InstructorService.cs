@@ -3,9 +3,7 @@ using e_learning.DataTransfersObjects;
 using e_learning.Models;
 using e_learning.Services.Interfaces;
 using e_learning.ViewModels;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 
 namespace e_learning.Services
@@ -19,19 +17,24 @@ namespace e_learning.Services
         private readonly string _contentRoot = webHostEnvironment.ContentRootPath;
 
 
-        public async Task<UserDto> GetAuthenticatedInstructor()
+        public async Task<InstructorDto> GetInstructor()
         {
-            var instructor = await UserDetailsService!.GetUser();
+            var userId = await UserDetailsService!.GetUserId();
 
+            if (userId == null)
+            {
+                return null;
+            }
 
-            // var instructorLessons = await GetAuthenticatedInstructorLessons();
+            var instructor = await eLearningContext.Instructors.Include(i => i.User).Include(i => i.InstructorLessons)
+                .FirstOrDefaultAsync(i => i.Id == userId);
 
-            // if (instructor != null)
-            // {
-            //     user.
-            // }
+            if (instructor == null)
+            {
+                return null;
+            }
 
-            return new UserDto(instructor);
+            return new InstructorDto(instructor);
         }
 
         private string CreateVideoFileStorageDirectory()
@@ -48,16 +51,21 @@ namespace e_learning.Services
         {
             try
             {
-                var lessonOwnerId = await GetAuthenticatedInstructor();
-                var newLesson = new LessonModel();
+                var ownerId = await UserDetailsService!.GetUserId();
 
+                if (ownerId == "")
+                {
+                    return null!;
+                }
+
+                var newLesson = new LessonModel();
+                newLesson.LessonOwnerId = ownerId;
                 newLesson.LessonName = model.LessonName;
                 newLesson.LessonCategory = model.LessonCategory;
                 newLesson.LessonVideoUrl = modelVideoUrl;
                 newLesson.LessonDescription = model.LessonDescription;
+
                 await eLearningContext.Lessons.AddAsync(newLesson);
-
-
                 var result = await eLearningContext.SaveChangesAsync();
 
                 if (result > 0)
@@ -113,21 +121,24 @@ namespace e_learning.Services
                     File.Delete(videoFilePath);
                     return new ObjectResult(new { Message = "Server Error Occured" })
                         { StatusCode = 500 };
-                    break;
             }
 
             return new ObjectResult(new { Message = "Server Error Occured" })
                 { StatusCode = 500 };
         }
 
-        public async Task<List<LessonModel>> GetAuthenticatedInstructorLessons()
+        public async Task<List<LessonModel>> GetInstructorLessons()
         {
-            var authenticatedInstructorId = await UserDetailsService!.GetUser();
+            var instructorId = await UserDetailsService!.GetUserId();
+
+            if (instructorId == "")
+            {
+                return null!;
+            }
 
             var lessons =
-                await eLearningContext.Lessons.Where(lesson => lesson.LessonOwnerId == authenticatedInstructorId.Id)
+                await eLearningContext.Lessons.Where(lesson => lesson.LessonOwnerId == instructorId)
                     .ToListAsync();
-
             return lessons;
         }
     }

@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace e_learning.Controllers
 {
-    [Authorize(Roles = "InstructorModel")]
+    [Authorize(Roles = "Instructor")]
     public class InstructorController(
         ILessonService lessonService,
         IInstructorService instructorService) : Controller
@@ -15,14 +15,14 @@ namespace e_learning.Controllers
         // GET:Creator
         public async Task<IActionResult> InstructorDashboard()
         {
-            var user = await instructorService.GetAuthenticatedInstructor();
+            var user = await instructorService.GetInstructor();
 
             return View(user);
         }
 
         public async Task<IActionResult> InstructorLessons()
         {
-            var lessons = await instructorService.GetAuthenticatedInstructorLessons();
+            var lessons = await instructorService.GetInstructorLessons();
 
             return View(lessons);
         }

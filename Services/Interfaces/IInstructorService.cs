@@ -7,10 +7,10 @@ namespace e_learning.Services.Interfaces
 {
     public interface IInstructorService
     {
-        public Task<UserDto> GetAuthenticatedInstructor();
+        public Task<InstructorDto> GetInstructor();
 
         public Task<IActionResult> CreateLesson(CreateLessonViewModel model);
 
-        public Task<List<LessonModel>> GetAuthenticatedInstructorLessons();
+        public Task<List<LessonModel>> GetInstructorLessons();
     }
 }
