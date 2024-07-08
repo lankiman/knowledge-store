@@ -11,6 +11,6 @@ namespace e_learning.Services.Interfaces
 
         public Task<IActionResult> CreateLesson(CreateLessonViewModel model);
 
-        public Task<List<LessonModel>> GetInstructorLessons();
+        public Task<List<LessonDto>> GetInstructorLessons();
     }
 }

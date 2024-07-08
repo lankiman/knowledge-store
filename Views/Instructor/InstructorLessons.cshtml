@@ -1,4 +1,4 @@
-﻿@model List<LessonModel>
+﻿@model List<e_learning.DataTransfersObjects.LessonDto>
 
 @{
     Layout = "_InstructorLayout";
@@ -16,6 +16,12 @@
 {
     <div>
         <p>@lesson.LessonCategory</p>
-        <p>@lesson.LessonOwner.</p>
+        <p>@lesson.LessonName</p>
+        <p>@lesson.LessonOwner.InstructorDetails.UserName</p>
+
+        <video src="C:\Users\Lankiman\Videos\Captures\Proprietary Startups to Popular Software – TheLACollective — Firefox Developer Edition 2024-05-31 19-54-11.mp4" width="320" height="240" controls>
+            <source src="C:\Users\Lankiman\Videos\Captures\Proprietary Startups to Popular Software – TheLACollective — Firefox Developer Edition 2024-05-31 19-54-11.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
     </div>
 }
