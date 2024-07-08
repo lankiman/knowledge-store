@@ -8,8 +8,8 @@ namespace e_learning.Services.Interfaces
     {
         public Task<AdminDto> GetAuthenticatedAdmin();
 
-        public Task<List<UserModel>> GetAllUsers();
+        public Task<List<UserDto>> GetAllUsers();
 
-        public Task<List<UserModel>> GetCreators();
+        public Task<List<UserDto>> GetInstructors();
     }
 }

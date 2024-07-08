@@ -29,7 +29,7 @@ namespace e_learning.Controllers
                     case OkResult:
                         if (result.Roles != null && result.Roles.Contains("Creator") && !result.Roles.Contains("Admin"))
                         {
-                            return RedirectToAction("CreatorDashboard", "Creator");
+                            return RedirectToAction("InstructorDashboard", "Instructor");
                         }
 
                         if (result.Roles != null && result.Roles.Contains("Admin"))
@@ -49,7 +49,7 @@ namespace e_learning.Controllers
                         break;
 
                     case ObjectResult { StatusCode: 500 }:
-                        ModelState.AddModelError("", "Server error occurred.");
+                        ModelState.AddModelError("", "An Error Occured");
                         break;
                 }
             }
@@ -80,7 +80,7 @@ namespace e_learning.Controllers
                 {
                     case OkResult:
 
-                        //return RedirectToAction("CreatorDashboard", "Admin");
+                        //return RedirectToAction("InstructorDashboard", "Admin");
                         break;
 
                     case BadRequestResult:
@@ -96,7 +96,7 @@ namespace e_learning.Controllers
                         break;
 
                     case ObjectResult { StatusCode: 500 }:
-                        ModelState.AddModelError("", "Server error occurred.");
+                        ModelState.AddModelError("", "An Error Occured");
                         break;
                 }
             }

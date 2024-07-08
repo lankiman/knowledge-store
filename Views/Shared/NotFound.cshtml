@@ -1,0 +1,39 @@
+﻿@model ErrorViewModel
+
+@{
+    ViewData["Title"] = "Page Not Found";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+</head>
+<body class="h-[100svh] flex overflow-auto bg-amber-50">
+
+    <main role="main" class="flex h-full w-full flex-col items-center justify-center gap-2 p-4 md:justify-normal">
+        <div class="w-[80%] md:w-1/4">
+            <div class="glitch w-full">
+                <img src="~/images/error-404-monochrome.svg" alt="404 error" />
+            </div>
+            <p class="mt-2">The Requested Page was not found</p>
+            <button onclick="location.href='@Url.Action("Index", "Home")'" class="flex h-6 items-center hover:text-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     height="20px"
+                     viewBox="0 -960 960 960"
+                     width="20px"
+                     fill="black">
+                    <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+                </svg>
+                <p class="self-baseline">return to homepage</p>
+            </button>
+        </div>
+    </main>
+
+    <script src="~/js/script.js" asp-append-version="true"></script>
+</body>
+</html>

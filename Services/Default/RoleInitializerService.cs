@@ -10,7 +10,7 @@ namespace e_learning.Services.Default
             {
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                var roles = new[] { "Creator", "Admin", "Learner" };
+                var roles = new[] { "Instructor", "Admin", "Learner" };
 
                 foreach (var roleName in roles)
                 {

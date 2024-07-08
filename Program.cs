@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddELearningBusinessServices();
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -36,33 +37,43 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
+    app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
+    app.UseHsts();
+    app.UseHttpsRedirection();
 }
+
+//db context
 
 var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ELearningDbContext>();
 
-// context.Database.Migrate();
+context.Database.EnsureDeleted();
 
-// context.Database.EnsureDeleted();
+context.Database.Migrate();
 
-// context.Database.EnsureCreated();
+//Initialize Identity User Roles
 //
-// //Initialize Identity User Roles
-//
-// var roleInitializer = new RoleInitializerService(app.Services);
-//
-// await roleInitializer.InitializeRoles();
+var roleInitializer = new RoleInitializerService(app.Services);
+
+await roleInitializer.InitializeRoles();
 //
 // //Initialize Default Admin User
 //
-// var adminInitializer = new AdminUserInitializerService(app.Services, builder.Configuration);
-//
-// await adminInitializer.InitializeAdmin();
+var adminInitializer = new AdminUserInitializerService(app.Services, builder.Configuration);
+
+await adminInitializer.InitializeAdmin();
 
 app.UseStaticFiles();
 
-app.UseAuthentication();
+app.MapGet("/environment", async context =>
+{
+    var envName = app.Environment.EnvironmentName;
+    await context.Response.WriteAsync(envName);
+});
+
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
