@@ -102,6 +102,7 @@ namespace e_learning.Services
         }
 
         [HttpPost]
+        [RequestSizeLimit(268435456)]
         public async Task<IActionResult> CreateLesson(CreateLessonViewModel model)
         {
             var eLearningVideosFolder = CreateVideoFileStorageDirectory();

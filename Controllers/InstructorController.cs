@@ -2,7 +2,6 @@
 using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using e_learning.ViewModels;
-using Microsoft.CodeAnalysis.CSharp;
 
 
 namespace e_learning.Controllers
