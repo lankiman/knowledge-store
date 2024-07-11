@@ -21,9 +21,9 @@ namespace e_learning.Services
         {
             var userId = await UserDetailsService!.GetUserId();
 
-            if (userId == null)
+            if (userId == "")
             {
-                return null;
+                return null!;
             }
 
             var instructor = await eLearningContext.Instructors.Include(i => i.User).Include(i => i.InstructorLessons)
@@ -31,7 +31,7 @@ namespace e_learning.Services
 
             if (instructor == null)
             {
-                return null;
+                return null!;
             }
 
             return new InstructorDto(instructor);
@@ -105,7 +105,13 @@ namespace e_learning.Services
         public async Task<IActionResult> CreateLesson(CreateLessonViewModel model)
         {
             var eLearningVideosFolder = CreateVideoFileStorageDirectory();
-            var videoFilePath = Path.Combine(eLearningVideosFolder, Path.GetRandomFileName());
+
+            var tempName = Path.GetRandomFileName();
+
+            var videoName = $"{Path.GetFileNameWithoutExtension(tempName)}.mp4";
+
+
+            var videoFilePath = Path.Combine(eLearningVideosFolder, videoName);
 
             var videoSavingResult = await SaveLessonVideoToStorage(model, videoFilePath);
 
@@ -127,7 +133,7 @@ namespace e_learning.Services
                 { StatusCode = 500 };
         }
 
-        public async Task<List<LessonModel>> GetInstructorLessons()
+        public async Task<List<LessonDto>> GetInstructorLessons()
         {
             var instructorId = await UserDetailsService!.GetUserId();
 
@@ -136,9 +142,28 @@ namespace e_learning.Services
                 return null!;
             }
 
-            var lessons =
-                await eLearningContext.Lessons.Where(lesson => lesson.LessonOwnerId == instructorId)
-                    .ToListAsync();
+            // var lessons =
+            //     await eLearningContext.Lessons.Where(lesson => lesson.LessonOwnerId == instructorId)
+            //         .ToListAsync();
+            // return lessons;
+
+
+            var inr = await GetInstructor();
+
+            if (inr == null)
+            {
+                return null;
+            }
+
+            var lessons = new List<LessonDto>();
+
+            foreach (var lesson in inr.InstructorLessons)
+            {
+                var lessonDto = new LessonDto(lesson);
+
+                lessons.Add(lessonDto);
+            }
+
             return lessons;
         }
     }

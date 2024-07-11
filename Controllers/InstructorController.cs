@@ -15,9 +15,10 @@ namespace e_learning.Controllers
         // GET:Creator
         public async Task<IActionResult> InstructorDashboard()
         {
-            var user = await instructorService.GetInstructor();
+            var instructor = await instructorService.GetInstructor();
 
-            return View(user);
+
+            return View(instructor);
         }
 
         public async Task<IActionResult> InstructorLessons()
