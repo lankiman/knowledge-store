@@ -48,36 +48,83 @@ namespace e_learning.Services
         //     }
         // }
 
+        // public async Task<IActionResult> PlayVideo(string filePath)
+        // {
+        //     var fileLength = new FileInfo(filePath).Length;
+        //     FileStream fileStream = null;
+        //
+        //
+        //     fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+        //
+        //     if (_request.Headers.ContainsKey("Range"))
+        //     {
+        //         var rangeHeader = _request.Headers["Range"].ToString();
+        //         var range = rangeHeader.Replace("bytes=", "").Split('-');
+        //         var start = long.Parse(range[0]);
+        //         var end = range.Length > 1 && !string.IsNullOrEmpty(range[1])
+        //             ? long.Parse(range[1])
+        //             : fileLength - 1;
+        //
+        //         fileStream.Seek(start, SeekOrigin.Begin);
+        //
+        //         var contentLength = end - start + 1;
+        //
+        //
+        //         _response.StatusCode = 206;
+        //         _response.Headers[HeaderNames.AcceptRanges] = "bytes";
+        //         _response.Headers[HeaderNames.ContentLength] = contentLength.ToString();
+        //         _response.Headers[HeaderNames.ContentRange] = $"bytes {start}-{end}/{fileLength}";
+        //         _response.Headers[HeaderNames.ContentType] = "video/mp4";
+        //     }
+        //
+        //     return new FileStreamResult(fileStream, "video/mp4");
+        // }
+
         public async Task<IActionResult> PlayVideo(string filePath)
         {
             var fileLength = new FileInfo(filePath).Length;
-            FileStream fileStream = null;
-
-
-            fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
             if (_request.Headers.ContainsKey("Range"))
             {
                 var rangeHeader = _request.Headers["Range"].ToString();
                 var range = rangeHeader.Replace("bytes=", "").Split('-');
                 var start = long.Parse(range[0]);
-                var end = range.Length > 1 && !string.IsNullOrEmpty(range[1])
-                    ? long.Parse(range[1])
-                    : fileLength - 1;
+                var end = range.Length > 1 && !string.IsNullOrEmpty(range[1]) ? long.Parse(range[1]) : fileLength - 1;
 
                 fileStream.Seek(start, SeekOrigin.Begin);
-
                 var contentLength = end - start + 1;
-
 
                 _response.StatusCode = 206;
                 _response.Headers[HeaderNames.AcceptRanges] = "bytes";
                 _response.Headers[HeaderNames.ContentLength] = contentLength.ToString();
                 _response.Headers[HeaderNames.ContentRange] = $"bytes {start}-{end}/{fileLength}";
                 _response.Headers[HeaderNames.ContentType] = "video/mp4";
+
+                var buffer = new byte[64 * 1024]; // 64 KB buffer
+                var bytesRemaining = contentLength;
+
+                while (bytesRemaining > 0)
+                {
+                    var bytesRead = await fileStream.ReadAsync(buffer, 0, (int)Math.Min(buffer.Length, bytesRemaining));
+                    if (bytesRead == 0)
+                    {
+                        break;
+                    }
+
+                    await _response.Body.WriteAsync(buffer, 0, bytesRead);
+                    bytesRemaining -= bytesRead;
+                }
+            }
+            else
+            {
+                _response.Headers[HeaderNames.ContentLength] = fileLength.ToString();
+                _response.Headers[HeaderNames.ContentType] = "video/mp4";
+
+                await fileStream.CopyToAsync(_response.Body);
             }
 
-            return new FileStreamResult(fileStream, "video/mp4");
+            return new EmptyResult();
         }
     }
 }
