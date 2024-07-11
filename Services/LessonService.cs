@@ -1,4 +1,5 @@
-﻿using e_learning.Models;
+﻿using e_learning.Data;
+using e_learning.Models;
 using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +9,8 @@ using System.IO;
 
 namespace e_learning.Services
 {
-    public class LessonService(IHttpContextAccessor httpContextAccessor, DbContext )
-        : BaseService(httpContextAccessor), ILessonService
+    public class LessonService(IHttpContextAccessor httpContextAccessor, ELearningDbContext eLearningContext)
+        : BaseService(httpContextAccessor, eLearningContext), ILessonService
     {
         private readonly HttpRequest _request = httpContextAccessor.HttpContext.Request;
         private readonly HttpResponse _response = httpContextAccessor.HttpContext.Response;
@@ -88,7 +89,14 @@ namespace e_learning.Services
 
             try
             {
-                filePath = eLearningContext.Lessons.FirstOrDefault(l => l.LessonId == videoId).ToString();
+                var path = eLearningContext.Lessons.FirstOrDefault(l => l.LessonId == videoId).ToString();
+
+                if (path == null)
+                {
+                    return new BadRequestResult();
+                }
+
+                filePath = path;
             }
             catch (Exception ex)
             {

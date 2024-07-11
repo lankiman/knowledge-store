@@ -16,14 +16,14 @@
 {
     <div class="flex gap-4">
         <div>
-        <p>@lesson.LessonCategory</p>
-        <p>@lesson.LessonName</p>
-        <p>@lesson.LessonOwner.InstructorDetails.UserName</p>
+            <p>@lesson.LessonCategory</p>
+            <p>@lesson.LessonName</p>
+            <p>@lesson.LessonOwner.InstructorDetails.UserName</p>
         </div>
         <div class="w-[4rem] h-[4rem]">
-        <video width="320" height="240" class="h-[2rem] w-[2rem]" controls>
-            <source src="@Url.Action("PlayVideo","Lesson", new {filePath=lesson.LessonVideoUrl} )" type="video/mp4">
-        </video>
+            <video width="320" height="240" class="h-[2rem] w-[2rem]" controls>
+                <source src="@Url.Action("PlayVideo","Lesson", new {videoId=lesson.LessonId} )" type="video/mp4">
+            </video>
         </div>
     </div>
 }
