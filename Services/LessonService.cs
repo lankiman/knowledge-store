@@ -1,12 +1,14 @@
 ﻿using e_learning.Models;
 using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
+using System.IO;
 
 
 namespace e_learning.Services
 {
-    public class LessonService(IHttpContextAccessor httpContextAccessor)
+    public class LessonService(IHttpContextAccessor httpContextAccessor, DbContext )
         : BaseService(httpContextAccessor), ILessonService
     {
         private readonly HttpRequest _request = httpContextAccessor.HttpContext.Request;
@@ -80,51 +82,69 @@ namespace e_learning.Services
         //     return new FileStreamResult(fileStream, "video/mp4");
         // }
 
-        public async Task<IActionResult> PlayVideo(string filePath)
+        public async Task<IActionResult> PlayVideo(string videoId)
         {
+            var filePath = string.Empty;
+
+            try
+            {
+                filePath = eLearningContext.Lessons.FirstOrDefault(l => l.LessonId == videoId).ToString();
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult(new { Message = "Server Error Occured" })
+                    { StatusCode = 500 };
+            }
+
+
             var fileLength = new FileInfo(filePath).Length;
-            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
-            if (_request.Headers.ContainsKey("Range"))
+            using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                var rangeHeader = _request.Headers["Range"].ToString();
-                var range = rangeHeader.Replace("bytes=", "").Split('-');
-                var start = long.Parse(range[0]);
-                var end = range.Length > 1 && !string.IsNullOrEmpty(range[1]) ? long.Parse(range[1]) : fileLength - 1;
-
-                fileStream.Seek(start, SeekOrigin.Begin);
-                var contentLength = end - start + 1;
-
-                _response.StatusCode = 206;
-                _response.Headers[HeaderNames.AcceptRanges] = "bytes";
-                _response.Headers[HeaderNames.ContentLength] = contentLength.ToString();
-                _response.Headers[HeaderNames.ContentRange] = $"bytes {start}-{end}/{fileLength}";
-                _response.Headers[HeaderNames.ContentType] = "video/mp4";
-
-                var buffer = new byte[64 * 1024]; // 64 KB buffer
-                var bytesRemaining = contentLength;
-
-                while (bytesRemaining > 0)
+                if (_request.Headers.ContainsKey("Range"))
                 {
-                    var bytesRead = await fileStream.ReadAsync(buffer, 0, (int)Math.Min(buffer.Length, bytesRemaining));
-                    if (bytesRead == 0)
+                    var rangeHeader = _request.Headers["Range"].ToString();
+                    var range = rangeHeader.Replace("bytes=", "").Split('-');
+                    var start = long.Parse(range[0]);
+                    var end = range.Length > 1 && !string.IsNullOrEmpty(range[1])
+                        ? long.Parse(range[1])
+                        : fileLength - 1;
+
+                    fileStream.Seek(start, SeekOrigin.Begin);
+                    var contentLength = end - start + 1;
+
+                    _response.StatusCode = 206;
+                    _response.Headers[HeaderNames.AcceptRanges] = "bytes";
+                    _response.Headers[HeaderNames.ContentLength] = contentLength.ToString();
+                    _response.Headers[HeaderNames.ContentRange] = $"bytes {start}-{end}/{fileLength}";
+                    _response.Headers[HeaderNames.ContentType] = "video/mp4";
+
+                    var buffer = new byte[64 * 1024];
+                    var bytesRemaining = contentLength;
+
+                    while (bytesRemaining > 0)
                     {
-                        break;
+                        var bytesRead =
+                            await fileStream.ReadAsync(buffer, 0, (int)Math.Min(buffer.Length, bytesRemaining));
+                        if (bytesRead == 0)
+                        {
+                            break;
+                        }
+
+                        await _response.Body.WriteAsync(buffer, 0, bytesRead);
+                        bytesRemaining -= bytesRead;
                     }
-
-                    await _response.Body.WriteAsync(buffer, 0, bytesRead);
-                    bytesRemaining -= bytesRead;
                 }
-            }
-            else
-            {
-                _response.Headers[HeaderNames.ContentLength] = fileLength.ToString();
-                _response.Headers[HeaderNames.ContentType] = "video/mp4";
+                else
+                {
+                    _response.Headers[HeaderNames.ContentLength] = fileLength.ToString();
+                    _response.Headers[HeaderNames.ContentType] = "video/mp4";
 
-                await fileStream.CopyToAsync(_response.Body);
-            }
+                    await fileStream.CopyToAsync(_response.Body);
+                }
 
-            return new EmptyResult();
+                return new EmptyResult();
+            }
         }
     }
 }

@@ -69,12 +69,14 @@ namespace e_learning.Services
         }
 
         /// <summary>
-        /// constructor for lesson service or for services requring only httpctonext acessor
+        /// constructor for lesson service or for services requiring both db context and http context
         /// </summary>
         /// <param name="httpContextAccessor"></param>
-        protected BaseService(IHttpContextAccessor httpContextAccessor)
+        /// <param name="eLearningContext"></param>
+        protected BaseService(IHttpContextAccessor httpContextAccessor, ELearningDbContext eLearningContext)
         {
             this.httpContextAccessor = httpContextAccessor;
+            this.eLearningContext = eLearningContext;
         }
 
         /// <summary>
