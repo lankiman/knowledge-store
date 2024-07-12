@@ -45,19 +45,19 @@ if (!app.Environment.IsDevelopment())
 //db context
 //
 // var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ELearningDbContext>();
-//
+
 // context.Database.EnsureDeleted();
-//
+
 // context.Database.Migrate();
+
+//Initialize Identity User Roles
 //
-// //Initialize Identity User Roles
-// //
 // var roleInitializer = new RoleInitializerService(app.Services);
 //
 // await roleInitializer.InitializeRoles();
-// //
-// // //Initialize Default Admin User
-// //
+//
+// //Initialize Default Admin User
+//
 // var adminInitializer = new AdminUserInitializerService(app.Services, builder.Configuration);
 //
 // await adminInitializer.InitializeAdmin();
