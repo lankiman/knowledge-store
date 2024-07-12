@@ -53,7 +53,6 @@ namespace e_learning.Controllers
                         break;
                 }
             }
-
             return View(userLoginInfo);
         }
 
