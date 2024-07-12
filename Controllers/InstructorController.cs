@@ -2,7 +2,6 @@
 using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using e_learning.ViewModels;
-using Microsoft.CodeAnalysis.CSharp;
 
 
 namespace e_learning.Controllers
@@ -35,6 +34,9 @@ namespace e_learning.Controllers
         }
 
         [HttpPost]
+        [HttpPost]
+        [RequestSizeLimit(268435456)]
+        [RequestFormLimits(MultipartBodyLengthLimit = 268435456)]
         public async Task<IActionResult> CreateLesson(CreateLessonViewModel lessonData)
         {
             if (ModelState.IsValid)

@@ -32,7 +32,7 @@ namespace e_learning.ViewModels
         [RegularExpression(@"^(?:\+?234|0)?[789][01]\d{8}$", ErrorMessage = "Invalid Phone number")]
         public string? PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "Field is required")]
+        [Required(ErrorMessage = "Username is required")]
         public string? Username { get; set; }
     }
 }

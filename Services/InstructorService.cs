@@ -101,7 +101,7 @@ namespace e_learning.Services
             }
         }
 
-        [HttpPost]
+
         public async Task<IActionResult> CreateLesson(CreateLessonViewModel model)
         {
             var eLearningVideosFolder = CreateVideoFileStorageDirectory();

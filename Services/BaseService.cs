@@ -69,6 +69,17 @@ namespace e_learning.Services
         }
 
         /// <summary>
+        /// constructor for lesson service or for services requiring both db context and http context
+        /// </summary>
+        /// <param name="httpContextAccessor"></param>
+        /// <param name="eLearningContext"></param>
+        protected BaseService(IHttpContextAccessor httpContextAccessor, ELearningDbContext eLearningContext)
+        {
+            this.httpContextAccessor = httpContextAccessor;
+            this.eLearningContext = eLearningContext;
+        }
+
+        /// <summary>
         /// Constructor for InstructorModel Service (or for services requiring only Db Context, Web host Environment and User detials service)
         /// </summary>
         /// <param name="eLearningContext"></param>
