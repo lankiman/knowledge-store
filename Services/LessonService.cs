@@ -1,6 +1,7 @@
 ﻿using e_learning.Data;
 using e_learning.Models;
 using e_learning.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
@@ -89,7 +90,8 @@ namespace e_learning.Services
 
             try
             {
-                var path = eLearningContext.Lessons.FirstOrDefault(l => l.LessonId == videoId).ToString();
+                var path = eLearningContext.Lessons.Where(l => l.LessonId == videoId).Select(c => c.LessonVideoUrl)
+                    .SingleOrDefaultAsync().Result;
 
                 if (path == null)
                 {

@@ -12,18 +12,23 @@
     </div>
 }
 
-@foreach (var lesson in Model)
-{
-    <div class="flex gap-4">
-        <div>
-            <p>@lesson.LessonCategory</p>
-            <p>@lesson.LessonName</p>
-            <p>@lesson.LessonOwner.InstructorDetails.UserName</p>
+<div class="flex flex-col gap-4 md:flex-row">
+    @foreach (var lesson in Model)
+    {
+        <div class="w-[1rem] h-[1rem] flex flex-col">
+            <div>
+
+                <p>@lesson.LessonName</p>
+            </div>
+            <div class="h-full w-full" >
+                <video id="video" class="h-full w-full" control controls>
+                    <source src="@Url.Action("PlayVideo","Lesson", new {videoId=lesson.LessonId} )" type="video/mp4">
+                </video>
+            </div>
+            <p>@lesson.LessonDescription</p>
         </div>
-        <div class="w-[4rem] h-[4rem]">
-            <video width="320" height="240" class="h-[2rem] w-[2rem]" controls>
-                <source src="@Url.Action("PlayVideo","Lesson", new {videoId=lesson.LessonId} )" type="video/mp4">
-            </video>
-        </div>
-    </div>
-}
+
+    }
+</div>
+
+<script src="~/js/video.js"></script>

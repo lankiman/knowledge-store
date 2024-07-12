@@ -1,8 +1,11 @@
 ﻿using e_learning.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace e_learning.Controllers
 {
+    [AutoValidateAntiforgeryToken]
+    [Authorize]
     public class LessonController(ILessonService lessonService) : Controller
     {
         public IActionResult Index()
@@ -10,9 +13,9 @@ namespace e_learning.Controllers
             return View();
         }
 
-        public Task<IActionResult> PlayVideo(string filePath)
+        public Task<IActionResult> PlayVideo(string videoId)
         {
-            var result = lessonService.PlayVideo(filePath);
+            var result = lessonService.PlayVideo(videoId);
 
 
             return result;
