@@ -498,3 +498,24 @@ body {
     clip: rect(0, 900px, 0, 0);
     animation: noise-anim-2 3s infinite linear alternate-reverse;
 }
+
+.loading__overlay--animation {
+    animation: moveSideToSide 2s infinite ease-in-out;
+}
+
+@keyframes moveSideToSide {
+    0% {
+        left: 0;
+        
+    }
+
+    50% {
+        left: 50%;
+        transform: rotate(360deg);
+    }
+
+    100% {
+        left: 0;
+        transform: rotate(0deg);
+    }
+}
