@@ -31,14 +31,14 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
-      - name: Copy Tailwind CSS to publish directory
-        run: cp ./wwwroot/css/output.css publish/wwwroot/css/output.css
-
       - name: Migrate
         run: dotnet ef database update --connection "${{secrets.ELEARNING_CONNECTION_STRING}}"
 
       - name: Publish
         run: dotnet publish --configuration Release -o publish --no-build 
+      
+      - name: Copy Tailwind CSS to publish directory
+        run: cp ./wwwroot/css/output.css publish/wwwroot/css/output.css
 
       - name: Deploy to SmarterASP.NET
         uses: talunzhang/auto-web-deploy@v1.0.1
