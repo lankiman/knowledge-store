@@ -106,6 +106,12 @@ namespace e_learning.Services
                     { StatusCode = 500 };
             }
 
+            if (!File.Exists(filePath))
+            {
+                return new ObjectResult(new { Message = "Server Error Occured" })
+                    { StatusCode = 500 };
+            }
+
 
             var fileLength = new FileInfo(filePath).Length;
 

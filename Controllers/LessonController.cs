@@ -17,7 +17,6 @@ namespace e_learning.Controllers
         {
             var result = lessonService.PlayVideo(videoId);
 
-
             return result;
         }
     }

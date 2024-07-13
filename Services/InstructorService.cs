@@ -159,6 +159,11 @@ namespace e_learning.Services
 
             foreach (var lesson in inr.InstructorLessons)
             {
+                if (!File.Exists(lesson.LessonVideoUrl))
+                {
+                    return null;
+                }
+
                 var lessonDto = new LessonDto(lesson);
 
                 lessons.Add(lessonDto);
