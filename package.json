@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "tailwind.config.js",
   "scripts": {
-    "build-tailwind": "npx tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/output.css --watch",
+    "watch-tailwind": "npx tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/output.css --watch",
+    "build-tailwind": "npx tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/output.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
