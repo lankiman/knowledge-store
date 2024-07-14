@@ -61,28 +61,25 @@ namespace e_learning.Services
             return result;
         }
 
-        public async Task<List<UserDto>> GetInstructors()
+        public async Task<List<InstructorDto>> GetInstructors()
         {
-            var users = await GetAllUsersModel();
-            var instructors = new List<UserDto>();
+            var currentUser = await UserDetailsService.GetUser();
+            var instructors = await eLearningContext.Instructors.Where(i => i.User.Id != currentUser.Id).ToListAsync();
+            var instructorsList = new List<InstructorDto>();
 
-            foreach (var user in users)
+            foreach (var instructor in instructors)
             {
-                var userRoles = await UserDetailsService.GetUserRole(user);
-
-                if (userRoles != null)
-                {
-                    var usersList = users.Where(c => userRoles.Contains("Instructor")).ToList();
-
-                    foreach (var person in usersList)
-                    {
-                        var personDto = new UserDto(person);
-                        instructors.Add(personDto);
-                    }
-                }
+                var instructorDto = new InstructorDto(instructor);
+                instructorsList.Add(instructorDto);
             }
 
-            return instructors;
+
+            return instructorsList;
+        }
+
+        public Task<IActionResult> AddInstructor(UserModel user)
+        {
+            throw new NotImplementedException();
         }
     }
 }

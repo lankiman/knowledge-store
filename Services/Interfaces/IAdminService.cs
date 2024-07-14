@@ -12,7 +12,7 @@ namespace e_learning.Services.Interfaces
 
         public Task<List<UserDto>> GetAllUsers();
 
-        public Task<List<UserDto>> GetInstructors();
+        public Task<List<InstructorDto>> GetInstructors();
 
         public Task<IActionResult> AddInstructor(UserModel user);
     }

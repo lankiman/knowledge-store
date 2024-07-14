@@ -1,4 +1,5 @@
-﻿using e_learning.Models;
+﻿using e_learning.DataTransfersObjects;
+using e_learning.Models;
 using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -33,6 +34,13 @@ namespace e_learning.Controllers
             return View(users);
         }
 
+        public async Task<IActionResult> UserDetails(UserDto user)
+        {
+            var users = await adminService.GetAllUsers();
+
+            return View(users);
+        }
+
         public async Task<IActionResult> Instructors()
         {
             var instructors = await adminService.GetInstructors();
@@ -51,8 +59,6 @@ namespace e_learning.Controllers
         [HttpPost]
         public async Task<IActionResult> AddInstructor(UserModel user)
         {
-            var instructors = await adminService.GetInstructors();
-
             return View();
         }
     }
