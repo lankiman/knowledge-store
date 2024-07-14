@@ -32,5 +32,28 @@ namespace e_learning.Controllers
 
             return View(users);
         }
+
+        public async Task<IActionResult> Instructors()
+        {
+            var instructors = await adminService.GetInstructors();
+
+            return View(instructors);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddInstructor()
+        {
+            var instructors = await adminService.GetInstructors();
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddInstructor(UserModel user)
+        {
+            var instructors = await adminService.GetInstructors();
+
+            return View();
+        }
     }
 }

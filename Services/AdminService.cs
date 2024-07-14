@@ -30,13 +30,29 @@ namespace e_learning.Services
         {
             var users = await eLearningContext!.Users.ToListAsync();
 
-            var user = await UserDetailsService.GetUser();
+            var currentUser = await UserDetailsService.GetUser();
 
-            var userList = users.Where(u => u.Id != user!.Id).ToList();
+            var instructorsIds = await eLearningContext.Instructors.Select(i => i.Id).ToListAsync();
+
+            var tempUsersList = new List<UserModel>();
+
+            foreach (var user in users)
+            {
+                foreach (var id in instructorsIds)
+                {
+                    if (user.Id != id)
+                    {
+                        tempUsersList.Add(user);
+                    }
+                }
+            }
+
+            var usersList = tempUsersList.Where(u => u.Id != currentUser!.Id).ToList();
+
 
             var result = new List<UserDto>();
 
-            foreach (var person in userList)
+            foreach (var person in usersList)
             {
                 var personDto = new UserDto(person);
                 result.Add(personDto);
@@ -56,7 +72,7 @@ namespace e_learning.Services
 
                 if (userRoles != null)
                 {
-                    var usersList = users.Where(c => userRoles.Contains("Creator")).ToList();
+                    var usersList = users.Where(c => userRoles.Contains("Instructor")).ToList();
 
                     foreach (var person in usersList)
                     {
