@@ -1,8 +1,6 @@
-﻿using e_learning.DataTransfersObjects;
-using e_learning.Models;
+﻿using e_learning.Models;
 using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace e_learning.Controllers
@@ -10,10 +8,7 @@ namespace e_learning.Controllers
     [Route("splendid/[action]")]
     [Authorize(Roles = "Admin")]
     public class AdminController(
-        IAdminService adminService,
-        IUserService userService,
-        ILessonService lessonService,
-        UserManager<UserModel> userManager) : Controller
+        IAdminService adminService) : Controller
     {
         public async Task<IActionResult> AdminDashboard()
         {
