@@ -19,10 +19,10 @@ namespace e_learning.Controllers
         {
             var user = await adminService.GetAuthenticatedAdmin();
             var usersCount = await adminService.GetAllUsers();
-            var creatorsCount = await adminService.GetInstructors();
+            var instructorsCount = await adminService.GetInstructors();
 
             ViewData["UsersCount"] = usersCount.Count;
-            ViewData["CreatorsCount"] = creatorsCount.Count;
+            ViewData["CreatorsCount"] = instructorsCount.Count;
 
             return View(user);
         }
@@ -34,11 +34,11 @@ namespace e_learning.Controllers
             return View(users);
         }
 
-        public async Task<IActionResult> UserDetails(UserDto user)
+        public async Task<IActionResult> UserDetails(string userId)
         {
-            var users = await adminService.GetAllUsers();
+            var userDetails = await adminService.GetUserDetails(userId);
 
-            return View(users);
+            return View(userDetails);
         }
 
         public async Task<IActionResult> Instructors()
@@ -57,8 +57,10 @@ namespace e_learning.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddInstructor(UserModel user)
+        public async Task<IActionResult> AddInstructor(UserModel? user)
         {
+            var result = await adminService.AddInstructor(user);
+            
             return View();
         }
     }

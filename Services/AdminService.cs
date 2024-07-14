@@ -5,6 +5,7 @@ using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 
 namespace e_learning.Services
 {
@@ -24,6 +25,18 @@ namespace e_learning.Services
         {
             var users = await eLearningContext!.Users.ToListAsync();
             return users;
+        }
+
+        public async Task<UserDto> GetUserDetails(string userId)
+        {
+            var userDetails = await userDetailsService.GetUserDetails(userId);
+
+            if (userDetails == null)
+            {
+                return null!;
+            }
+
+            return userDetails;
         }
 
         public async Task<List<UserDto>> GetAllUsers()
@@ -77,9 +90,40 @@ namespace e_learning.Services
             return instructorsList;
         }
 
-        public Task<IActionResult> AddInstructor(UserModel user)
+        public async Task<IActionResult> AddInstructor(UserModel user)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = await userManager!.AddToRoleAsync(user, "Instructor");
+
+                if (result.Succeeded)
+                {
+                    var instructor = new InstructorModel
+                    {
+                        Id = user.Id
+                    };
+                     eLearningContext.Instructors.Add(instructor);
+                    
+                    var changes=eLearningContext.SaveChanges();
+
+                    if (changes > 1)
+                    {
+                        return new OkResult();
+                    }
+                    else
+                    {
+                        await userManager.RemoveFromRoleAsync(user, "Instructor");
+                        eLearningContext.Instructors.Remove(instructor);
+                        return new BadRequestResult();
+                    }
+                }
+
+                return new OkResult();
+            }
+            catch (Exception ex)
+            { Console.WriteLine(ex.InnerException.Message);
+               return new ObjectResult(new { Message = $"An error occurred: {ex.Message}" }) { StatusCode = 500 };
+            }
         }
     }
 }
