@@ -13,20 +13,20 @@ namespace e_learning.Controllers
         public async Task<IActionResult> AdminDashboard()
         {
             var user = await adminService.GetAuthenticatedAdmin();
-            var usersCount = await adminService.GetAllUsers();
+            var usersCount = adminService.GetUsersCount();
             var instructorsCount = await adminService.GetInstructors();
 
-            ViewData["UsersCount"] = usersCount.Count;
+            ViewData["UsersCount"] = usersCount;
             ViewData["CreatorsCount"] = instructorsCount.Count;
 
             return View(user);
         }
 
-        public async Task<IActionResult> AllUsers()
+        public async Task<IActionResult> AllUsers(string? term = "")
         {
-            var users = await adminService.GetAllUsers();
+            var result = await adminService.GetAllUsers(term);
 
-            return View(users);
+            return View(result);
         }
 
         public async Task<IActionResult> UserDetails(string userId)

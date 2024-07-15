@@ -2,10 +2,10 @@
 using e_learning.DataTransfersObjects;
 using e_learning.Models;
 using e_learning.Services.Interfaces;
+using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Plugins;
 
 namespace e_learning.Services
 {
@@ -27,6 +27,19 @@ namespace e_learning.Services
             return users;
         }
 
+        private async Task<List<UserDto>> GetUsers()
+        {
+            var currentUser = await UserDetailsService.GetUser();
+
+            var instructorsIds = await eLearningContext.Instructors.Select(i => i.Id).ToListAsync();
+
+            var users = await eLearningContext!.Users.Where(user =>
+                    !instructorsIds.Contains(user.Id) && user.Id != currentUser.Id).Select(user => new UserDto(user))
+                .ToListAsync();
+
+            return users;
+        }
+
         public async Task<UserDto> GetUserDetails(string userId)
         {
             var userDetails = await userDetailsService.GetUserDetails(userId);
@@ -39,55 +52,32 @@ namespace e_learning.Services
             return userDetails;
         }
 
-        public async Task<List<UserDto>> GetAllUsers()
+        public int GetUsersCount()
         {
-            var users = await eLearningContext!.Users.ToListAsync();
+            var count = GetUsers().Result.Count;
 
-            var currentUser = await UserDetailsService.GetUser();
+            return count;
+        }
 
-            var instructorsIds = await eLearningContext.Instructors.Select(i => i.Id).ToListAsync();
+        public async Task<AllUsersViewModel> GetAllUsers(string? term = "")
+        {
+            var users = await GetUsers();
 
-            var tempUsersList = new List<UserModel>();
-
-            foreach (var user in users)
+            var result = new AllUsersViewModel
             {
-                foreach (var id in instructorsIds)
-                {
-                    if (user.Id != id)
-                    {
-                        tempUsersList.Add(user);
-                    }
-                }
-            }
-
-            var usersList = tempUsersList.Where(u => u.Id != currentUser!.Id).ToList();
-
-
-            var result = new List<UserDto>();
-
-            foreach (var person in usersList)
-            {
-                var personDto = new UserDto(person);
-                result.Add(personDto);
-            }
-
+                Users = users
+            };
             return result;
         }
 
         public async Task<List<InstructorDto>> GetInstructors()
         {
             var currentUser = await UserDetailsService.GetUser();
-            var instructors = await eLearningContext.Instructors.Where(i => i.User.Id != currentUser.Id).ToListAsync();
-            var instructorsList = new List<InstructorDto>();
+            var instructors = await eLearningContext.Instructors.Where(i => i.User.Id != currentUser.Id)
+                .Select(i => new InstructorDto(i)).ToListAsync();
 
-            foreach (var instructor in instructors)
-            {
-                var instructorDto = new InstructorDto(instructor);
-                instructorsList.Add(instructorDto);
-            }
+            return instructors;
 
-
-            return instructorsList;
         }
 
         public async Task<IActionResult> AddInstructor(UserModel? user)

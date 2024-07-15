@@ -1,8 +1,7 @@
 ﻿using e_learning.DataTransfersObjects;
 using e_learning.Models;
+using e_learning.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
-
 
 namespace e_learning.Services.Interfaces
 {
@@ -12,7 +11,9 @@ namespace e_learning.Services.Interfaces
 
         public Task<UserDto> GetUserDetails(string userId);
 
-        public Task<List<UserDto>> GetAllUsers();
+        public int GetUsersCount();
+
+        public Task<AllUsersViewModel> GetAllUsers(string? term = "");
 
         public Task<List<InstructorDto>> GetInstructors();
 

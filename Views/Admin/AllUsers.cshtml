@@ -1,10 +1,10 @@
-﻿@model List<e_learning.DataTransfersObjects.UserDto>
+﻿@model e_learning.ViewModels.AllUsersViewModel
 
 @{
     Layout = "_AdminLayout";
 }
 
-@if (Model.Count == 0)
+@if (Model.Users.Count == 0)
 {
     <div class="flex h-full w-full items-center justify-center">
         <p class="animate-pulse text-xl font-bold text-blue-600">No Users Currently Available!</p>
@@ -31,7 +31,7 @@ else
     </div>
 
     <div class="w-full m-auto md:w-[90%]">
-        @foreach (var user in Model)
+        @foreach (var user in Model.Users)
         {
             <a href="@Url.Action("UserDetails", "Admin", new { userId = user.Id })">
                 <div class="w-full group mt-2 hover:bg-white cursor-pointer">
