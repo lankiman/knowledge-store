@@ -23,6 +23,16 @@ namespace e_learning.Controllers
             return View();
         }
 
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
+        public IActionResult Plans()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(int statusCode)
         {
@@ -32,6 +42,7 @@ namespace e_learning.Controllers
                 case 404:
                     return View("NotFound");
                     break;
+
                 default:
                     return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
                     break;

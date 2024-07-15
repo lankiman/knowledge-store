@@ -20,8 +20,8 @@
                 <ul class="hidden md:flex md:flex-row md:items-center md:justify-center">
                     <li class="px-5"><a asp-action="Index" asp-controller="Home" active>Home</a></li>
                     <li class="px-5"><a asp-action="" asp-controller="">Lessons</a></li>
-                    <li class="px-5"><a asp-action="" asp-controller="">About Us</a></li>
-                    <li class="px-5"><a asp-action="" asp-controller="">Plans</a></li>
+                    <li class="px-5"><a asp-action="AboutUs" asp-controller="Home">About Us</a></li>
+                    <li class="px-5"><a asp-action="Plans" asp-controller="Home">Plans</a></li>
                 </ul>
             </div>
 
@@ -44,8 +44,8 @@
             <ul>
                 <li class="w-full"><a class="flex w-full justify-center py-3" asp-action="Index" asp-controller="Home" active>Home</a></li>
                 <li class="w-full"><a class="flex w-full justify-center py-3" asp-action="" asp-controller="">Lessons</a></li>
-                <li class="w-full"><a class="flex w-full justify-center py-3" asp-action="" asp-controller="">About Us</a></li>
-                <li class="w-full"><a class="flex w-full justify-center py-3" asp-action="" asp-controller="">Plans</a></li>
+                <li class="w-full"><a class="flex w-full justify-center py-3" asp-action="AboutUs" asp-controller="Home">About Us</a></li>
+                <li class="w-full"><a class="flex w-full justify-center py-3" asp-action="Plans" asp-controller="Home">Plans</a></li>
             </ul>
             <div class="mt-5 flex flex-col justify-center gap-y-3.5">
                 <a class="mx-10 flex justify-center rounded-full border border-blue-500 p-2 font-bold" asp-action="Login" asp-controller="Account">Login</a>
