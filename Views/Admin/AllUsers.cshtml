@@ -11,8 +11,23 @@
     </div>
 }
 
-@foreach (var user in Model)
-{
-    <div>@user.Firstname @user.Lastname </div>
-
-}
+<div class="w-full md:w-[90%]">
+    @foreach (var user in Model)
+    {
+        <div class="w-full hover:bg-white cursor-pointer">
+            <hr>
+            <div>
+                <div class="flex gap-2 p-2 items-center font-bold text-md">
+                    <p>@user.Lastname @user.Firstname</p>
+                    <p class="text-sm self-end text-gray-400">@user.Email</p>
+                </div>
+                @* <div> *@
+                @*     <a> *@
+                @*         <button class="btn btn-primary"></button> *@
+                @*     </a> *@
+                @* </div> *@
+            </div>
+            <hr>
+        </div>
+    }
+</div>

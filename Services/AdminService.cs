@@ -90,7 +90,7 @@ namespace e_learning.Services
             return instructorsList;
         }
 
-        public async Task<IActionResult> AddInstructor(UserModel user)
+        public async Task<IActionResult> AddInstructor(UserModel? user)
         {
             try
             {
