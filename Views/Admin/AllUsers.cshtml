@@ -10,26 +10,47 @@
         <p class="animate-pulse text-xl font-bold text-blue-600">No Users Currently Available!</p>
     </div>
 }
+else
+{
+    <div class="p-2 flex justify-between">
+        <h1 class="font-bold text-blue-600 md:text-2xl">Users</h1>
+        <div>
+            <div>
+                <form asp-action="AllUsers" asp-controller="Admin">
+                    <div class="relative flex  justify-between px-2 gap-4 shadow-gray-400 bg-white shadow-md rounded-md h-[2rem] w-[10rem] md:w-[15rem]">
+                        <span class="absolute top-1/4  self-baseline">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="gray">
+                                <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
+                            </svg>
+                        </span>
+                        <input type="text" name="search" placeholder="Search User" class="px-6 outline-none self-start  text-gray-400 w-full h-full"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-<div class="w-full m-auto md:w-[90%]">
-    @foreach (var user in Model)
-    {
-        <a href="@Url.Action("UserDetails", "Admin", new { userId = user.Id })">
-            <div class="w-full group mt-2 hover:bg-white cursor-pointer">
-            <hr>
-            <div class="flex items-center justify-between">
-                <div class="flex gap-2 p-2 items-center font-bold text-md">
-                    <p class="group-hover:text-blue-700">@user.Lastname @user.Firstname</p>
-                    <p class="text-sm self-end text-gray-400">@user.Email</p>
+    <div class="w-full m-auto md:w-[90%]">
+        @foreach (var user in Model)
+        {
+            <a href="@Url.Action("UserDetails", "Admin", new { userId = user.Id })">
+                <div class="w-full group mt-2 hover:bg-white cursor-pointer">
+                    <hr>
+                    <div class="flex items-center justify-between">
+                        <div class="flex gap-2 p-2 items-center font-bold text-md">
+                            <p class="group-hover:text-blue-700">@user.Lastname @user.Firstname</p>
+                            <p class="text-sm self-end text-gray-400">@user.Email</p>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="blue">
+                                <path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <hr>
                 </div>
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="blue">
-                        <path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/>
-                    </svg>
-                </div>
-            </div>
-            <hr>
-            </div>
-        </a>
-    }
-</div>
+            </a>
+        }
+    </div>
+}
+
