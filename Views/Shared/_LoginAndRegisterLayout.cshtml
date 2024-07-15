@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
 </head>
 <body class="overflow-auto md:overflow-hidden">
+
     <header>
         <nav class="flex w-full flex-row items-center justify-between p-4">
             <a asp-action="Index" asp-controller="Home">
@@ -27,7 +28,13 @@
             </div>
         </nav>
     </header>
-
+    <div class="h-[100vh] loading__overlay opacity-80 z-10 fixed top-0 flex hidden w-full items-center justify-center overflow-auto bg-gray-600">
+        <div class="w-[10%] relative h-fit bg-red-400">
+            <div class="loading__overlay--animation absolute w-fit">
+                <img src="~/images/logo.svg" class="size-10" />
+            </div>
+        </div>
+    </div>
     <main role="main" class="h-[100svh] w-full">
         @RenderBody()
     </main>

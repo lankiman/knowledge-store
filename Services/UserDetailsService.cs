@@ -1,6 +1,8 @@
-﻿using e_learning.Models;
+﻿using e_learning.DataTransfersObjects;
+using e_learning.Models;
 using e_learning.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace e_learning.Services
 {
@@ -18,6 +20,18 @@ namespace e_learning.Services
             }
 
             return user;
+        }
+
+        public async Task<UserDto?> GetUserDetails(string userId)
+        {
+            var userDetails = await userManager!.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
+
+            if (userDetails == null)
+            {
+                return null;
+            }
+
+            return new UserDto(userDetails);
         }
 
 

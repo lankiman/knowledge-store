@@ -20,7 +20,18 @@ const confirmPasswordVisible = document.querySelector(".confirm__password__input
 
 const confirmPasswordNotVisible = document.querySelector(".confirm__password__input--hidden");
 
+const loadingOverlay = document.querySelector(".loading__overlay");
 
+const loadingTrigger = document.querySelector(".loading__trigger");
+
+
+if (loadingOverlay) {
+    if (loadingTrigger) {
+        loadingTrigger.addEventListener("click", () => {
+            loadingOverlay.classList.remove("hidden");
+        });
+    }
+}
 
 if (passwordInput) {
     if (passwordNotVisible) {
@@ -28,14 +39,14 @@ if (passwordInput) {
             passwordInput.setAttribute("type", "text");
             passwordNotVisible.classList.add("hidden");
             passwordVisible.classList.remove("hidden");
-        })
+        });
     }
     if (passwordVisible) {
         passwordVisible.addEventListener("click", () => {
             passwordInput.setAttribute("type", "password");
             passwordVisible.classList.add("hidden");
             passwordNotVisible.classList.remove("hidden");
-        })
+        });
     }
 }
 
@@ -45,14 +56,14 @@ if (confirmPasswordInput) {
             confirmPasswordInput.setAttribute("type", "text");
             confirmPasswordNotVisible.classList.add("hidden");
             confirmPasswordVisible.classList.remove("hidden");
-        })
+        });
     }
     if (passwordVisible) {
         confirmPasswordVisible.addEventListener("click", () => {
             confirmPasswordInput.setAttribute("type", "password");
             confirmPasswordVisible.classList.add("hidden");
             confirmPasswordNotVisible.classList.remove("hidden");
-        })
+        });
     }
 }
 

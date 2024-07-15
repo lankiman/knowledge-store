@@ -16,7 +16,7 @@
             <input class="h-10 rounded-sm bg-gray-200 p-2 font-bold outline-none" placeholder="Email or Username" asp-for="LoginIdentifier" type="text" />
             <span class="font-bold text-red-700" asp-validation-for="LoginIdentifier"></span>
             <div class="relative flex h-10 w-full items-center justify-between rounded-sm bg-gray-200">
-                <input class="password__input h-full w-full p-2 font-bold outline-none" placeholder="Password" asp-for="Password" type="password" />
+                <input class="password__input h-full w-full bg-gray-200 p-2 font-bold outline-none" placeholder="Password" asp-for="Password" type="password" />
                 <span class="password__input--visible absolute right-1 hidden w-fit">
                     <svg xmlns="http://www.w3.org/2000/svg"
                          height="24px"
@@ -44,7 +44,7 @@
             </div>
             <div class="flex justify-between">
                 <a asp-action="Register" asp-controller="Account" class="text-blue-700">Forgot Password?</a>
-                <button type="submit" class="btn bg-blue-500 text-white hover:bg-black">Login</button>
+                <button type="submit" class="btn loading__trigger bg-blue-500 text-white hover:bg-black">Login</button>
             </div>
         </form>
     </div>

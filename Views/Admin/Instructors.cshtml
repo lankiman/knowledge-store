@@ -1,0 +1,14 @@
+﻿@model List<e_learning.DataTransfersObjects.InstructorDto>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Instructors";
+}
+
+@if (Model.Count == 0)
+{
+    <div class="flex h-full w-full items-center justify-center">
+        <p class="animate-pulse text-xl font-bold text-blue-600">No Instructors Currently Available!</p>
+    </div>
+}
+

@@ -16,6 +16,12 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0'
+      
+      - name: Install Node.js dependencies
+        run: npm install
+        
+      - name: Build Tailwind CSS
+        run: npm run build-tailwind
           
       - name: Install dependencies
         run: |
@@ -30,6 +36,9 @@ jobs:
 
       - name: Publish
         run: dotnet publish --configuration Release -o publish --no-build 
+      
+      - name: Copy Tailwind CSS to publish directory
+        run: cp ./wwwroot/css/output.css publish/wwwroot/css/output.css
 
       - name: Deploy to SmarterASP.NET
         uses: talunzhang/auto-web-deploy@v1.0.1

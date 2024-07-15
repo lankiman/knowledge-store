@@ -24,6 +24,11 @@ namespace e_learning.Controllers
         {
             var lessons = await instructorService.GetInstructorLessons();
 
+            if (lessons == null)
+            {
+                return View(null);
+            }
+
             return View(lessons);
         }
 

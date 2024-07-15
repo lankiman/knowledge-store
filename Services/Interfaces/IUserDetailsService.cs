@@ -1,4 +1,5 @@
-﻿using e_learning.Models;
+﻿using e_learning.DataTransfersObjects;
+using e_learning.Models;
 
 namespace e_learning.Services.Interfaces
 {
@@ -6,6 +7,8 @@ namespace e_learning.Services.Interfaces
     {
         public Task<string> GetUserId();
         public Task<UserModel?> GetUser();
+
+        public Task<UserDto?> GetUserDetails(string userId);
 
         public Task<IList<string>?> GetUserRole();
 
