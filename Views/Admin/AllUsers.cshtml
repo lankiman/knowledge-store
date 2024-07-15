@@ -11,23 +11,25 @@
     </div>
 }
 
-<div class="w-full md:w-[90%]">
+<div class="w-full m-auto md:w-[90%]">
     @foreach (var user in Model)
     {
-        <div class="w-full hover:bg-white cursor-pointer">
+        <a href="@Url.Action("UserDetails", "Admin", new { userId = user.Id })">
+            <div class="w-full group mt-2 hover:bg-white cursor-pointer">
             <hr>
-            <div>
+            <div class="flex items-center justify-between">
                 <div class="flex gap-2 p-2 items-center font-bold text-md">
-                    <p>@user.Lastname @user.Firstname</p>
+                    <p class="group-hover:text-blue-700">@user.Lastname @user.Firstname</p>
                     <p class="text-sm self-end text-gray-400">@user.Email</p>
                 </div>
-                @* <div> *@
-                @*     <a> *@
-                @*         <button class="btn btn-primary"></button> *@
-                @*     </a> *@
-                @* </div> *@
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="blue">
+                        <path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/>
+                    </svg>
+                </div>
             </div>
             <hr>
-        </div>
+            </div>
+        </a>
     }
 </div>
