@@ -4,7 +4,7 @@
     Layout = "_AdminLayout";
 }
 
-@if (Model.Users.Count == 0)
+@if (Model.Users.Count == 0 && !(bool)ViewData["search"])
 {
     <div class="flex h-full w-full items-center justify-center">
         <p class="animate-pulse text-xl font-bold text-blue-600">No Users Currently Available!</p>
@@ -14,7 +14,10 @@ else
 {
     <div class="p-2 flex justify-between">
         <h1 class="font-bold text-blue-600 md:text-2xl">Users</h1>
-        <div>
+        <div class="flex gap-4">
+            <a asp-action="AllUsers" asp-controller="Admin">
+                <button class="btn bg-blue-700 text-white hover:bg-black ">All Users</button>
+            </a>
             <div>
                 <form asp-action="AllUsers" asp-controller="Admin">
                     <div class="relative flex  justify-between px-2 gap-4 shadow-gray-400 bg-white shadow-md rounded-md h-[2rem] w-[10rem] md:w-[15rem]">
@@ -24,11 +27,19 @@ else
                             </svg>
                         </span>
                         <input type="text" name="search" placeholder="Search User" class="px-6 outline-none self-start  text-gray-400 w-full h-full"/>
+
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    @if (Model.Users.Count == 0 && (bool)ViewData["search"])
+    {
+        <div class="flex h-full w-full mt-3 justify-center">
+            <p class="animate-pulse text-xl font-bold text-blue-600">No Result</p>
+        </div>
+    }
 
     <div class="w-full m-auto md:w-[90%]">
         @foreach (var user in Model.Users)

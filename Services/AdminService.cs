@@ -27,14 +27,14 @@ namespace e_learning.Services
             return users;
         }
 
-        private async Task<IQueryable<UserDto>> GetUsers()
+        private async Task<IQueryable<UserModel>> GetUsers()
         {
             var currentUser = await UserDetailsService.GetUser();
 
             var instructorsIds = await eLearningContext.Instructors.Select(i => i.Id).ToListAsync();
 
             var users = eLearningContext!.Users.Where(user =>
-                !instructorsIds.Contains(user.Id) && user.Id != currentUser.Id).Select(user => new UserDto(user));
+                !instructorsIds.Contains(user.Id) && user.Id != currentUser.Id);
 
             return users;
         }
@@ -61,21 +61,20 @@ namespace e_learning.Services
         public async Task<AllUsersViewModel> GetAllUsers(string? term = "")
         {
             var users = await GetUsers();
-
-
             term = string.IsNullOrEmpty(term) ? "" : term.ToLower();
 
+            Console.WriteLine(term);
+
+            
 
             if (!string.IsNullOrEmpty(term))
             {
-                users = users.Where(u => u.Firstname.Contains(term) || u.Lastname.Contains(term) || u.Email.Contains(term)
-                );
+                users = users.Where(u => u.Firstname.ToLower().Contains(term) || u.Lastname.ToLower().Contains(term));
             }
-
 
             var result = new AllUsersViewModel
             {
-                Users = users.ToList()
+                Users = users.Select(user => new UserDto(user)).ToList()
             };
             return result;
         }

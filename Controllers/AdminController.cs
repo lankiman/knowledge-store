@@ -22,9 +22,14 @@ namespace e_learning.Controllers
             return View(user);
         }
 
-        public async Task<IActionResult> AllUsers(string? term = "")
+        public async Task<IActionResult> AllUsers(string? search = "")
         {
-            var result = await adminService.GetAllUsers(term);
+            var result = await adminService.GetAllUsers(search);
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                ViewData["search"] = true;
+            }
 
             return View(result);
         }
