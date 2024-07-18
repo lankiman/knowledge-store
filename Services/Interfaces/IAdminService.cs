@@ -13,7 +13,7 @@ namespace e_learning.Services.Interfaces
 
         public int GetUsersCount();
 
-        public Task<AllUsersViewModel> GetAllUsers(string? term = "");
+        public Task<AllUsersViewModel> GetAllUsers(int currentPage = 1, string? searchTerm = "", string? filters = "");
 
         public Task<List<InstructorDto>> GetInstructors();
 

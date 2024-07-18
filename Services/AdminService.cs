@@ -58,23 +58,31 @@ namespace e_learning.Services
             return result.Count;
         }
 
-        public async Task<AllUsersViewModel> GetAllUsers(string? term = "")
+        public async Task<AllUsersViewModel> GetAllUsers(int currentPage=1, string? searchTerm = "", string? filters = "")
         {
             var users = await GetUsers();
-            term = string.IsNullOrEmpty(term) ? "" : term.ToLower();
 
-            Console.WriteLine(term);
+            searchTerm = string.IsNullOrEmpty(searchTerm) ? "" : searchTerm.ToLower();
 
-            
+            int? pageSize = 10;
 
-            if (!string.IsNullOrEmpty(term))
+            Console.WriteLine(searchTerm);
+
+
+            if (!string.IsNullOrEmpty(searchTerm))
             {
-                users = users.Where(u => u.Firstname.ToLower().Contains(term) || u.Lastname.ToLower().Contains(term));
+                users = users.Where(u =>
+                    u.Firstname.ToLower().Contains(searchTerm) || u.Lastname.ToLower().Contains(searchTerm));
             }
 
+            
             var result = new AllUsersViewModel
             {
-                Users = users.Select(user => new UserDto(user)).ToList()
+                Users = users.Skip((int)((currentPage - 1) * pageSize)).Take((int)pageSize)
+                    .Select(user => new UserDto(user)).ToList(),
+
+                CurrentPage = currentPage,
+                TotalPages = (int)(users.Count() / pageSize)
             };
             return result;
         }
