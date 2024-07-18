@@ -64,11 +64,8 @@ namespace e_learning.Services
 
             searchTerm = string.IsNullOrEmpty(searchTerm) ? "" : searchTerm.ToLower();
 
-            int? pageSize = 1;
-
-            Console.WriteLine(searchTerm);
-
-
+            int? pageSize = 10;
+            
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 users = users.Where(u =>
@@ -82,7 +79,8 @@ namespace e_learning.Services
                     .Select(user => new UserDto(user)).ToList(),
 
                 CurrentPage = currentPage,
-                TotalPages = (int)(users.Count() / pageSize)
+                TotalPages = (int)(users.Count() / pageSize),
+                SearchTerm = searchTerm
             };
             return result;
         }

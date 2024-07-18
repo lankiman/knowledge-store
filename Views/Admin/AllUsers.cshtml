@@ -15,30 +15,51 @@ else
     <div class="p-2 flex justify-between">
         <div>
             <h1 class="font-bold text-blue-600 md:text-2xl">Users</h1>
-            <nav class="text-black">
-                <ul class="flex w-fit h-4 bg-white text-blue-600 rounded-md">
+            <nav class="mt-4">
+                <ul class="flex font-bold items-center space-x-2">
                     @if (Model.CurrentPage > 1)
                     {
-                        <li class="btn rounded-none hover:text-white hover:bg-black">
-                            <a href="@Url.Action("AllUsers", "Admin", new { currentPage = Model.CurrentPage - 1 })">
+                        <a href="@Url.Action("AllUsers", "Admin", new { currentPage = Model.CurrentPage - 1, search = Model.SearchTerm })">
+                            <li class="cursor-pointer px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
                                 <span>&laquo;</span>
-                            </a>
-                        </li>
+                            </li>
+                        </a>
                     }
 
                     @for (var i = 1; i <= Model.TotalPages; i++)
                     {
-                        <li class="btn rounded-none hover:bg-black hover:text-white border-r-black">
-                            <a href="@Url.Action("AllUsers", "Admin", new { currentPage = i })">@i</a>
-                        </li>
+                        if (Model.CurrentPage == i)
+                        {
+                            <li class="cursor-pointer px-3 py-1 bg-blue-600 text-white  rounded-md hover:bg-gray-300">
+                                <a href="@Url.Action("AllUsers", "Admin", new { currentPage = i, search = Model.SearchTerm })">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("AllUsers", "Admin", new { currentPage = i, search = Model.SearchTerm })">
+                                <li class="cursor-pointer px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                                    @i
+                                </li>
+
+                            </a>
+                        }
+                    }
+
+                    @if (Model.CurrentPage < Model.TotalPages)
+                    {
+                        <a href="@Url.Action("AllUsers", "Admin", new { currentPage = Model.CurrentPage + 1, search = Model.SearchTerm })">
+                            <li class="cursor-pointer px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                                <span>&raquo;</span>
+                            </li>
+                        </a>
                     }
 
                 </ul>
             </nav>
         </div>
-        <div class="flex gap-4">
+        <div class="flex w-fit h-fit items-center gap-4">
             <a asp-action="AllUsers" asp-controller="Admin">
-                <button class="btn bg-blue-700 text-white hover:bg-black ">All Users</button>
+                <button class="rounded-md px-3 py-2 w-fit text-sm bg-blue-700 text-white hover:bg-black ">All Users</button>
             </a>
             <div>
                 <form asp-action="AllUsers" asp-controller="Admin">
@@ -64,6 +85,7 @@ else
     }
 
     <div class="w-full m-auto md:w-[90%]">
+        
         @foreach (var user in Model.Users)
         {
             <a href="@Url.Action("UserDetails", "Admin", new { userId = user.Id })">
