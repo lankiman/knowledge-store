@@ -22,9 +22,9 @@ namespace e_learning.Controllers
             return View(user);
         }
 
-        public async Task<IActionResult> AllUsers(string? search = "")
+        public async Task<IActionResult> AllUsers(int currentPage = 1, string? search = "", string filters = "")
         {
-            var result = await adminService.GetAllUsers(search);
+            var result = await adminService.GetAllUsers(searchTerm: search, currentPage: currentPage, filters: filters);
 
             if (!string.IsNullOrEmpty(search))
             {

@@ -64,7 +64,7 @@ namespace e_learning.Services
 
             searchTerm = string.IsNullOrEmpty(searchTerm) ? "" : searchTerm.ToLower();
 
-            int? pageSize = 10;
+            int? pageSize = 1;
 
             Console.WriteLine(searchTerm);
 
