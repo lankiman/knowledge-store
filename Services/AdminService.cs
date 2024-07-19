@@ -5,7 +5,9 @@ using e_learning.Services.Interfaces;
 using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace e_learning.Services
 {
@@ -15,12 +17,6 @@ namespace e_learning.Services
         IUserDetailsService userDetailsService)
         : BaseService(eLearningContext, userManager, userDetailsService), IAdminService
     {
-        public async Task<AdminDto> GetAuthenticatedAdmin()
-        {
-            var user = await UserDetailsService.GetUser();
-            return new AdminDto(user!);
-        }
-
         private async Task<List<UserModel>> GetAllUsersModel()
         {
             var users = await eLearningContext!.Users.ToListAsync();
@@ -38,6 +34,26 @@ namespace e_learning.Services
 
             return users;
         }
+
+        private async Task<IQueryable<UserModel>> GetUsers(string filters)
+        {
+            var users = await GetUsers();
+
+            switch (filters)
+            {
+                case "Subscribed":
+                    users = users.Where(
+                        user => userManager.GetClaimsAsync(user).Result.Any(c => c.Type == "Subscribed"));
+                    break;
+            }
+        }
+
+        public async Task<AdminDto> GetAuthenticatedAdmin()
+        {
+            var user = await UserDetailsService.GetUser();
+            return new AdminDto(user!);
+        }
+
 
         public async Task<UserDto> GetUserDetails(string userId)
         {
@@ -58,21 +74,22 @@ namespace e_learning.Services
             return result.Count;
         }
 
-        public async Task<AllUsersViewModel> GetAllUsers(int currentPage=1, string? searchTerm = "", string? filters = "")
+        public async Task<AllUsersViewModel> GetAllUsers(int currentPage = 1, string? searchTerm = "",
+            string? filters = "")
         {
             var users = await GetUsers();
 
             searchTerm = string.IsNullOrEmpty(searchTerm) ? "" : searchTerm.ToLower();
 
             int? pageSize = 10;
-            
+
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 users = users.Where(u =>
                     u.Firstname.ToLower().Contains(searchTerm) || u.Lastname.ToLower().Contains(searchTerm));
             }
 
-            
+
             var result = new AllUsersViewModel
             {
                 Users = users.Skip((int)((currentPage - 1) * pageSize)).Take((int)pageSize)
@@ -92,7 +109,6 @@ namespace e_learning.Services
                 .Select(i => new InstructorDto(i)).ToListAsync();
 
             return instructors;
-
         }
 
         public async Task<IActionResult> AddInstructor(UserModel? user)
@@ -107,27 +123,26 @@ namespace e_learning.Services
                     {
                         Id = user.Id
                     };
-                     eLearningContext.Instructors.Add(instructor);
-                    
-                    var changes=eLearningContext.SaveChanges();
+                    eLearningContext.Instructors.Add(instructor);
+
+                    var changes = eLearningContext.SaveChanges();
 
                     if (changes > 1)
                     {
                         return new OkResult();
                     }
-                    else
-                    {
-                        await userManager.RemoveFromRoleAsync(user, "Instructor");
-                        eLearningContext.Instructors.Remove(instructor);
-                        return new BadRequestResult();
-                    }
+
+                    await userManager.RemoveFromRoleAsync(user, "Instructor");
+                    eLearningContext.Instructors.Remove(instructor);
+                    return new BadRequestResult();
                 }
 
                 return new OkResult();
             }
             catch (Exception ex)
-            { Console.WriteLine(ex.InnerException.Message);
-               return new ObjectResult(new { Message = $"An error occurred: {ex.Message}" }) { StatusCode = 500 };
+            {
+                Console.WriteLine(ex.InnerException.Message);
+                return new ObjectResult(new { Message = $"An error occurred: {ex.Message}" }) { StatusCode = 500 };
             }
         }
     }
