@@ -1,13 +1,13 @@
-﻿using e_learning.Data;
+﻿using System.Security.Claims;
+using e_learning.Data;
 using e_learning.DataTransfersObjects;
 using e_learning.Models;
 using e_learning.Services.Interfaces;
 using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
+
 
 namespace e_learning.Services
 {
@@ -35,18 +35,57 @@ namespace e_learning.Services
             return users;
         }
 
-        private async Task<IQueryable<UserModel>> GetUsers(string filters)
-        {
-            var users = await GetUsers();
+        // private async Task<IQueryable<UserModel>> FilterUsers(IQueryable<UserModel> users, string filters)
+        // {
+        //     switch (filters)
+        //     {
+        //         case "subscribed":
+        //             users = users.Where(
+        //                 user => userManager.GetClaimsAsync(user).Result.Any(c => c.Type == "Subscribed"));
+        //             break;
+        //         case "unsubscribed":
+        //             users = users.Where(
+        //                 user => userManager.GetClaimsAsync(user).Result.Any(c => c.Type != "Subscribed"));
+        //             break;
+        //     }
+        //
+        //
+        //     return users;
+        // }
 
-            switch (filters)
+        private async Task<IQueryable<UserModel>> FilterUsers(IQueryable<UserModel> users, string filters)
+        {
+            // Fetch the users into memory
+            var userList = await users.ToListAsync();
+
+            // Create a dictionary to hold user-claims associations
+            var claimsDictionary = new Dictionary<UserModel, IList<Claim>>();
+
+            // Populate the dictionary with user-claims pairs
+            foreach (var user in userList)
             {
-                case "Subscribed":
-                    users = users.Where(
-                        user => userManager.GetClaimsAsync(user).Result.Any(c => c.Type == "Subscribed"));
+                claimsDictionary[user] = await userManager.GetClaimsAsync(user);
+            }
+
+            // Filter users based on the claims
+            switch (filters.ToLower())
+            {
+                case "subscribed":
+                    userList = userList
+                        .Where(user => claimsDictionary[user].Any(c => c.Type == "Subscribed"))
+                        .ToList();
+                    break;
+                case "unsubscribed":
+                    userList = userList
+                        .Where(user => !claimsDictionary[user].Any(c => c.Type == "Subscribed"))
+                        .ToList();
                     break;
             }
+
+            // Convert the filtered list back to IQueryable
+            return userList.AsQueryable();
         }
+
 
         public async Task<AdminDto> GetAuthenticatedAdmin()
         {
@@ -89,6 +128,15 @@ namespace e_learning.Services
                     u.Firstname.ToLower().Contains(searchTerm) || u.Lastname.ToLower().Contains(searchTerm));
             }
 
+            Console.WriteLine($"{filters} from service");
+
+            if (!string.IsNullOrEmpty(filters))
+            {
+                Console.WriteLine($"{filters} from service condtion");
+                users = await FilterUsers(users, filters);
+                Console.WriteLine($"{users.Count()} from condition method call");
+            }
+
 
             var result = new AllUsersViewModel
             {
@@ -97,7 +145,8 @@ namespace e_learning.Services
 
                 CurrentPage = currentPage,
                 TotalPages = (int)(users.Count() / pageSize),
-                SearchTerm = searchTerm
+                SearchTerm = searchTerm,
+                Filters = filters
             };
             return result;
         }

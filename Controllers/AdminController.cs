@@ -22,14 +22,21 @@ namespace e_learning.Controllers
             return View(user);
         }
 
-        public async Task<IActionResult> AllUsers(int currentPage = 1, string? search = "", string filters = "")
+        public async Task<IActionResult> AllUsers(int currentPage = 1, string? search = "", string? filters = "")
         {
             var result = await adminService.GetAllUsers(searchTerm: search, currentPage: currentPage, filters: filters);
-            
+
             if (!string.IsNullOrEmpty(search))
             {
                 ViewData["search"] = true;
             }
+
+            if (!string.IsNullOrEmpty(filters))
+            {
+                ViewData["filters"] = true;
+            }
+
+            Console.WriteLine($"{filters} from controller");
 
             return View(result);
         }
@@ -60,7 +67,7 @@ namespace e_learning.Controllers
         public async Task<IActionResult> AddInstructor(UserModel? user)
         {
             var result = await adminService.AddInstructor(user);
-            
+
             return View();
         }
     }
