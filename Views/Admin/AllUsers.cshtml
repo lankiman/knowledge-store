@@ -5,7 +5,7 @@
 
 }
 
-@if (Model.Users.Count == 0 && !(bool)ViewData["search"] && !(bool)ViewData["filters"])
+@if (Model.Users!=null && Model.Users.Count == 0 && !(bool)ViewData["search"]&& !(bool)ViewData["filters"])
 {
     <div class="flex h-full w-full items-center justify-center">
         <p class="animate-pulse text-xl font-bold text-blue-600">No Users Currently Available!</p>
@@ -85,19 +85,14 @@ else
         </div>
     </div>
 
-    @if (Model.Users.Count == 0 && (bool)ViewData["search"])
+    @if (Model.Users!=null && Model.Users.Count == 0 && ((bool)ViewData["search"] || (bool)ViewData["filters"]))
     {
         <div class="mt-3 flex h-full w-full justify-center">
             <p class="animate-pulse text-xl font-bold text-blue-600">No Result</p>
         </div>
     }
 
-    @if (Model.Users.Count == 0 && (bool)ViewData["filters"])
-    {
-        <div class="mt-3 flex h-full w-full justify-center">
-            <p class="animate-pulse text-xl font-bold text-blue-600">No Result</p>
-        </div>
-    }
+
 
     <div class="m-auto w-full md:w-[90%]">
 

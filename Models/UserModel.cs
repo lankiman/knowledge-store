@@ -14,6 +14,10 @@ namespace e_learning.Models
         [Required]
         public string? Lastname { get; set; }
 
+
+        public virtual ICollection<IdentityUserClaim<int>>? Claims { get; set; }
+
+
         [Column(TypeName = "nvarchar(100)")] public string? MiddleName { get; set; }
     }
 }

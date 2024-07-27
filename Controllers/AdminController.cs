@@ -36,8 +36,7 @@ namespace e_learning.Controllers
                 ViewData["filters"] = true;
             }
 
-            Console.WriteLine($"{filters} from controller");
-
+            Console.WriteLine(result);
             return View(result);
         }
 

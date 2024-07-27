@@ -7,6 +7,7 @@ using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging.Rules;
 
 
 namespace e_learning.Services
@@ -35,55 +36,45 @@ namespace e_learning.Services
             return users;
         }
 
-        // private async Task<IQueryable<UserModel>> FilterUsers(IQueryable<UserModel> users, string filters)
-        // {
-        //     switch (filters)
-        //     {
-        //         case "subscribed":
-        //             users = users.Where(
-        //                 user => userManager.GetClaimsAsync(user).Result.Any(c => c.Type == "Subscribed"));
-        //             break;
-        //         case "unsubscribed":
-        //             users = users.Where(
-        //                 user => userManager.GetClaimsAsync(user).Result.Any(c => c.Type != "Subscribed"));
-        //             break;
-        //     }
-        //
-        //
-        //     return users;
-        // }
-
-        private async Task<IQueryable<UserModel>> FilterUsers(IQueryable<UserModel> users, string filters)
+        private async Task<Dictionary<string, IList<Claim>>> GetUserClaims(IQueryable<UserModel> users)
         {
-            // Fetch the users into memory
-            var userList = await users.ToListAsync();
+            var claimsDictionary = new Dictionary<string, IList<Claim>>();
 
-            // Create a dictionary to hold user-claims associations
-            var claimsDictionary = new Dictionary<UserModel, IList<Claim>>();
-
-            // Populate the dictionary with user-claims pairs
-            foreach (var user in userList)
+            foreach (var user in users)
             {
-                claimsDictionary[user] = await userManager.GetClaimsAsync(user);
+                try
+                {
+                    var userClaims = await userManager.GetClaimsAsync(user);
+
+                    claimsDictionary[user.Id] = userClaims;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    return null;
+                }
             }
 
-            // Filter users based on the claims
-            switch (filters.ToLower())
+            return claimsDictionary;
+        }
+
+
+        private async Task<IQueryable<UserModel>> FilterUsers(Dictionary<string, IList<Claim>> claimsDictionary,
+            IQueryable<UserModel> users, string filters)
+        {
+            switch (filters)
             {
                 case "subscribed":
-                    userList = userList
-                        .Where(user => claimsDictionary[user].Any(c => c.Type == "Subscribed"))
-                        .ToList();
+                    users = users
+                        .Where(user => claimsDictionary[user.Id].Any(c => c.Type == "Subscribed"));
                     break;
                 case "unsubscribed":
-                    userList = userList
-                        .Where(user => !claimsDictionary[user].Any(c => c.Type == "Subscribed"))
-                        .ToList();
+                    users = users
+                        .Where(user => claimsDictionary[user.Id].Any(c => c.Type != "Subscribed"));
                     break;
             }
 
-            // Convert the filtered list back to IQueryable
-            return userList.AsQueryable();
+            return users;
         }
 
 
@@ -118,6 +109,14 @@ namespace e_learning.Services
         {
             var users = await GetUsers();
 
+            var userClaims = new Dictionary<string, IList<Claim>>();
+
+            if (users.Count() > 0)
+            {
+                userClaims = await GetUserClaims(users);
+            }
+
+
             searchTerm = string.IsNullOrEmpty(searchTerm) ? "" : searchTerm.ToLower();
 
             int? pageSize = 10;
@@ -128,15 +127,11 @@ namespace e_learning.Services
                     u.Firstname.ToLower().Contains(searchTerm) || u.Lastname.ToLower().Contains(searchTerm));
             }
 
-            Console.WriteLine($"{filters} from service");
 
             if (!string.IsNullOrEmpty(filters))
             {
-                Console.WriteLine($"{filters} from service condtion");
-                users = await FilterUsers(users, filters);
-                Console.WriteLine($"{users.Count()} from condition method call");
+                users = await FilterUsers(userClaims, users, filters);
             }
-
 
             var result = new AllUsersViewModel
             {
