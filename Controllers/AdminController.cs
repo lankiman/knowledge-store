@@ -26,17 +26,14 @@ namespace e_learning.Controllers
         {
             var result = await adminService.GetAllUsers(searchTerm: search, currentPage: currentPage, filters: filters);
 
-            if (!string.IsNullOrEmpty(search))
-            {
-                ViewData["search"] = true;
-            }
 
-            if (!string.IsNullOrEmpty(filters))
-            {
-                ViewData["filters"] = true;
-            }
+            ViewData["search"] = !string.IsNullOrEmpty(search);
 
-            Console.WriteLine(result);
+
+            ViewData["filters"] = !string.IsNullOrEmpty(filters);
+
+
+            Console.WriteLine($"{result.Filters} from controller");
             return View(result);
         }
 

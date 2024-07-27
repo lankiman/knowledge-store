@@ -36,41 +36,18 @@ namespace e_learning.Services
             return users;
         }
 
-        private async Task<Dictionary<string, IList<Claim>>> GetUserClaims(IQueryable<UserModel> users)
-        {
-            var claimsDictionary = new Dictionary<string, IList<Claim>>();
 
-            foreach (var user in users)
-            {
-                try
-                {
-                    var userClaims = await userManager.GetClaimsAsync(user);
-
-                    claimsDictionary[user.Id] = userClaims;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                    return null;
-                }
-            }
-
-            return claimsDictionary;
-        }
-
-
-        private async Task<IQueryable<UserModel>> FilterUsers(Dictionary<string, IList<Claim>> claimsDictionary,
-            IQueryable<UserModel> users, string filters)
+        private async Task<IQueryable<UserModel>> FilterUsers(IQueryable<UserModel> users, string filters)
         {
             switch (filters)
             {
                 case "subscribed":
                     users = users
-                        .Where(user => claimsDictionary[user.Id].Any(c => c.Type == "Subscribed"));
+                        .Where(user => user.Claims.Any(c => c.ClaimType.Contains("Subscribed")));
                     break;
                 case "unsubscribed":
                     users = users
-                        .Where(user => claimsDictionary[user.Id].Any(c => c.Type != "Subscribed"));
+                        .Where(user => user.Claims.Any(c => !c.ClaimType.Contains("Subscribed")));
                     break;
             }
 
@@ -109,13 +86,6 @@ namespace e_learning.Services
         {
             var users = await GetUsers();
 
-            var userClaims = new Dictionary<string, IList<Claim>>();
-
-            if (users.Count() > 0)
-            {
-                userClaims = await GetUserClaims(users);
-            }
-
 
             searchTerm = string.IsNullOrEmpty(searchTerm) ? "" : searchTerm.ToLower();
 
@@ -130,7 +100,7 @@ namespace e_learning.Services
 
             if (!string.IsNullOrEmpty(filters))
             {
-                users = await FilterUsers(userClaims, users, filters);
+                users = await FilterUsers(users, filters);
             }
 
             var result = new AllUsersViewModel
@@ -143,6 +113,9 @@ namespace e_learning.Services
                 SearchTerm = searchTerm,
                 Filters = filters
             };
+
+            Console.WriteLine($"{result.Users.Count} from service");
+
             return result;
         }
 
