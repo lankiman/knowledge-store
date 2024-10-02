@@ -1,4 +1,5 @@
-﻿using e_learning.Data;
+﻿using System.Security.Claims;
+using e_learning.Data;
 using e_learning.DataTransfersObjects;
 using e_learning.Models;
 using e_learning.Services.Interfaces;
@@ -6,6 +7,8 @@ using e_learning.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging.Rules;
+
 
 namespace e_learning.Services
 {
@@ -15,30 +18,49 @@ namespace e_learning.Services
         IUserDetailsService userDetailsService)
         : BaseService(eLearningContext, userManager, userDetailsService), IAdminService
     {
-        public async Task<AdminDto> GetAuthenticatedAdmin()
-        {
-            var user = await UserDetailsService.GetUser();
-            return new AdminDto(user!);
-        }
-
         private async Task<List<UserModel>> GetAllUsersModel()
         {
             var users = await eLearningContext!.Users.ToListAsync();
             return users;
         }
 
-        private async Task<List<UserDto>> GetUsers()
+        private async Task<IQueryable<UserModel>> GetUsers()
         {
             var currentUser = await UserDetailsService.GetUser();
 
             var instructorsIds = await eLearningContext.Instructors.Select(i => i.Id).ToListAsync();
 
-            var users = await eLearningContext!.Users.Where(user =>
-                    !instructorsIds.Contains(user.Id) && user.Id != currentUser.Id).Select(user => new UserDto(user))
-                .ToListAsync();
+            var users = eLearningContext!.Users.Where(user =>
+                !instructorsIds.Contains(user.Id) && user.Id != currentUser.Id);
 
             return users;
         }
+
+
+        private async Task<IQueryable<UserModel>> FilterUsers(IQueryable<UserModel> users, string filters)
+        {
+            switch (filters)
+            {
+                case "subscribed":
+                    users = users
+                        .Where(user => user.Claims.Any(c => c.ClaimType.Contains("Subscribed")));
+                    break;
+                case "unsubscribed":
+                    users = users
+                        .Where(user => user.Claims.Any(c => !c.ClaimType.Contains("Subscribed")));
+                    break;
+            }
+
+            return users;
+        }
+
+
+        public async Task<AdminDto> GetAuthenticatedAdmin()
+        {
+            var user = await UserDetailsService.GetUser();
+            return new AdminDto(user!);
+        }
+
 
         public async Task<UserDto> GetUserDetails(string userId)
         {
@@ -54,19 +76,46 @@ namespace e_learning.Services
 
         public int GetUsersCount()
         {
-            var count = GetUsers().Result.Count;
+            var result = GetUsers().Result.ToList();
 
-            return count;
+            return result.Count;
         }
 
-        public async Task<AllUsersViewModel> GetAllUsers(string? term = "")
+        public async Task<AllUsersViewModel> GetAllUsers(int currentPage = 1, string? searchTerm = "",
+            string? filters = "")
         {
             var users = await GetUsers();
 
+
+            searchTerm = string.IsNullOrEmpty(searchTerm) ? "" : searchTerm.ToLower();
+
+            int? pageSize = 10;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                users = users.Where(u =>
+                    u.Firstname.ToLower().Contains(searchTerm) || u.Lastname.ToLower().Contains(searchTerm));
+            }
+
+
+            if (!string.IsNullOrEmpty(filters))
+            {
+                users = await FilterUsers(users, filters);
+            }
+
             var result = new AllUsersViewModel
             {
-                Users = users
+                Users = users.Skip((int)((currentPage - 1) * pageSize)).Take((int)pageSize)
+                    .Select(user => new UserDto(user)).ToList(),
+
+                CurrentPage = currentPage,
+                TotalPages = (int)(users.Count() / pageSize),
+                SearchTerm = searchTerm,
+                Filters = filters
             };
+
+            Console.WriteLine($"{result.Users.Count} from service");
+
             return result;
         }
 
@@ -77,7 +126,6 @@ namespace e_learning.Services
                 .Select(i => new InstructorDto(i)).ToListAsync();
 
             return instructors;
-
         }
 
         public async Task<IActionResult> AddInstructor(UserModel? user)
@@ -92,27 +140,26 @@ namespace e_learning.Services
                     {
                         Id = user.Id
                     };
-                     eLearningContext.Instructors.Add(instructor);
-                    
-                    var changes=eLearningContext.SaveChanges();
+                    eLearningContext.Instructors.Add(instructor);
+
+                    var changes = eLearningContext.SaveChanges();
 
                     if (changes > 1)
                     {
                         return new OkResult();
                     }
-                    else
-                    {
-                        await userManager.RemoveFromRoleAsync(user, "Instructor");
-                        eLearningContext.Instructors.Remove(instructor);
-                        return new BadRequestResult();
-                    }
+
+                    await userManager.RemoveFromRoleAsync(user, "Instructor");
+                    eLearningContext.Instructors.Remove(instructor);
+                    return new BadRequestResult();
                 }
 
                 return new OkResult();
             }
             catch (Exception ex)
-            { Console.WriteLine(ex.InnerException.Message);
-               return new ObjectResult(new { Message = $"An error occurred: {ex.Message}" }) { StatusCode = 500 };
+            {
+                Console.WriteLine(ex.InnerException.Message);
+                return new ObjectResult(new { Message = $"An error occurred: {ex.Message}" }) { StatusCode = 500 };
             }
         }
     }
