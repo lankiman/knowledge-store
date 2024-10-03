@@ -2,9 +2,9 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="h-[100vh] px-[10%] pt-[80px] pb-[30px] flex flex-col items-center justify-center text-center md:flex-row md:px-[5%]">
-    <div class="flex flex-auto flex-col items-center justify-center text-center md:flex-[3] md:text-left md:items-start">
-        <h1 class="text-2xl font-bold sm:text-3xl md:text-5xl">
+<div class="flex h-[100vh] flex-col items-center justify-center py-[10%] pb-[30px] pt-[80px] text-center sm:pt-6 md:flex-row md:py-[15%] md:mt-10">
+    <div class="flex flex-auto flex-col items-center justify-center text-center md:flex-[3] md:text-left md:items-start md:pt-6">
+        <h1 class="text-2xl font-bold sm:text-3xl md:text-4xl">
             Gain New Knowledge <br /> Every day, Anytime <br /> and Anywhere
         </h1>
         <p class="py-4">
@@ -19,38 +19,93 @@
         <img class="" src="~/images/heropic.svg" />
     </div>
 </div>
-<div class="px-[5%] py-[100px] flex w-full flex-col items-stretch justify-center gap-11 bg-blue-300 md:flex-row">
-    <div class="flex-1 card w-full flex-col items-center justify-center p-8 text-center">
-        <h2 class="font-primary border-2 mb-3 border-double border-white bg-white text-2xl font-bold text-violet-900">Our Courses</h2>
-        <ul class="m-2 divide-y divide-slate-200 text-blue-900">
-            <li class="py-2 text-sm">Chemistry</li>
-            <li class="py-2 text-sm"> Physics</li>
-            <li class="py-2 text-sm">Mathematics</li>
-            <li class="py-2 text-sm">Pharmaceutical Chemistry</li>
-            <li class="py-2 text-sm">Biochemistry</li>
-            <li class="py-2 text-sm">Human Anatomy</li>
-            <li class="py-2 text-sm">Human Physiology</li>
-        </ul>
+
+<h2 class="mt-8 text-center text-xl font-bold">Our Products</h2>
+
+<div class="flex w-full flex-col items-center justify-center gap-5 md:flex-row">
+    <div class="flex-1 card m-6 w-full">
+        <img class="aspect-square" src="~/images/chem.jpeg" />
+        <div class="p-6">
+            <span class="font-bold">Chemistry</span>
+            <span class="block text-sm text-gray-500">Learn More</span>
+        </div>
     </div>
-    <div class="flex-1 card w-full flex-col items-center justify-center p-8 text-center">
-        <h2 class="font-primary border-2 mb-3 border-double border-white bg-white text-2xl font-bold text-violet-900">Our Materials</h2>
-        <ol class="m-2 divide-y divide-slate-200 text-blue-900">
-            <li class="py-2 text-sm">Chemistry 101 Sure Success</li>
-            <li class="py-2 text-sm">Physics 101 Sure Success</li>
-            <li class="py-2 text-sm">Maths 101 Sure Success</li>
-            <li class="py-2 text-sm">Chemistry 102 Sure Success</li>
-            <li class="py-2 text-sm">Physics 102 Sure Success</li>
-            <li class="py-2 text-sm">Maths 102 Sure Success</li>
-        </ol>
+    <div class="flex-1 card m-6 h-3/4 w-3/4">
+        <img class="aspect-square h-3/4 w-3/4" src="~/images/physics.jpeg" />
+        <div class="p-6">
+            <span class="font-bold">Physics</span>
+            <span class="block text-sm text-gray-500">Learn More</span>
+        </div>
+    </div>
+    <div class="flex-1 card h-3/4 w-3/4">
+        <img class="aspect-square h-3/4 w-3/4" src="~/images/math.jpeg" />
+        <div>
+            <span class="font-bold">Maths</span>
+            <span class="block text-sm text-gray-500">Learn More</span>
+        </div>
+    </div>
+    <div class="card">
+        <img src="~/images/pharmchem.jpeg" />
+        <div>
+            <span class="font-bold">Pharmaceutical Chemistry</span>
+            <span class="block text-sm text-gray-500">Learn More</span>
+        </div>
+    </div>
+    <div class="card">
+        <img src="~/images/biochem.jpeg" />
+        <div>
+            <span class="font-bold">BioChemistry</span>
+            <span class="block text-sm text-gray-500">Learn More</span>
+        </div>
+    </div>
+    <div class="card">
+        <img src="~/images/anat.jpeg" />
+        <div>
+            <span class="font-bold">Human Anatomy</span>
+            <span class="block text-sm text-gray-500">Learn More</span>
+        </div>
+    </div>
+    <div class="card">
+        <img src="~/images/physio.jpeg" />
+        <div>
+            <span class="font-bold">Human Physiology</span>
+            <span class="block text-sm text-gray-500">Learn More</span>
+        </div>
     </div>
 </div>
+
+@*<div class="flex w-full flex-col items-stretch justify-center gap-11 bg-blue-300 px-[5%] py-[100px] md:flex-row">
+        <div class="flex-1 card w-full flex-col items-center justify-center p-8 text-center">
+            <h2 class="font-primary border-2 mb-3 border-double border-white bg-white text-2xl font-bold text-violet-900">Our Courses</h2>
+            <ul class="m-2 divide-y divide-slate-200 text-blue-900">
+                <li class="py-2 text-sm">Chemistry</li>
+                <li class="py-2 text-sm"> Physics</li>
+                <li class="py-2 text-sm">Mathematics</li>
+                <li class="py-2 text-sm">Pharmaceutical Chemistry</li>
+                <li class="py-2 text-sm">Biochemistry</li>
+                <li class="py-2 text-sm">Human Anatomy</li>
+                <li class="py-2 text-sm">Human Physiology</li>
+            </ul>
+        </div>
+        <div class="flex-1 card w-full flex-col items-center justify-center p-8 text-center">
+            <h2 class="font-primary border-2 mb-3 border-double border-white bg-white text-2xl font-bold text-violet-900">Our Materials</h2>
+            <ol class="m-2 divide-y divide-slate-200 text-blue-900">
+                <li class="py-2 text-sm">Chemistry 101 Sure Success</li>
+                <li class="py-2 text-sm">Physics 101 Sure Success</li>
+                <li class="py-2 text-sm">Maths 101 Sure Success</li>
+                <li class="py-2 text-sm">Chemistry 102 Sure Success</li>
+                <li class="py-2 text-sm">Physics 102 Sure Success</li>
+                <li class="py-2 text-sm">Maths 102 Sure Success</li>
+            </ol>
+        </div>
+    </div>*@
 
 <div class="flex flex-col items-center space-y-20 py-20">
     <h2 class="w-3/4 text-center text-3xl font-semibold text-blue-950 lg:text-6xl lg:w-2/4">
         Sure Exam Success
         <span class="text-[#f18337]">for you</span>
-          !
+        !
     </h2>
-  
+
     <iframe class="h-[200px] w-4/5 lg:w-4/5 lg:h-[530px]" src="https://www.youtube-nocookie.com/embed/y2KsRhTW0bs?si=q5cG919UNmg51VzC&amp;controls=0" title="Welcome to E-Lesson" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
