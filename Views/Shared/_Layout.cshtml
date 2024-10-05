@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <nav class="z-[1000] fixed top-0 flex h-20 w-full flex-row items-center justify-between bg-white px-6">
+        <nav class="z-[1000] fixed top-0 flex h-20 w-full flex-row items-center justify-between bg-white p-2.5 shadow">
             <a asp-action="Index" asp-controller="Home">
                 <div class="flex items-center justify-between px-2">
                     <img src="~/images/logo.svg" class="mr-3.5 size-6" />
@@ -59,22 +59,22 @@
         @RenderBody()
     </main>
 
-    <footer class="font-open-sans bg-[#080F24] bottom-0 box-border px-12 py-16 text-white lg:px-20">
+    <footer class="font-open-sans bottom-0 box-border bg-[#080F24] px-12 py-16 text-white lg:px-20">
         <div class="flex flex-col justify-center lg:flex-row">
             <div class="box-border flex w-full flex-col items-baseline gap-10 lg:flex-row lg:gap-40 lg:w-4/5">
                 <div class="mb-10 flex flex-col lg:mb-0">
                     <h3 class="text-sm font-bold">Company</h3>
                     <ul class="mt-2 p-0">
-                        <li class="text-[#D4D4D4] mb-2 text-sm">
+                        <li class="mb-2 text-sm text-[#D4D4D4]">
                             <a class="">Our Products</a>
                         </li>
-                        <li class="text-[#D4D4D4] mb-2 text-sm">
+                        <li class="mb-2 text-sm text-[#D4D4D4]">
                             <a class="">About Us</a>
                         </li>
-                        <li class="text-[#D4D4D4] mb-2 text-sm">
+                        <li class="mb-2 text-sm text-[#D4D4D4]">
                             <a class="">Blogs</a>
                         </li>
-                        <li class="text-[#D4D4D4] mb-2 text-sm">
+                        <li class="mb-2 text-sm text-[#D4D4D4]">
                             <a class="">FAQs</a>
                         </li>
                     </ul>
@@ -84,13 +84,13 @@
                         Make a difference
                     </h3>
                     <ul class="mt-2 p-0">
-                        <li class="text-[#D4D4D4] mb-2 text-sm">
+                        <li class="mb-2 text-sm text-[#D4D4D4]">
                             <a>Become an ambassodor</a>
                         </li>
-                        <li class="text-[#D4D4D4] mb-2 text-sm">
+                        <li class="mb-2 text-sm text-[#D4D4D4]">
                             <a>Volunteer</a>
                         </li>
-                        <li class="text-[#D4D4D4] mb-2 text-sm">
+                        <li class="mb-2 text-sm text-[#D4D4D4]">
                             <a>Sponser Us</a>
                         </li>
                     </ul>
@@ -98,36 +98,36 @@
                 <div class="mb-10 flex flex-col lg:mb-0">
                     <h3 class="text-sm font-bold">Contact us</h3>
                     <ul class="mt-2 p-0">
-                        <li class="text-[#D4D4D4] mb-2 text-sm">
+                        <li class="mb-2 text-sm text-[#D4D4D4]">
                             <a>support@elesson.com</a>
                         </li>
-                        <li class="text-[#D4D4D4] mb-2 text-sm">
+                        <li class="mb-2 text-sm text-[#D4D4D4]">
                             <a href="tel:+2348038357252">+234-803-835-7252</a>
                         </li>
-                        <li class="text-[#D4D4D4] mb-2 text-sm">
+                        <li class="mb-2 text-sm text-[#D4D4D4]">
                             <a href="tel:+2347040672132">+234-704-067-2132</a>
                         </li>
-                        <li class="text-[#D4D4D4] mb-2 text-sm">
+                        <li class="mb-2 text-sm text-[#D4D4D4]">
                             <a>E-Lesson Institute, NDU Wilberforce Island</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="mt-10 box-border flex w-full flex-col justify-center lg:w-1/2 lg:mt-0">
-                <div class="bg-[#F18337] mx-auto w-full rounded-md p-5 lg:w-4/5">
-                    <h3 class="text-[#2C1403] mt-0 text-base">Subscribe to our Newsletter</h3>
+                <div class="mx-auto w-full rounded-md bg-[#F18337] p-5 lg:w-4/5">
+                    <h3 class="mt-0 text-base text-[#2C1403]">Subscribe to our Newsletter</h3>
                     <form class="mt-2 block">
-                        <input class="w-4/5 px-4 py-2 text-sm text-black" placeholder="Input your Full name"/>
-                        <input class="mt-2 w-4/5 px-4 py-2 text-sm text-black" placeholder="Input your email address"/>
-                        <button type="submit" class="bg-[#080F24] border-[#080F24] mt-1 block rounded-r-md border px-3 py-2">Subscribe</button>
+                        <input class="w-4/5 px-4 py-2 text-sm text-black" placeholder="Input your Full name" />
+                        <input class="mt-2 w-4/5 px-4 py-2 text-sm text-black" placeholder="Input your email address" />
+                        <button type="submit" class="mt-1 block rounded-r-md border border-[#080F24] bg-[#080F24] px-3 py-2">Subscribe</button>
                     </form>
-                    <p class="text-[#230f01] my-2 text-sm">Get latest exciting updates!</p>
+                    <p class="my-2 text-sm text-[#230f01]">Get latest exciting updates!</p>
                 </div>
             </div>
-         </div>
-        <hr class="border-[#D4D4D4] my-5 border-t"/>
+        </div>
+        <hr class="my-5 border-t border-[#D4D4D4]" />
         <div class="mt-5 flex flex-col items-center justify-between lg:flex-row">
-            <img src="~/images/logo.svg" alt="logo" class="w-[97px] h-[42.083px] mb-5 lg:mb-0"/>
+            <img src="~/images/logo.svg" alt="logo" class="mb-5 h-[42.083px] w-[97px] lg:mb-0" />
             <div class="mb-5 lg:mb-0">
                 <ul class="flex gap-3 text-sm lg:gap-10">
                     <li>

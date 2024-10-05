@@ -21,7 +21,7 @@ body {
 }
 
 .card {
-    @apply relative overflow-hidden rounded bg-blue-200 shadow-md;
+    @apply relative overflow-hidden rounded shadow-md;
 }
 
 .btn {
@@ -506,7 +506,6 @@ body {
 @keyframes moveSideToSide {
     0% {
         left: 0;
-        
     }
 
     50% {
