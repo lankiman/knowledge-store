@@ -39,7 +39,7 @@ namespace e_learning.Controllers
 
                         if (result.Roles != null && result.Roles.Contains("Learner"))
                         {
-                            return RedirectToAction("LearnerDashboard", "Learner");
+                            return RedirectToAction("Dashboard", "Learner");
                         }
 
                         break;
@@ -53,6 +53,7 @@ namespace e_learning.Controllers
                         break;
                 }
             }
+
             return View(userLoginInfo);
         }
 
