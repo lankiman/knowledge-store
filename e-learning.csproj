@@ -10,12 +10,16 @@
 
 	<ItemGroup>
 		<Compile Remove="ViewModel\**" />
+		<Compile Remove="Views\User\**" />
 		<Compile Remove="wwwroot\lib\**" />
 		<Content Remove="ViewModel\**" />
+		<Content Remove="Views\User\**" />
 		<Content Remove="wwwroot\lib\**" />
 		<EmbeddedResource Remove="ViewModel\**" />
+		<EmbeddedResource Remove="Views\User\**" />
 		<EmbeddedResource Remove="wwwroot\lib\**" />
 		<None Remove="ViewModel\**" />
+		<None Remove="Views\User\**" />
 		<None Remove="wwwroot\lib\**" />
 	</ItemGroup>
 
@@ -40,9 +44,5 @@
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
 	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Views\User\" />
 	</ItemGroup>
 </Project>
