@@ -45,4 +45,12 @@
 	<ItemGroup>
 	  <Folder Include="Views\User\" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <EditorConfigFiles Remove="C:\Users\mac\CodeGit\knowledge-store\.editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="C:\Users\mac\CodeGit\knowledge-store\.editorconfig" />
+	</ItemGroup>
 </Project>
