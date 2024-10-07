@@ -42,15 +42,4 @@
 	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Views\User\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EditorConfigFiles Remove="C:\Users\mac\CodeGit\knowledge-store\.editorconfig" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="C:\Users\mac\CodeGit\knowledge-store\.editorconfig" />
-	</ItemGroup>
 </Project>
