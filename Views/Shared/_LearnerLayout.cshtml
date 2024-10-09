@@ -7,18 +7,15 @@
     <title>home</title>
 
     <!-- font awesome cdn link  -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-
-    <!-- custom css file link  -->
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
 </head>
 <body>
     <header class="z-[1000] sticky left-0 right-0 top-0 w-[100%] items-center justify-between border border-b p-6">
         <section class="flex w-[100%] items-center justify-between">
-            <a href="home.html" class="logo">Educa.</a>
+            <a html" class=""><img src="~/images/logo.svg" /></a>
 
-            <form action="search.html" method="post" class="search-form">
+            <form action="search.html" method="post" class="flex">
                 <input type="text"
                        name="search_box"
                        required
@@ -36,8 +33,8 @@
 
             <div class="profile">
                 <img src="images/pic-1.jpg" class="image" alt="" />
-                <h3 class="name">shaikh anas</h3>
-                <p class="role">studen</p>
+                <h3 class="name">Robert-Wilson</h3>
+                <p class="role"></p>
                 <a href="profile.html" class="btn">view profile</a>
                 <div class="flex-btn">
                     <a href="login.html" class="option-btn">login</a>
@@ -50,5 +47,10 @@
     <main role="main" class="w-full">
         @RenderBody()
     </main>
+    <footer>
+    </footer>
+    <script src="~/js/dashboardScript.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
