@@ -1,14 +1,13 @@
 ﻿@model e_learning.DataTransfersObjects.InstructorDto
 
 @{
-    Layout = "_InstructorLayout";
-    ViewData["Title"] = "Instructor";
+    ViewData["Title"] = "Dashboard";
 }
 
 <h1 class="mb-4 text-xl font-bold text-blue-800">Dashboard</h1>
 <div class="flex h-fit w-full flex-col justify-evenly gap-2 md:flex-row md:gap-0">
-    <div class="h-[6rem] flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
-        <div class="w-[0.5rem] h-full rounded-md bg-blue-600"></div>
+    <div class="flex h-[6rem] w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
+        <div class="h-full w-[0.5rem] rounded-md bg-blue-600"></div>
         <div class="flex w-full items-center justify-between p-2">
             <div class="">
                 <p class="font-bold text-blue-700">My Lessons</p>
@@ -21,8 +20,8 @@
             </div>
         </div>
     </div>
-    <div class="h-[6rem] flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
-        <div class="w-[0.5rem] h-full rounded bg-blue-400"></div>
+    <div class="flex h-[6rem] w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
+        <div class="h-full w-[0.5rem] rounded bg-blue-400"></div>
         <div class="flex w-full items-center justify-between p-2">
             <div class="">
                 <p class="font-bold text-blue-700"></p>
@@ -35,12 +34,12 @@
             </div>
         </div>
     </div>
-    <div class="h-[6rem] flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
-        <div class="w-[0.5rem] h-full rounded bg-blue-300"></div>
+    <div class="flex h-[6rem] w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
+        <div class="h-full w-[0.5rem] rounded bg-blue-300"></div>
         <div class="p-2">Most Viewed Video</div>
     </div>
-    <div class="h-[6rem] flex w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
-        <div class="w-[0.5rem] h-full rounded bg-blue-200"></div>
+    <div class="flex h-[6rem] w-full rounded-md bg-white shadow-md shadow-gray-400 md:w-[20%]">
+        <div class="h-full w-[0.5rem] rounded bg-blue-200"></div>
         <div class="p-2">Most Liked Video</div>
     </div>
 </div>

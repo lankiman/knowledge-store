@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<header class="z-20 sticky top-0">
+    <nav class="flex h-[5rem] w-full items-center bg-white p-6 drop-shadow-md">
+        <div class="mr-4 flex w-fit items-center rounded pr-4">
+            <span data-inr_sidebar-menu-icon class="material-symbols-outlined inr_sidebar-menu-icon cursor-pointer text-medium_gray hover:text-dark_gray">
+                menu_open
+            </span>
+            <img  src="~/images/logo_e-lesson.png" alt="logo"/>
+            <h1 class="ml-2 hidden font-bold uppercase text-accent md:flex">Instructor</h1>
+        </div>
+        <div class="inr_search-container relative ml-auto min-w-fit md:m-auto">
+            <div class="inr_dsk_search-bar hidden h-[3rem] w-[24rem] items-center md:flex">
+                <span class="material-symbols-outlined absolute left-1 text-medium_gray">
+                    search
+                </span>
+                <input type="text" placeholder="Search accross your dashboard" class="h-full w-full rounded-lg bg-accent_lightestGray pl-8 outline-accent focus:outline-2"/>
+            </div>
+
+            <div class="inr_mbl_search-container relative flex items-center md:hidden">
+                <span data-inr-mb-search-icon class="material-symbols-outlined inr_mbl-search-icon cursor-pointer text-medium_gray">
+                    search
+                </span>
+                <div data-inr_mbl_search-bar class="inr_mbl_search-bar absolute -right-[100px] top-[2rem] hidden h-[3rem] w-[20rem] items-center md:flex">
+                    <input type="text" placeholder="Search accross your dashboard" class="h-full w-full rounded-lg bg-accent_lightestGray pl-6 outline-accent focus:outline-2" />
+                </div>
+            </div>
+        </div>
+        <div class="ml-2">
+            <div class="flex items-center gap-2">
+                <div class="flex w-fit cursor-pointer gap-1 md:p-2 md:rounded-md md:border md:border-accent_lightestGray md:hover:bg-accent_lightestGray">
+                    <span class="material-symbols-outlined text-medium_gray">
+                        movie_edit
+                    </span>
+                    <span class="hidden text-accent md:flex">Create</span>
+                </div>
+                <img id="profilePicBurger" class="size-10 cursor-pointer" src="~/images/profile-pic.png" alt="profile_picture" />
+            </div>
+            @* <div id="inr_profile_menu" class="absolute right-2 top-[4.5rem] hidden size-40 flex-col items-center rounded-md bg-white p-2"> *@
+            @*     <button class="btn flex w-full items-center justify-center gap-1 bg-gray-50 hover:bg-amber-100" onclick="location.href='@Url.Action("Logout", "Account")'"> *@
+            @*         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"> *@
+            @*             <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" /> *@
+            @*         </svg> *@
+            @*         <span>Logout</span> *@
+            @*     </button> *@
+            @* </div> *@
+        </div>
+    </nav>
+</header>

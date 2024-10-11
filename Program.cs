@@ -1,7 +1,6 @@
 using e_learning.Data;
 using e_learning.Extensions;
 using e_learning.Models;
-using e_learning.Services.Default;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -51,16 +50,16 @@ if (!app.Environment.IsDevelopment())
 // context.Database.Migrate();
 
 //Initialize Identity User Roles
-//
-// var roleInitializer = new RoleInitializerService(app.Services);
-//
-// await roleInitializer.InitializeRoles();
-//
-// //Initialize Default Admin User
-//
-// var adminInitializer = new AdminUserInitializerService(app.Services, builder.Configuration);
-//
-// await adminInitializer.InitializeAdmin();
+
+//var roleInitializer = new RoleInitializerService(app.Services);
+
+//await roleInitializer.InitializeRoles();
+
+//Initialize Default Admin User
+
+//var adminInitializer = new AdminUserInitializerService(app.Services, builder.Configuration);
+
+//await adminInitializer.InitializeAdmin();
 
 app.UseStaticFiles();
 

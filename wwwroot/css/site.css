@@ -3,6 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --animation-duration: 300ms;
+    --animation-timing-curve: ease-in-out;
+    --test-color: red;
+}
+
 html {
     position: relative;
     min-height: 100%;
@@ -12,12 +18,12 @@ body {
     margin: 0;
     box-sizing: border-box;
     padding: 0;
-    height: 100%;
-    width: 100%;
 }
 
-* {
+*, *::before, *::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 .card {
@@ -518,3 +524,121 @@ body {
         transform: rotate(0deg);
     }
 }
+
+.inr_sidebar-menu-icon {
+    font-size: 26px !important;
+}
+
+.inr_sidebar-list-item {
+    @apply relative w-full;
+}
+
+    .inr_sidebar-list-item.active {
+        @apply bg-accent_lightestGray;
+    }
+
+        .inr_sidebar-list-item.active .inr_sidebar-link-text {
+            @apply font-bold text-accent;
+        }
+
+        .inr_sidebar-list-item.active::before {
+            content: "";
+            @apply absolute left-0 h-full w-[5px] bg-accent;
+        }
+
+    .inr_sidebar-list-item:hover {
+        @apply bg-accent_lightestGray;
+    }
+
+    .inr_sidebar-list-item.active .inr_custom-icon-class {
+        font-variation-settings: "FILL" 1;
+        @apply text-accent;
+    }
+
+.inr_sidebar-link {
+    @apply flex w-full cursor-pointer items-center justify-center gap-4 py-[.5rem];
+}
+
+.inr_custom-icon-class {
+    font-size: 26px !important;
+    @apply text-accent_lightGray;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.inr_sidebar-profile-image {
+    @apply size-[30px];
+    transition: var(--animation-duration) var(--animation-timing-curve);
+}
+
+/*.inr_sidebar-top-text {
+    @apply hidden;
+}*/
+
+.inr_sidebar-menu {
+    transition: width var(--animation-duration) var(--animation-timing-curve);
+}
+
+    .inr_sidebar-menu .hidden-sidebar {
+        width: 0;
+        opacity: 0;
+        transition: opacity var(--animation-duration) var(--animation-timing-curve);
+    }
+
+    .inr_sidebar-menu.sidebar-open .hidden-sidebar {
+        width: 100%;
+        opacity: 1
+    }
+
+    .inr_sidebar-menu .inr_sidebar-top {
+        height: 2rem;
+        transition: height var(--animation-duration) var(--animation-timing-curve);
+    }
+
+    .inr_sidebar-menu.sidebar-open .inr_sidebar-top {
+        height: 10rem;
+    }
+
+    .inr_sidebar-menu.sidebar-open {
+        @apply fixed w-[12rem] md:sticky md:w-[20rem];
+    }
+inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
+    @apply flex md:hidden;
+}
+
+
+.inr_sidebar-menu.sidebar-open .inr_sidebar-profile-image {
+    @apply size-[100px];
+}
+
+
+    .inr_sidebar-menu .inr_sidebar-link {
+        @apply justify-start pl-[1.3rem];
+    }
+
+    .inr_sidebar-menu .inr_sidebar-top .hidden-sidebar {
+        width: 100%;
+    }
+/*main {
+    margin-left:0;
+    transition: all var(--animation-duration) ease-in-out;
+}
+
+.inr_sidebar-menu.sidebar-open ~ main {
+    @apply ml-[4rem] md:ml-0;
+    
+}*/
+
+.inr_sidebar-mobile-overlay {
+    @apply hidden;
+    opacity: 0;
+    transition: opacity var(--animation-duration) var(--animation-timing-curve);
+}
+
+.inr_sidebar-menu.sidebar-open ~ .inr_sidebar-mobile-overlay {
+    @apply block md:hidden;
+    opacity: 0.7; 
+    transition: opacity var(--animation-duration) var(--animation-timing-curve);
+}
+
+
