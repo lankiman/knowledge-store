@@ -9,10 +9,10 @@
     --test-color: red;
 }
 
-html {
+/*html {
     position: relative;
     min-height: 100%;
-}
+}*/
 
 body {
     margin: 0;
@@ -600,7 +600,7 @@ body {
     }
 
     .inr_sidebar-menu.sidebar-open {
-        @apply fixed w-[12rem] md:sticky md:w-[20rem];
+        @apply fixed w-[12rem] md:sticky md:w-[15rem];
     }
 inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
     @apply flex md:hidden;

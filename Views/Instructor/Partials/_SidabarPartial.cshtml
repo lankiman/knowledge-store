@@ -10,7 +10,7 @@
 }
 
 
-<aside data-inr_sidebar-menu class="inr_sidebar-menu z-10 h-[calc(100svh-5rem)] flex-shrink-0 sticky left-0 top-[5rem] flex w-[5rem] flex-col items-center border-r border-r-accent_lightGray bg-white pt-[1rem]">
+<aside data-inr_sidebar-menu class="inr_sidebar-menu z-10 h-[calc(100dvh-5rem)] flex-shrink-0 sticky bottom-0 left-0 top-[5rem] flex w-[5rem] flex-col items-center overflow-hidden border-r border-r-accent_lightGray bg-white pt-[1rem] shadow-md">
     <div class="inr_sidebar-top mb-[1rem] flex w-full flex-col items-center gap-2">
         <a>
             <img class="inr_sidebar-profile-image" src="~/images/profile-pic.png" alt="proile_pic" />
@@ -43,14 +43,34 @@
                     </span>
                 </a>
             </li>
+            <li class="inr_sidebar-list-item @GetActiveClass("Analytics")">
+                <a class="inr_sidebar-link">
+                    <span class="material-symbols-outlined inr_custom-icon-class">
+                        vr180_create2d
+                    </span>
+                    <span class="hidden-sidebar inr_sidebar-link-text">
+                        Studio
+                    </span>
+                </a>
+            </li>
 
             <li class="inr_sidebar-list-item @GetActiveClass("Analytics")">
-                <a  class="inr_sidebar-link">
+                <a class="inr_sidebar-link">
                     <span class="material-symbols-outlined inr_custom-icon-class">
                         analytics
                     </span>
                     <span class="hidden-sidebar inr_sidebar-link-text">
                         Analytics
+                    </span>
+                </a>
+            </li>
+            <li class="inr_sidebar-list-item @GetActiveClass("Analytics")">
+                <a class="inr_sidebar-link">
+                    <span class="material-symbols-outlined inr_custom-icon-class">
+                        forum
+                    </span>
+                    <span class="hidden-sidebar inr_sidebar-link-text">
+                        Comments
                     </span>
                 </a>
             </li>
