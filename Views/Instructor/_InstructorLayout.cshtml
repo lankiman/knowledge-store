@@ -1,4 +1,6 @@
-﻿@{
+﻿@using e_learning.ViewModels;
+@{
+    var instructorDetails = Context.Items["InstructorDetails"] as LayoutsViewModel;
 
 }
 
@@ -18,7 +20,7 @@
     <!--Main Body-->
     <div class="flex h-full w-full">
         <!--Side Bar-->
-        <partial name="Partials/_SidabarPartial.cshtml" />
+        <partial name="Partials/_SidabarPartial.cshtml" model="@instructorDetails" />
         <!--Main Content-->
         <main role="main" class="flex-1 overflow-y-auto bg-accent_lightestGray p-4">
             @RenderBody()

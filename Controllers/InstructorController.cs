@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using e_learning.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using e_learning.Services.Interfaces;
 using e_learning.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 
 namespace e_learning.Controllers
@@ -11,12 +12,22 @@ namespace e_learning.Controllers
         ILessonService lessonService,
         IInstructorService instructorService) : Controller
     {
+
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userDetails = await instructorService.GetUserDetails();
+                context.HttpContext.Items["InstructorDetails"] = new LayoutsViewModel(userDetails);
+            }
+
+            await next();
+        }
+
         // GET:Creator
         public async Task<IActionResult> InstructorDashboard()
         {
             var instructor = await instructorService.GetInstructor();
-
-
             return View(instructor);
         }
 
