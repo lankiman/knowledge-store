@@ -17,6 +17,16 @@ namespace e_learning.Services
         private readonly string _contentRoot = webHostEnvironment.ContentRootPath;
 
 
+        public async Task<UserDto> GetUserDetails()
+        {
+            var user = await UserDetailsService.GetUser();
+            if (user == null)
+            {
+                return null;
+            }
+            return new UserDto(user);
+        }
+
         public async Task<InstructorDto> GetInstructor()
         {
             var userId = await UserDetailsService!.GetUserId();
@@ -78,7 +88,7 @@ namespace e_learning.Services
             catch (Exception ex)
             {
                 return new ObjectResult(new { Message = "Server Error Occured" })
-                    { StatusCode = 500 };
+                { StatusCode = 500 };
             }
         }
 
@@ -97,7 +107,7 @@ namespace e_learning.Services
             {
                 File.Delete(videoFilePath);
                 return new ObjectResult(new { Message = "Server Error Occured" })
-                    { StatusCode = 500 };
+                { StatusCode = 500 };
             }
         }
 
@@ -126,11 +136,11 @@ namespace e_learning.Services
 
                     File.Delete(videoFilePath);
                     return new ObjectResult(new { Message = "Server Error Occured" })
-                        { StatusCode = 500 };
+                    { StatusCode = 500 };
             }
 
             return new ObjectResult(new { Message = "Server Error Occured" })
-                { StatusCode = 500 };
+            { StatusCode = 500 };
         }
 
         public async Task<List<LessonDto>> GetInstructorLessons()
@@ -171,5 +181,7 @@ namespace e_learning.Services
 
             return lessons;
         }
+
+
     }
 }

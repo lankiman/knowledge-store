@@ -1,0 +1,19 @@
+﻿
+@model e_learning.Views.Instructor.ViewModels.StudioViewModel
+@{
+    ViewData["Title"] = "Studio";
+}
+
+
+<div class="inr_studio">
+
+    <nav>
+        <div>Upload Video</div>
+        <div>Create Series</div>
+    </nav>
+    <!--Form Section-->
+    <div>
+        <partial name="Partials/_SidabarPartial.cshtml" model="@Model.LessonModel" />
+    </div>
+
+</div>
