@@ -28,7 +28,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Remove="wwwroot\js\DashboardScript.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="wwwroot\js\DashboardScript.js" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Include="tailwind.config.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\js\dashboardScript.js" />
 	</ItemGroup>
 
 	<ItemGroup>

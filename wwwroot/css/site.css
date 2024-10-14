@@ -3,6 +3,19 @@
 @tailwind components;
 @tailwind utilities;
 
+<<<<<<< HEAD
+* {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
+
+html {
+=======
 :root {
     --animation-duration: 300ms;
     --animation-timing-curve: ease-in-out;
@@ -10,6 +23,7 @@
 }
 
 /*html {
+>>>>>>> 90ebc9838113be503da70636b0db42ef340c3c7c
     position: relative;
     min-height: 100%;
 }*/
@@ -31,7 +45,7 @@ body {
 }
 
 .btn {
-    @apply cursor-pointer rounded-full px-3 py-2 text-sm font-bold tracking-wider;
+    @apply cursor-pointer px-3 py-2 text-sm font-bold tracking-wider;
 }
 
 .glitch {
