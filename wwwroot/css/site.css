@@ -35,7 +35,7 @@ body {
 }
 
 .btn {
-    @apply cursor-pointer rounded-full px-3 py-2 text-sm font-bold tracking-wider;
+    @apply cursor-pointer px-3 py-2 text-sm font-bold tracking-wider;
 }
 
 .glitch {

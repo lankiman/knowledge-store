@@ -27,14 +27,14 @@ toggleBtn.onclick = (e) => {
     }
 }
 
-let profile = document.querySelector('.header .flex .profile');
+let profile = document.querySelector('.profile');
 
 document.querySelector('#user-btn').onclick = () => {
-    profile.classList.toggle('active');
-    search.classList.remove('active');
+    profile.classList.toggle('hidden');
+    search.classList.remove('hidden');
 }
 
-let search = document.querySelector('.header .flex .search-form');
+let search = document.querySelector('.search-form');
 
 document.querySelector('#search-btn').onclick = () => {
     search.classList.toggle('active');
