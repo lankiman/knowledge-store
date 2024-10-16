@@ -22,6 +22,9 @@ function customToggleElement(element, classname) {
 sidebarMenuButton.addEventListener("click", () => customToggleElement(sidebarMenu, "sidebar-open"));
 mobileSearchButton.addEventListener("click", () => toggleElement(mobileSearchBar));
 
+//lesson Details form
+const lessonDetailsForm = document.querySelector("[data-file-details-form-container]");
+
 //inr_video list functions
 //IIFE
 const fileHandler = (function () {
@@ -116,6 +119,8 @@ const fileHandler = (function () {
             videoFileDropZone.classList.add("hidden")
             uploadingFilesContainer.classList.remove("hidden")
             uploadingFilesContainer.classList.add("flex")
+            lessonDetailsForm.classList.remove("hidden")
+            lessonDetailsForm.classList.add("flex")
             uploadingFilesContainer.classList.remove("md:w-1/2", "self-center", "items-center", "justify-center")
         }
     }
@@ -125,6 +130,8 @@ const fileHandler = (function () {
             videoFileDropZone.classList.remove("hidden")
             uploadingFilesContainer.classList.add("hidden")
             uploadingFilesContainer.classList.remove("flex")
+            lessonDetailsForm.classList.remove("flex")
+            lessonDetailsForm.classList.add("hidden")
         }
     }
 
