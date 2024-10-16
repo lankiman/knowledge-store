@@ -11,6 +11,10 @@ namespace e_learning.Data
 
         public DbSet<InstructorModel>? Instructors { get; set; }
 
+        public DbSet<PlaylistModel>? Playlists { get; set; }
+
+        public DbSet<PlaylistLessonsModel>? PlaylistsLessons { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
