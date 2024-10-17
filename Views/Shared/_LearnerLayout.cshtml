@@ -9,13 +9,12 @@
     <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
 </head>
 <body class="bg-gray-100 font-sans text-gray-900">
-
     <header class="fixed z-50 w-full bg-white shadow-md">
-        <section class="container mx-auto flex items-center justify-between p-4">
+        <section class="flex w-full items-center justify-between p-4">
             <a href="home.html" class="text-2xl font-bold text-blue-600">E-LESSON</a>
 
             <!-- Search Form -->
-            <form action="search.html" method="post" class="relative hidden items-center md:flex">
+            <form data-search-bar action="search.html" method="post" class="relative hidden items-center md:flex">
                 <input type="text"
                        name="search_box"
                        required
@@ -27,17 +26,30 @@
                 </button>
             </form>
 
-            <!-- Icons -->
-            <div class="flex space-x-4 text-xl text-gray-600">
-                <div id="menu-btn" class="fas fa-bars cursor-pointer hover:text-blue-500 md:hidden"></div>
-                <div id="search-btn" class="fas fa-search cursor-pointer hover:text-blue-500 md:hidden"></div>
-            </div>
-            <!-- Profile Dropdown -->
-            <div class="card flex items-center md:flex">
-                <img src="~/images/profile-pic.png" class="border-2 h-10 w-10 rounded-full border-gray-300" alt="Profile Picture" />
-                <div class="">
-                    <h3 class="font-semibold">@User.Identity.Name</h3>
-                    <a class="text-blue-500 hover:underline" onclick="location.href='@Url.Action("Logout", "Account")'">Logout</a>
+            <div class="relative flex items-center gap-2">
+                <!-- Icons -->
+                <div class="flex gap-2 text-gray-600">
+                    <div id="menu-btn" class="fas fa-bars cursor-pointer hover:text-blue-500 md:hidden"></div>
+                    <div data-search-btn id="search-btn" class="fas fa-search cursor-pointer hover:text-blue-500 md:hidden">
+
+                    </div>
+                    <form data-mobile-search-bar action="search.html" method="post" class="absolute right-0 top-10 hidden items-center md:hidden">
+                        <input type="text"
+                               name="search_box"
+                               required
+                               placeholder="Search courses..."
+                               class="w-64 rounded-full border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               maxlength="100" />
+                    </form>
+                </div>
+
+                <!-- Profile Dropdown -->
+                <div class="relative flex items-center md:flex">
+                    <img src="~/images/profile-pic.png" class="border-2 h-10 w-10 rounded-full border-gray-300" alt="Profile Picture" />
+                    <div class="profile-menu-dropdown absolute hidden">
+                        <h3 class="font-semibold">@User.Identity.Name</h3>
+                        <a class="text-blue-500 hover:underline" onclick="location.href='@Url.Action("Logout", "Account")'">Logout</a>
+                    </div>
                 </div>
             </div>
         </section>

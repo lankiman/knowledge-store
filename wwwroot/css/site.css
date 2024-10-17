@@ -39,6 +39,12 @@ body {
 .btn {
     @apply cursor-pointer px-3 py-2 text-sm font-bold tracking-wider;
 }
+.searchbar{
+    @apply absolute left-20 top-16;
+}
+.default-searchbar {
+    @apply relative m-auto hidden;
+}
 
 .glitch {
     position: relative;

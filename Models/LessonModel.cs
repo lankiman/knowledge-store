@@ -44,6 +44,9 @@ namespace e_learning.Models
         public DateTime UpdatedAt { get; set; }
 
         [Required]
+        public bool IsPublished { get; set; } = false;
+
+        [Required]
         public AcessType LessonAcessType { get; set; } = AcessType.Subscribed;
 
         [ForeignKey("LessonOwner")][Required] public string? LessonOwnerId { get; set; }
