@@ -11,6 +11,9 @@ namespace e_learning.Models
         [Required]
         public string LessonId { get; set; }
 
+        [Required]
+        public DateTime LessonAddedAt { get; set; }
+
         [ForeignKey(nameof(LessonId))]
         [Required] public LessonModel Lesson { get; set; }
 

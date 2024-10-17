@@ -14,9 +14,6 @@ namespace e_learning.ViewModels
         [Required(ErrorMessage = "Please choose a category")]
         public LessonCategory LessonCategory { get; set; }
 
-        [DataType(DataType.Date)] public string? CreatedAt { get; set; }
-
-
 
         [Required(ErrorMessage = "Please Choose a Video File")]
         // [CustomFileExtensionValidation]

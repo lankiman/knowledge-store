@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using e_learning.Data;
 
@@ -11,9 +12,11 @@ using e_learning.Data;
 namespace e_learning.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    partial class ELearningDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241017093012_PlaylistSchemaAndUpdatesForOtherModels")]
+    partial class PlaylistSchemaAndUpdatesForOtherModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,10 +229,6 @@ namespace e_learning.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("LessonThumbnailUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("LessonVideoUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
@@ -279,10 +278,6 @@ namespace e_learning.Migrations
 
                     b.Property<int>("PlaylistLikes")
                         .HasColumnType("int");
-
-                    b.Property<string>("PlaylistThumbnailUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PlaylistTittle")
                         .IsRequired()
@@ -351,9 +346,6 @@ namespace e_learning.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("ProfilePicUrl")
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

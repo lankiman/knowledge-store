@@ -32,6 +32,11 @@ namespace e_learning.Models
         [Required]
         public string? LessonVideoUrl { get; set; }
 
+
+        [Column(TypeName = "nvarchar(100)")]
+        [Required]
+        public string? LessonThumbnailUrl { get; set; }
+
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 

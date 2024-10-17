@@ -16,6 +16,10 @@ namespace e_learning.Models
         [Column(TypeName = "nvarchar(2000)")]
         [Required] public string PlaylistDescription { get; set; }
 
+        [Column(TypeName = "nvarchar(100)")]
+        [Required]
+        public string? PlaylistThumbnailUrl { get; set; }
+
         [Required]
         public AcessType PlaylistAcessType { get; set; } = AcessType.Subscribed;
 

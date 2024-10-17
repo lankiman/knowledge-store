@@ -19,6 +19,8 @@ namespace e_learning.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<PlaylistLessonsModel>().HasKey(pl => new { pl.PlaylistId, pl.LessonId });
+
             modelBuilder.Entity<UserModel>().HasIndex(u => u.PhoneNumber).IsUnique();
 
             modelBuilder.Entity<InstructorModel>().Property(i => i.Rating).HasPrecision(3, 2);
