@@ -4,16 +4,16 @@
     ViewData["Title"] = "Studio";
 }
 
+<div class="inr_studio h-full w-full">
 
-<div class="inr_studio">
-
-    <nav>
-        <div>Upload Video</div>
-        <div>Create Series</div>
+    <nav class="inr_studio-nav flex gap-2">
+        <div  class="w-fit cursor-pointer border p-2 @(Model.ActiveView=="lesson"?"text-accent bg-white shadow-md":"")">Upload Video</div>
+        <div class="w-fit cursor-pointer border p-2 text-accent_lightGray">Create Series</div>
+        
     </nav>
     <!--Form Section-->
-    <div>
-        <partial name="Partials/_SidabarPartial.cshtml" model="@Model.LessonModel" />
+    <div class="@(Model.ActiveView=="lesson" ?"":"hidden") mt-2 h-full w-full">
+        <partial name="Partials/_UploadLessonPartial" model="@Model.LessonModel" />
     </div>
 
 </div>

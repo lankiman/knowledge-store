@@ -98,7 +98,7 @@ namespace e_learning.Services
             {
                 using (var fileStream = new FileStream(videoFilePath, FileMode.Create))
                 {
-                    await model.LessonVideo.CopyToAsync(fileStream);
+                    await model.LessonThumbnail.CopyToAsync(fileStream);
                 }
 
                 return new OkResult();

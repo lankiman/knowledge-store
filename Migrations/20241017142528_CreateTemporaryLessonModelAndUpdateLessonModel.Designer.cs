@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using e_learning.Data;
 
@@ -11,9 +12,11 @@ using e_learning.Data;
 namespace e_learning.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    partial class ELearningDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241017142528_CreateTemporaryLessonModelAndUpdateLessonModel")]
+    partial class CreateTemporaryLessonModelAndUpdateLessonModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

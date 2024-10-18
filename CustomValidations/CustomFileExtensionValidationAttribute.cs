@@ -1,20 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using e_learning.ViewModels;
 
 namespace e_learning.CustomValidations
 {
-    public class CustomFileExtensionValidationAttribute : ValidationAttribute
+    public class CustomFileExtensionValidationAttribute(string[] allowedExtension) : ValidationAttribute
     {
-        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+        private readonly string[] _allowedExtension = allowedExtension;
+        protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
         {
-            CreateLessonViewModel instanceCreateLessonViewModel =
-                (CreateLessonViewModel)validationContext.ObjectInstance;
+            //CreateLessonViewModel instanceCreateLessonViewModel =
+            //    (CreateLessonViewModel)validationContext.ObjectInstance;
 
-            if (!instanceCreateLessonViewModel.LessonVideo.Name.Contains(".mp4"))
+
+            if (value is IFormFile file)
             {
-                return new ValidationResult("Only Mp4 Files are allowed");
-            }
+                string fileExtension = Path.GetExtension(file.FileName);
+                if (!_allowedExtension.Contains(fileExtension.ToLower()))
+                {
+                    return new ValidationResult($"Only {string.Join(", ", _allowedExtension)} are allowed ");
 
+                }
+            }
             return ValidationResult.Success;
         }
     }

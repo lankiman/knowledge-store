@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
 
 namespace e_learning.Models
 {
@@ -14,6 +14,14 @@ namespace e_learning.Models
         [Required]
         public string? Lastname { get; set; }
 
+        [Required]
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        [Required]
+        public DateTime UpdatedAt { get; set; }
+
+        [Column(TypeName = "nvarchar(100)")]
+        public string? ProfilePicUrl { get; set; }
 
         public virtual ICollection<IdentityUserClaim<int>>? Claims { get; set; }
 

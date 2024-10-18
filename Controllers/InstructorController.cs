@@ -56,7 +56,6 @@ namespace e_learning.Controllers
         }
 
         [HttpPost]
-        [HttpPost]
         [RequestSizeLimit(268435456)]
         [RequestFormLimits(MultipartBodyLengthLimit = 268435456)]
         public async Task<IActionResult> CreateLesson(CreateLessonViewModel lessonData)

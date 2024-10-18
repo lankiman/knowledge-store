@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using e_learning.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using e_learning.Enums;
 
 
 namespace e_learning.Models
@@ -33,7 +33,23 @@ namespace e_learning.Models
         public string? LessonVideoUrl { get; set; }
 
 
-        [ForeignKey("LessonOwner")] [Required] public string? LessonOwnerId { get; set; }
+        [Column(TypeName = "nvarchar(100)")]
+        [Required]
+        public string? LessonThumbnailUrl { get; set; }
+
+        [Required]
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        [Required]
+        public DateTime UpdatedAt { get; set; }
+
+        [Required]
+        public bool IsPublished { get; set; } = false;
+
+        [Required]
+        public AcessType LessonAcessType { get; set; } = AcessType.Subscribed;
+
+        [ForeignKey("LessonOwner")][Required] public string? LessonOwnerId { get; set; }
 
         [Required] public InstructorModel? LessonOwner { get; set; }
     }

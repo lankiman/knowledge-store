@@ -17,7 +17,6 @@ namespace e_learning.Extensions
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-
             services.AddScoped<RoleInitializerService>();
             services.AddScoped<AdminUserInitializerService>();
         }

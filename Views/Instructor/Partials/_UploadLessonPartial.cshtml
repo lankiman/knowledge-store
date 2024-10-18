@@ -3,4 +3,27 @@
 }
 
 
-<div>Upload lesson here</div>
+<div class="flex h-full w-full flex-col p-4 md:flex-row">
+    <form class="inr_video-form flex-1 flex flex-col text-sm md:text-md">
+        <div data-drag-drop-container class="drag-drop-container border-2 flex h-full w-full flex-col items-center justify-center rounded-md border-accent_lightGray bg-white p-2 text-center shadow-lg md:self-center md:w-1/2">
+            <input data-file-input class="file-input hidden" type="file" accept=".mp4" multiple />
+            <span class="material-symbols-outlined animate-pulse" style="font-size:5rem">
+                upload
+            </span>
+            <p>Drag and drop video files here to upload</p>
+            <p class="text-sm text-accent_lightGray">your lessons will be private till you publish them</p>
+            <button type="button" data-select-files-btn class="select-files-btn mt-4 w-fit rounded-md bg-accent p-4 text-white hover:bg-black">Select Files</button>
+        </div>
+        <div data-uploading-files-container class="uploading-files-container border-2 hidden h-full w-full flex-col rounded-md border-accent_lightGray p-2 shadow-lg md:flex-row">
+            <div data-files-upload-part class="files-upload-part flex h-full w-full flex-col items-center justify-evenly gap-4">
+                <h1 class="text-xl font-bold">Review Video Files to Upload</h1>
+                <ul data-selected-files-list class="selected-files-list flex flex-col gap-2"></ul>
+                <button type="button" data-files-upload-button class="files-upload-button border-2 w-[10rem] rounded-lg border-black bg-accent p-4 px-2 py-1 text-white shadow-md hover:border-white hover:bg-black">Upload
+                </button>
+            </div>
+            <div data-file-details-form-container class="file-details-form-container hidden h-full w-full bg-green-600">
+                <partial name="Partials/_VideoDetailsFormPartial"/>
+            </div>
+        </div>
+    </form>
+</div>

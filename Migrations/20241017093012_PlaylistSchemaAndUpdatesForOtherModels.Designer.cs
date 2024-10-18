@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using e_learning.Data;
 
@@ -11,9 +12,11 @@ using e_learning.Data;
 namespace e_learning.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    partial class ELearningDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241017093012_PlaylistSchemaAndUpdatesForOtherModels")]
+    partial class PlaylistSchemaAndUpdatesForOtherModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -204,9 +207,6 @@ namespace e_learning.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsPublished")
-                        .HasColumnType("bit");
-
                     b.Property<int>("LessonAcessType")
                         .HasColumnType("int");
 
@@ -228,10 +228,6 @@ namespace e_learning.Migrations
                     b.Property<string>("LessonOwnerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LessonThumbnailUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LessonVideoUrl")
                         .IsRequired()
@@ -283,10 +279,6 @@ namespace e_learning.Migrations
                     b.Property<int>("PlaylistLikes")
                         .HasColumnType("int");
 
-                    b.Property<string>("PlaylistThumbnailUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("PlaylistTittle")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
@@ -297,73 +289,6 @@ namespace e_learning.Migrations
                     b.HasKey("PlaylistId");
 
                     b.ToTable("Playlists");
-                });
-
-            modelBuilder.Entity("e_learning.Models.TemporaryLessonDetailsModel", b =>
-                {
-                    b.Property<string>("TemporaryLessonDetialsId")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("TemporaryLessonAcessType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TemporaryLessonCategory")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("TemporaryLessonDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<string>("TemporaryLessonId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TemporaryLessonName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("TemporaryLessonThumbnailUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("TemporaryLessonDetialsId");
-
-                    b.HasIndex("TemporaryLessonId")
-                        .IsUnique();
-
-                    b.ToTable("TemporaryLessonsDetails");
-                });
-
-            modelBuilder.Entity("e_learning.Models.TemporaryLessonModel", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("CreatedAt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("LessonOwnerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("LessonVideoStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TempLessonUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("UpdatedAt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LessonOwnerId");
-
-                    b.ToTable("TemporaryLessons");
                 });
 
             modelBuilder.Entity("e_learning.Models.UserModel", b =>
@@ -421,9 +346,6 @@ namespace e_learning.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("ProfilePicUrl")
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -554,36 +476,9 @@ namespace e_learning.Migrations
                     b.Navigation("Playlist");
                 });
 
-            modelBuilder.Entity("e_learning.Models.TemporaryLessonDetailsModel", b =>
-                {
-                    b.HasOne("e_learning.Models.TemporaryLessonModel", "TemporaryLesson")
-                        .WithOne("TemporaryLessonDetails")
-                        .HasForeignKey("e_learning.Models.TemporaryLessonDetailsModel", "TemporaryLessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TemporaryLesson");
-                });
-
-            modelBuilder.Entity("e_learning.Models.TemporaryLessonModel", b =>
-                {
-                    b.HasOne("e_learning.Models.InstructorModel", "instructor")
-                        .WithMany()
-                        .HasForeignKey("LessonOwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("instructor");
-                });
-
             modelBuilder.Entity("e_learning.Models.InstructorModel", b =>
                 {
                     b.Navigation("InstructorLessons");
-                });
-
-            modelBuilder.Entity("e_learning.Models.TemporaryLessonModel", b =>
-                {
-                    b.Navigation("TemporaryLessonDetails");
                 });
 
             modelBuilder.Entity("e_learning.Models.UserModel", b =>

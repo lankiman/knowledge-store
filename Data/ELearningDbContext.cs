@@ -11,9 +11,19 @@ namespace e_learning.Data
 
         public DbSet<InstructorModel>? Instructors { get; set; }
 
+        public DbSet<PlaylistModel>? Playlists { get; set; }
+
+        public DbSet<PlaylistLessonsModel>? PlaylistsLessons { get; set; }
+
+        public DbSet<TemporaryLessonModel>? TemporaryLessons { get; set; }
+
+        public DbSet<TemporaryLessonDetailsModel>? TemporaryLessonsDetails { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<PlaylistLessonsModel>().HasKey(pl => new { pl.PlaylistId, pl.LessonId });
 
             modelBuilder.Entity<UserModel>().HasIndex(u => u.PhoneNumber).IsUnique();
 

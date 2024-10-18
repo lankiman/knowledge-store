@@ -3,16 +3,15 @@
 @tailwind components;
 @tailwind utilities;
 
-<<<<<<< HEAD
-* {
-    font-family: 'Nunito', sans-serif;
+/** {
+    
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     outline: none;
     border: none;
     text-decoration: none;
-}
+}*/
 
 :root {
     --animation-duration: 300ms;
@@ -20,11 +19,14 @@
     --test-color: red;
 }
 
+<<<<<<< HEAD
 html {
     position: relative;
     min-height: 100%;
 }
 
+=======
+>>>>>>> 2147b7397cc36b9aafc4ac365cecd8dc59fec397
 body {
     margin: 0;
     box-sizing: border-box;
@@ -32,6 +34,7 @@ body {
 }
 
 *, *::before, *::after {
+    /*font-family: 'Nunito', sans-serif;*/
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -43,6 +46,12 @@ body {
 
 .btn {
     @apply cursor-pointer px-3 py-2 text-sm font-bold tracking-wider;
+}
+.searchbar{
+    @apply absolute left-20 top-16;
+}
+.default-searchbar {
+    @apply relative m-auto hidden;
 }
 
 .glitch {
@@ -648,4 +657,23 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
     @apply block md:hidden;
     opacity: 0.7;
     transition: opacity var(--animation-duration) var(--animation-timing-curve);
+<<<<<<< HEAD
 }
+=======
+}
+.dragover{
+    @apply bg-gray-200;
+}
+.selected-files-list-item {
+    @apply flex justify-evenly gap-4 bg-gray-100 p-2;
+}
+
+.selected-files-list-item > p{
+    @apply w-3/4 break-words;
+}
+.selected-files-list-item > button span {
+    @apply hover:text-accent;
+}
+
+
+>>>>>>> 2147b7397cc36b9aafc4ac365cecd8dc59fec397
