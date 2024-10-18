@@ -110,6 +110,7 @@ const fileHandler = (function () {
     function updateUiOnFileAdded() {
         if (selectedFiles.length>1) {
             videoFileDropZone.classList.add("hidden")
+            videoFileDropZone.classList.remove("flex")
             uploadingFilesContainer.classList.remove("hidden")
             uploadingFilesContainer.classList.add("flex")
             uploadingFilesContainer.classList.add("md:w-1/2", "self-center", "items-center", "justify-center")
@@ -120,7 +121,6 @@ const fileHandler = (function () {
             uploadingFilesContainer.classList.remove("hidden")
             uploadingFilesContainer.classList.add("flex")
             lessonDetailsForm.classList.remove("hidden")
-            lessonDetailsForm.classList.add("flex")
             uploadingFilesContainer.classList.remove("md:w-1/2", "self-center", "items-center", "justify-center")
         }
     }
@@ -128,9 +128,9 @@ const fileHandler = (function () {
     function updateUiOnFileRemoved() {
         if (selectedFiles.length === 0) {
             videoFileDropZone.classList.remove("hidden")
+            videoFileDropZone.classList.add("flex")
             uploadingFilesContainer.classList.add("hidden")
             uploadingFilesContainer.classList.remove("flex")
-            lessonDetailsForm.classList.remove("flex")
             lessonDetailsForm.classList.add("hidden")
         }
     }

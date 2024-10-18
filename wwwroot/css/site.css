@@ -665,5 +665,46 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
 .selected-files-list-item > button span {
     @apply hover:text-accent;
 }
+.video-details-input-container{
+    @apply border-2 relative inset-2 flex h-fit w-full rounded-md border-accent_lightGray;    
+}
+/*.video-details-input-container > input{
+    @apply h-[3rem] w-full rounded-md border-none bg-accent_lightestGray pl-10;
+}
+.video-details-input-container-textarea {
+    @apply border-2 relative inset-2 mb-2 flex h-fit w-full rounded-md border-accent_lightGray;
+}
+    .video-details-input-container-textarea > textarea {
+        @apply h-[10rem] w-full rounded-md bg-accent_lightestGray pl-10 pt-2.5;
+    }
+.video-details-input-container-textarea > textarea::placeholder {
+    @apply font-bold italic text-accent_lightGray;
+
+}
+.video-details-input-container-textarea > span {
+    @apply absolute left-2 top-2 text-accent_lightGray;
+}
+
+.video-details-input-container-textarea > label {
+    @apply z-10 absolute -top-2.5 left-8 hidden bg-accent_lightestGray px-2 font-bold tracking-widest text-accent;
+}
+.video-details-input-container-textarea > textarea:focus ~ label {
+    @apply block;
+}
+.video-details-input-container > input::placeholder {
+        @apply font-bold italic text-accent_lightGray;
+    }
+.video-details-input-container > span {
+    @apply absolute left-2 text-accent_lightGray;
+    }
+.video-details-input-container > input:focus ~ span{
+    @apply text-accent;
+    }
+.video-details-input-container > label {
+    @apply z-10 absolute -top-2.5 left-8 hidden bg-accent_lightestGray px-2 font-bold tracking-widest text-accent;
+}
+.video-details-input-container > input:focus ~ label {
+    @apply block;
+}*/
 
 
