@@ -665,9 +665,23 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
 .selected-files-list-item > button span {
     @apply hover:text-accent;
 }
-.video-details-input-container{
+.video-details-input-container {
     @apply border-2 relative inset-2 flex h-fit w-full rounded-md border-accent_lightGray;    
 }
+
+.video-details-input-label {
+    @apply absolute bg-accent_lightestGray px-2 font-bold text-accent;
+}
+.video-details-input-icons {
+    @apply absolute text-accent_lightGray;
+}
+.select-thumbnail-icon {
+    font-size:7rem !important;
+    margin-left:-.5rem !important;
+    @apply cursor-pointer text-accent_lightGray hover:text-accent;
+}
+
+
 /*.video-details-input-container > input{
     @apply h-[3rem] w-full rounded-md border-none bg-accent_lightestGray pl-10;
 }

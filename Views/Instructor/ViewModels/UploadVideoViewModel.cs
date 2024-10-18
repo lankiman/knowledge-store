@@ -13,7 +13,7 @@ namespace e_learning.Views.Instructor.ViewModels
         public string? LessonDescription { get; set; }
 
         [Required(ErrorMessage = "Please choose a category")]
-        public LessonCategory LessonCategory { get; set; }
+        public LessonCategory? LessonCategory { get; set; }
 
 
         [Required(ErrorMessage = "Please choose Acess type")]

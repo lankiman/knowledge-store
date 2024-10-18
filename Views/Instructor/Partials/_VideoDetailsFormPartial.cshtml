@@ -4,19 +4,39 @@
     <div data-file-details-form-container class="file-details-form h-full w-full bg-accent_lightestGray shadow-lg">
         <form data-video-details-form class="video-details-form block h-full w-full p-4">
             <h1 class="mb-4 text-center text-xl font-bold uppercase text-accent">Video Details</h1>
-            <div class="video-details-input-container">
-                <input id="lesson-tittle" name="lesson-tittle" placeholder="Enter Lesson Tittle" type="text" aria-describedby="tittle" />
-                <span class="material-symbols-outlined">
+            <div class="video-details-input-container mb-4 items-center">
+                <input class="peer h-[3rem] w-full rounded-md bg-inherit pl-8 placeholder:font-bold placeholder:italic" id="lesson-tittle" name="lesson-tittle" placeholder="Enter Lesson Tittle" type="text" aria-describedby="tittle" />
+                <span class="material-symbols-outlined video-details-input-icons peer-focus:text-accent">
                     title
                 </span>
-                <label for="lesson-tittle">Tittle</label>
+                <label class="video-details-input-label -top-2.5 left-6 hidden peer-focus:block" for="lesson-tittle">Tittle</label>
             </div>
-            <div class="video-details-input-container">
-                <textarea id="lesson-description" name="lesson-description" placeholder="Enter Lesson Description"></textarea>
-                <span class="material-symbols-outlined">
+            <div class="video-details-input-container mb-2">
+                <textarea class="peer h-[10rem] w-full rounded-md bg-inherit pl-8 pt-4 placeholder:font-bold placeholder:italic" id="lesson-description" name="lesson-description" placeholder="Enter Lesson Description"></textarea>
+                <span class="material-symbols-outlined video-details-input-icons top-3 peer-focus:text-accent">
                     description
                 </span>
-                <label for="lesson-description">Description</label>
+                <label class="video-details-input-label -top-2.5 left-6 hidden peer-focus:block" for="lesson-description">Description</label>
+            </div>
+            <div class="video-details-input-container items-center has-[:focus]:border-accent">
+                <select class="peer h-[3rem] w-full rounded-md bg-inherit pl-8" asp-for="LessonCategory" asp-items="@Html.GetEnumSelectList(typeof(e_learning.Enums.LessonCategory))">
+                    <option selected disabled class="font-bold italic text-accent_lightestGray" value="">Select Lesson Category</option>
+                </select>
+                <span class="material-symbols-outlined video-details-input-icons top-3 peer-focus:text-accent">
+                    category
+                </span>
+                <label class="video-details-input-label -top-2.5 left-6 hidden peer-focus:block" for="lesson-category">Category</label>
+            </div>
+            <div class="relative mt-4 flex h-fit w-full">
+                <div class="flex flex-col">
+                    <label for="lesson-thumbnail" class="ml-1.5 text-sm font-bold text-accent">Choose Thumbnail<span class="text-xl text-red-600">*</span></label>
+                    <input accept=".jpg .png .gif" data-select-thumbnail-input class="hidden" type="file" />
+                    <span data-select-thumbnail-icon class="material-symbols-outlined select-thumbnail-icon">
+                        add_photo_alternate
+                    </span>
+                    <img data-thumbnail-preview-image class="hidden size-[7rem]" />
+                </div>
+                <fieldset></fieldset>
             </div>
         </form>
     </div>
