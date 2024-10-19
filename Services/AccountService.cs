@@ -55,35 +55,48 @@ public class AccountService(
         }
     }
 
-    private bool IsValidEmail(string email)
+    private static bool IsValidEmail(string email)
     {
         string pattern = @"^[^\s@]+@[^\s@]+\.[^\s@]+$";
-        Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+        Regex regex = new(pattern, RegexOptions.IgnoreCase);
         return regex.IsMatch(email);
     }
 
-    private async Task<string> UseEmailLogin(string loginIdentifier)
+    //private async Task<string> UseEmailLogin(string loginIdentifier)
+    //{
+
+    //    try
+    //    {
+    //        var result = await userManager!.FindByEmailAsync(loginIdentifier);
+
+    //        if (result != null)
+    //        {
+    //            return result.UserName!;
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Console.WriteLine($"Exception in LoginUser: {ex.Message}");
+    //        return $"An error occurred: {ex.Message}";
+    //    }
+
+    //    return "";
+    //}
+
+    private async Task<(string? userName, bool isError, bool notFound)> UseEmailLogin(string loginIdentifier)
     {
-        if (IsValidEmail(loginIdentifier))
+        try
         {
-            try
-            {
-                var result = await userManager!.FindByEmailAsync(loginIdentifier);
-
-                if (result != null)
-                {
-                    return result.UserName!;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Exception in LoginUser: {ex.Message}");
-                return $"An error occurred: {ex.Message}";
-            }
+            var result = await userManager!.FindByEmailAsync(loginIdentifier);
+            return (result?.UserName, false, result == null);
         }
-
-        return "";
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception in LoginUser: {ex.Message}");
+            return ($"An error occurred: {ex.Message}", true, false);
+        }
     }
+
 
     private async Task<UserModel?> GetUser(string userSearchParam)
     {
@@ -114,13 +127,22 @@ public class AccountService(
     public async Task<LoginResultDto> LoginUser(string loginIdentifier, string password,
         bool rememberMe)
     {
-        var userName = loginIdentifier;
 
-        var checkForUsername = UseEmailLogin(loginIdentifier);
+        var (userName, isError, notFound) = IsValidEmail(loginIdentifier)
+        ? await UseEmailLogin(loginIdentifier)
+        : (loginIdentifier, false, false);
 
-        if (checkForUsername != null && checkForUsername.Result != "")
+
+        if (isError)
         {
-            userName = checkForUsername.Result;
+            return new LoginResultDto(
+               new ObjectResult(new { Message = $"An error occurred: {userName}" })
+               { StatusCode = 500 }, null, null);
+        }
+
+        if (notFound)
+        {
+            return new LoginResultDto(new UnauthorizedResult(), null, null);
         }
 
         try
@@ -149,7 +171,7 @@ public class AccountService(
             Console.WriteLine($"Exception in LoginUser: {ex.Message}");
             return new LoginResultDto(
                 new ObjectResult(new { Message = $"An error occurred: {ex.Message}" })
-                    { StatusCode = 500 }, null, null);
+                { StatusCode = 500 }, null, null);
         }
     }
 
@@ -204,7 +226,7 @@ public class AccountService(
             Console.WriteLine($"Exception in RegisterUser: {ex.InnerException.Message}");
             return new RegisterResultDto(
                 new ObjectResult(new { Message = "Server Error Occured" })
-                    { StatusCode = 500 }, null!);
+                { StatusCode = 500 }, null!);
         }
     }
 }

@@ -178,10 +178,23 @@ fileHandler.init();
 //actual vidoe uploading logic
 const uploadVideoButton = document.querySelector("[data-files-upload-button]")
 
-uploadVideoButton.addEventListener("click", () => {
-    alert("do not leave or refresh the page while video uploads go on")
-})
+if (uploadVideoButton) {
+    uploadVideoButton.addEventListener("click", () => {
+        alert("do not leave or refresh the page while video uploads go on")
+    })
 
+}
+
+
+//Thumbnail choosing logic
+const selectThumbnailIcon = document.querySelector("[data-select-thumbnail-icon]")
+const selectThubmnailFileInuput = document.querySelector("[data-select-thumbnail-input]")
+const thumbnailPreviewImage = document.querySelector("[data-thumbnail-preview-image]")
+
+selectThumbnailIcon.addEventListener("click", () => {
+    selectThubmnailFileInuput.click();
+    console.log("i have been clicked now")
+})
 
 
 
