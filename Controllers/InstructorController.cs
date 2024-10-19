@@ -56,6 +56,12 @@ namespace e_learning.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> UploadLessonideo(IFormFile file)
+        {
+            var result = await instructorService.UploadLessonToTemp(file);
+        }
+
+        [HttpPost]
         [RequestSizeLimit(268435456)]
         [RequestFormLimits(MultipartBodyLengthLimit = 268435456)]
         public async Task<IActionResult> CreateLesson(CreateLessonViewModel lessonData)

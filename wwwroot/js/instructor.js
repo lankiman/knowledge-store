@@ -177,8 +177,23 @@ const fileHandler = (function () {
 
 fileHandler.init();
 
-//actual vidoe uploading logic
+//actual videe uploading logic
 const uploadVideoButton = document.querySelector("[data-files-upload-button]")
+
+
+function uploadFile(file) {
+    const req = new XMLHttpRequest();
+    req.open("POST", "/Instructor/UploadLessonVideo")
+    req.onload()
+}
+
+async function uploadFiles(files) {
+    for (let file of files) {
+        var result = await uploadFile(file)
+    }
+    
+}
+
 
 if (uploadVideoButton) {
     uploadVideoButton.addEventListener("click", () => {
