@@ -113,7 +113,8 @@ const fileHandler = (function () {
             videoFileDropZone.classList.remove("flex")
             uploadingFilesContainer.classList.remove("hidden")
             uploadingFilesContainer.classList.add("flex")
-            uploadingFilesContainer.classList.add("md:w-1/2", "self-center", "items-center", "justify-center")
+            uploadingFilesContainer.classList.add("uploading-contianer-visible")
+            uploadingFilesContainer.classList.remove("uploading-contianer-visible-width")
         }
 
         if (selectedFiles.length === 1) {
@@ -121,7 +122,8 @@ const fileHandler = (function () {
             uploadingFilesContainer.classList.remove("hidden")
             uploadingFilesContainer.classList.add("flex")
             lessonDetailsForm.classList.remove("hidden")
-            uploadingFilesContainer.classList.remove("md:w-1/2", "self-center", "items-center", "justify-center")
+            uploadingFilesContainer.classList.remove("uploading-contianer-visible")
+            uploadingFilesContainer.classList.add("uploading-contianer-visible-width")
         }
     }
 
@@ -190,10 +192,50 @@ if (uploadVideoButton) {
 const selectThumbnailIcon = document.querySelector("[data-select-thumbnail-icon]")
 const selectThubmnailFileInuput = document.querySelector("[data-select-thumbnail-input]")
 const thumbnailPreviewImage = document.querySelector("[data-thumbnail-preview-image]")
+const thumbnailSpinner = document.querySelector("[data-thumbnail-preview-spinner]")
+const removeThumbnailIcon = document.querySelector("[data-remove-thumbnail-icon]")
+function readFile(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = (e) => reject(new Error('Error reading file',e));
+        reader.readAsDataURL(file);
+    });
+}
 
 selectThumbnailIcon.addEventListener("click", () => {
     selectThubmnailFileInuput.click();
-    console.log("i have been clicked now")
+    
+})
+removeThumbnailIcon.addEventListener("click", () => {
+    selectThubmnailFileInuput.value = "";
+    thumbnailPreviewImage.classList.add("hidden")
+    thumbnailSpinner.classList.add("hidden")
+    selectThumbnailIcon.classList.remove("!hidden")
+})
+
+selectThubmnailFileInuput.addEventListener("change", (e) => {
+
+    const thubmnailImage = e.target.files[0];
+    //const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'] 
+
+    //if (thumbnailImage && !validImageTypes.includes(thubmnailImage.type)) {
+    //    alert("only .jpg, .png or .gif files are allowed")
+    //    return;
+    //}
+    thumbnailSpinner.classList.remove("hidden")
+
+    if (thubmnailImage) {
+        readFile(thubmnailImage).then((result) => {
+            if (result) {
+                thumbnailPreviewImage.src = `${result}`
+                thumbnailPreviewImage.classList.remove("hidden")
+                thumbnailSpinner.classList.add("hidden")
+                selectThumbnailIcon.classList.add("!hidden")
+            }
+        })
+    }
 })
 
 

@@ -17,7 +17,7 @@ namespace e_learning.Views.Instructor.ViewModels
 
 
         [Required(ErrorMessage = "Please choose Acess type")]
-        public AcessType LessonAcessType { get; set; }
+        public AcessType? LessonAcessType { get; set; }
 
         [CustomFileExtensionValidation([".png", ".jpg", ".gif"])]
         [Required(ErrorMessage = "Please Choose a Thumbnail")]

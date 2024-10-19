@@ -678,8 +678,18 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
 .select-thumbnail-icon {
     font-size:7rem !important;
     margin-left:-.5rem !important;
-    @apply cursor-pointer text-accent_lightGray hover:text-accent;
+    @apply w-fit cursor-pointer text-accent_lightGray hover:text-accent;
 }
+.uploading-contianer-visible {
+    @apply items-center justify-center self-center md:w-1/2;
+}
+.uploading-contianer-visible-width{
+    @apply lg:w-3/4;
+
+}
+
+
+
 
 
 /*.video-details-input-container > input{
