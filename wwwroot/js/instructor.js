@@ -194,14 +194,12 @@ async function uploadFiles(files) {
     
 }
 
-
 if (uploadVideoButton) {
     uploadVideoButton.addEventListener("click", () => {
         alert("do not leave or refresh the page while video uploads go on")
     })
 
 }
-
 
 //Thumbnail choosing logic
 const selectThumbnailIcon = document.querySelector("[data-select-thumbnail-icon]")
