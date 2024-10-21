@@ -687,6 +687,15 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
     @apply lg:w-3/4;
 
 }
+.files-uploading-list-item {
+    @apply flex flex-col gap-2 bg-gray-50 p-2;
+}
+.file-uploading-list-section {
+    @apply flex justify-evenly gap-4 bg-gray-100;
+}
+.file-uploading-name {
+    @apply w-3/4 break-words;
+}
 
 
 

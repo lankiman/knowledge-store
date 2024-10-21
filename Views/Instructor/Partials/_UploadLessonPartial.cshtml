@@ -15,16 +15,20 @@
             <button type="button" data-select-files-btn class="select-files-btn mt-4 w-fit rounded-md bg-accent p-4 text-white hover:bg-black">Select Files</button>
         </div>
         @*<partial name="Partials/_VideoDetailsFormPartial" />*@
-        <div data-uploading-files-container class="uploading-files-container border-2 hidden h-full w-full flex-col rounded-md border-accent_lightGray p-2 shadow-lg md:flex-row">
-            <div data-files-upload-part class="files-upload-part flex h-full w-full flex-col items-center justify-evenly gap-4">
-                <h1 class="text-xl font-bold">Review Video Files to Upload</h1>
-                <ul data-selected-files-list class="selected-files-list flex flex-col gap-2"></ul>
-                <button type="button" data-files-upload-button class="files-upload-button border-2 w-[10rem] rounded-lg border-black bg-accent p-4 px-2 py-1 text-white shadow-md hover:border-white hover:bg-black">
-                    Upload
-                </button>
-            </div>
-            <partial name="Partials/_VideoDetailsFormPartial" />
+    <div data-uploading-files-container class="uploading-files-container border-2 hidden h-full w-full flex-col rounded-md border-accent_lightGray p-2 shadow-lg md:flex-row">
+        <div data-files-upload-part class="files-upload-part flex h-full w-full flex-col items-center justify-evenly gap-4">
+            <h1 class="text-xl font-bold">Review Video Files to Upload</h1>
+            <ul data-selected-files-list class="selected-files-list flex flex-col gap-2"></ul>
+            <button type="button" data-files-upload-button class="files-upload-button border-2 w-[10rem] rounded-lg border-black bg-accent p-4 px-2 py-1 text-white shadow-md hover:border-white hover:bg-black">
+                Upload
+            </button>
         </div>
+        <div data-files-uploading-container class="files-uploading-container hidden h-full w-full flex-col items-center justify-evenly gap-4">
+            <h1 class="text-xl font-bold text-red-600">Files Are Being Uploaded Please Do not Leave Page !!!</h1>
+            <ul data-files-uploading-list class="files-uploading-list flex flex-col gap-2"></ul>
+        </div>
+        <partial name="Partials/_VideoDetailsFormPartial" />
+    </div>
     </div>
     
 </div>

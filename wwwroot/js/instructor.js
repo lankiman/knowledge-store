@@ -177,29 +177,6 @@ const fileHandler = (function () {
 
 fileHandler.init();
 
-//actual videe uploading logic
-const uploadVideoButton = document.querySelector("[data-files-upload-button]")
-
-
-function uploadFile(file) {
-    const req = new XMLHttpRequest();
-    req.open("POST", "/Instructor/UploadLessonVideo")
-    req.onload()
-}
-
-async function uploadFiles(files) {
-    for (let file of files) {
-        var result = await uploadFile(file)
-    }
-    
-}
-
-if (uploadVideoButton) {
-    uploadVideoButton.addEventListener("click", () => {
-        alert("do not leave or refresh the page while video uploads go on")
-    })
-
-}
 
 //Thumbnail choosing logic
 const selectThumbnailIcon = document.querySelector("[data-select-thumbnail-icon]")
@@ -250,6 +227,94 @@ selectThubmnailFileInuput.addEventListener("change", (e) => {
         })
     }
 })
+
+
+//actual videe uploading logic
+//IIFE
+
+const uploadHandling = (function () {
+    const uploadVideoButton = document.querySelector("[data-files-upload-button]")
+    const filesUploadingContainer = document.querySelector("[data-files-uploading-container]")
+    const filesUploadingList = document.querySelector("[data-files-uploading-list]")
+    const filesToUploadList = document.querySelector("[data-files-upload-part]")
+
+    function updateUIonUploadStart() {
+        filesUploadingList.classList.replace("hidden", "flex")
+        filesToUploadList.classList.replace("flex", "hidden")
+    }
+
+     function createFileUploadListItem(file) {
+        const li = document.createElement("li")
+        li.classList.add("files-uploading-list-item")
+        li.setAttribute("data-files-uploading-list-item", true)
+         li.innerHTML = `
+        <div data-file-uploading-list-section class="file-uploading-list-section">
+        <p data-file-uploading-name class="file-uploading-name">${file.name}</p>
+        <button data-file-uploading-cancel-button class="file-uploading-cancel-button" type="button">
+            <span class="material-symbols-outlined text-accent-dark_gray hover:text-accent">
+                close
+            </span>
+        </button>
+        <progress
+        data-file-uploading-progress
+        class="file-uploading-progress"
+        low="10"
+        high="90"
+        max="100"
+        value="0">
+        0%
+        </progress>
+        </div>`
+
+        const button = li.querySelector("[data-file-uploading-cancel-button]")
+        button.addEventListener("click", () => {
+            removeFile(file.name)
+        })
+        return li;
+    }
+
+    function addFileUploadingtoList(file) {
+        const li = createFileUploadListItem(file)
+        filesUploadingList.appendChild(li)
+    }
+  
+    function uploadFile(file) {
+        const req = new XMLHttpRequest();
+        req.open("POST", "/Instructor/UploadLessonVideo", true)
+
+        req.onload = function () {
+            if (this.status === 200) {
+                console.log(this.response)
+            }
+        }
+
+        req.onerror = function () {
+            console.log(this.response)
+        }
+    }
+
+      function uploadFiles(files) {
+        for (let file of files) {
+             uploadFile(file)
+        }
+
+    }
+
+    const filesToUpload = fileHandler.getSelectedFiles();
+
+    if (uploadVideoButton) {
+        uploadVideoButton.addEventListener("click", () => {
+            if (filesToUpload.length > 0) {
+                alert("do not leave or refresh the page while video uploads go on")
+                uploadFiles(file)
+            }
+            
+        })
+
+    }
+
+})();
+
 
 
 
