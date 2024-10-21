@@ -75,16 +75,16 @@ namespace e_learning.Services
             return mainFolder;
         }
 
-        private static string GetVideoTempStorage()
+        private string GetVideoTempStorage()
 
         {
-            var mainFolder = GetVideoTempStorage();
+            var mainFolder = GetVideoFileStorageDirectory();
             var tempVideosFolder = Path.Combine(mainFolder, "Videos", "Temp_Videos");
             return tempVideosFolder;
         }
-        private static string GetVideoTempThumbnialStorage()
+        private string GetVideoTempThumbnialStorage()
         {
-            var mainFolder = GetVideoTempStorage();
+            var mainFolder = GetVideoFileStorageDirectory();
             var tempThumbnailsFolder = Path.Combine(mainFolder, "Thumbnials", "Temp_Thumbnails");
             return tempThumbnailsFolder;
         }
@@ -214,8 +214,8 @@ namespace e_learning.Services
                         var videoDetialsSavingResult = await SaveLessonVideoDetailsToTempDB(videoFilePath);
                         if (videoDetialsSavingResult is OkObjectResult result)
                         {
-
-                            return new OkObjectResult(new { Message = "Video Upload Sucessful", result.Value });
+                            var lessonId = result.Value;
+                            return new OkObjectResult(new { Message = "Video Upload Sucessful", lessonId });
                         }
                         File.Delete(videoFilePath);
                         return new ObjectResult(new { Message = "Server Error Occured" })

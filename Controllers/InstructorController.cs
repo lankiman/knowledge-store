@@ -70,7 +70,6 @@ namespace e_learning.Controllers
                     return StatusCode(objectResult.StatusCode.Value, objectResult.Value);
 
                 default:
-
                     return StatusCode(500, new { Message = "An unexpected error occurred." });
             }
 
