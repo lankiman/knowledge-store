@@ -19,7 +19,7 @@
     --test-color: red;
 }
 
-<<<<<<< HEAD
+
 html {
     position: relative;
     min-height: 100%;
@@ -657,7 +657,7 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
     @apply block md:hidden;
     opacity: 0.7;
     transition: opacity var(--animation-duration) var(--animation-timing-curve);
-<<<<<<< HEAD
+
 }
 =======
 }
