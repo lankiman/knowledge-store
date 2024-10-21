@@ -251,7 +251,14 @@ const uploadHandling = (function () {
     const filesUploadingContainer = document.querySelector("[data-files-uploading-container]")
     const filesUploadingList = document.querySelector("[data-files-uploading-list]")
     const filesToUploadList = document.querySelector("[data-files-upload-part]")
+    const completeVideoDetailsForm = document.querySelector("[data-video-details-form]")
+    const completeVideoDetailsFormButton = document.querySelector("[data-complete-video-details-button]")
 
+
+    function updateVideoDetailsFormStatus(lessonId) {
+        completeVideoDetailsForm.action = "/Instructor/CompleteLessonDetails?id=" + encodeURIComponent(lessonId);
+        completeVideoDetailsFormButton.setAttribute("disabled",false)
+    }
     function updateUIonUploadStart() {
         filesToUploadList.classList.replace("flex", "hidden")
         filesUploadingContainer.classList.replace("hidden", "flex")

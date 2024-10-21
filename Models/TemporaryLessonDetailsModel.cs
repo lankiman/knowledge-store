@@ -9,7 +9,7 @@ namespace e_learning.Models
         [Column(TypeName = "nvarchar(50)")]
         [Key]
         [Required]
-        public string TemporaryLessonDetialsId { get; set; }
+        public string TemporaryLessonDetialsId { get; set; } = Guid.NewGuid().ToString();
 
         [Column(TypeName = "nvarchar(100)")]
         [Required]
@@ -27,6 +27,7 @@ namespace e_learning.Models
         [Required]
         public string? TemporaryLessonThumbnailUrl { get; set; }
 
+        [Column(TypeName = "nvarchar(100)")]
         [Required]
         public AcessType TemporaryLessonAcessType { get; set; } = AcessType.Subscribed;
 

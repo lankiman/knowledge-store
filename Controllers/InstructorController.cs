@@ -58,7 +58,7 @@ namespace e_learning.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadLessonVideo(IFormFile file)
         {
-            var result = await instructorService.UploadLessonToTemp(file);
+            var result = await instructorService.UploadLessonToTempStorage(file);
 
             switch (result)
             {
@@ -73,6 +73,28 @@ namespace e_learning.Controllers
 
                     return StatusCode(500, new { Message = "An unexpected error occurred." });
             }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CompleteLessonDetails(UploadVideoViewModel lessonData, string tempLessonId)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await instructorService.CompleteLessonDetails(lessonData, tempLessonId);
+                switch (result)
+                {
+                    case OkObjectResult:
+                        break;
+
+                    case ObjectResult { StatusCode: 500 }:
+                        ModelState.AddModelError("", "An Error Occured");
+                        break;
+
+                }
+
+            }
+            return View(lessonData);
 
         }
 
