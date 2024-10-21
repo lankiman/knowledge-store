@@ -263,7 +263,28 @@ const uploadHandling = (function () {
         if (progressBar) {
             progressBar.value = progress;
         }
+        const progressBarText = filesUploadingList.querySelector(`[data-file-uploading-list-section="${file.name}"]`)
+            ?.querySelector('[data-file-upload-progress-text]');
+        if (progressBarText) {
+            progressBarText.textContent=`${Math.trunc(progress)}% of ${sizeConverter(file.size)}`
+        }
     }
+
+    function replaceCancelButtonWithCheck(file) {
+        const cancelButton = filesUploadingList.querySelector(`[data-file-uploading-list-section="${file.name}"]`)
+            ?.querySelector('[data-file-uploading-cancel-button]');
+        console.log(cancelButton);
+        if (cancelButton) {
+            cancelButton.innerHTML =`
+            <span class="material-symbols-outlined uploaded-check-icon">
+                check
+            </span>
+            `
+            cancelButton.setAttribute("disabled", true)
+        }
+    }
+
+    
 
      function createFileUploadListItem(file) {
         const li = document.createElement("li")
@@ -272,20 +293,24 @@ const uploadHandling = (function () {
          li.innerHTML = `
         <p data-file-uploading-name class="file-uploading-name">${file.name}</p>
         <div data-file-uploading-list-section="${file.name}" class="file-uploading-list-section">
-        <progress
-        data-file-uploading-progress
-        class="file-uploading-progress"
-        low="10"
-        high="90"
-        max="100"
-        value="0">
-        0%   of ${sizeConverter(file.size)}
-        </progress>
-        <button data-file-uploading-cancel-button class="file-uploading-cancel-button" type="button">
-            <span class="material-symbols-outlined text-accent-dark_gray hover:text-accent">
-                close
-            </span>
-        </button>
+            <div data-file-upload-progress-container class=file-upload-progress-container>
+                <progress
+                data-file-uploading-progress
+                class="file-uploading-progress"
+                low="10"
+                high="90"
+                max="100"
+                value="0">
+                </progress>
+                <span data-file-upload-progress-text class=file-upload-progress-text>
+                    wating to Upload
+                </span>
+            </div>
+            <button data-file-uploading-cancel-button class="file-uploading-cancel-button" type="button">
+                <span class="material-symbols-outlined text-accent-dark_gray hover:text-accent">
+                    close
+                </span>
+            </button>
         </div>`
 
         const button = li.querySelector("[data-file-uploading-cancel-button]")
@@ -309,6 +334,7 @@ const uploadHandling = (function () {
         req.onload = function () {
             if (this.status === 200) {
                 console.log(this.response)
+                replaceCancelButtonWithCheck(file)
             }
         }
 

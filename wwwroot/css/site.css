@@ -690,14 +690,27 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
 .files-uploading-list-item {
     @apply flex w-full flex-col gap-2 bg-gray-100 p-2;
 }
-.file-uploading-list-section {
-    @apply flex w-full items-center justify-between gap-4;
-}
 .file-uploading-name {
     @apply w-3/4 break-words;
 }
+.file-uploading-list-section {
+    @apply flex w-full items-center justify-between gap-4;
+}
+.file-upload-progress-container{
+    @apply flex w-full flex-col gap-2;
+}
+
 .file-uploading-progress {
     @apply flex-1 h-[1rem] w-full rounded-md border border-[#F18337];
+}
+.file-upload-progress-text {
+    @apply text-sm font-bold text-[#F18337];
+}
+.file-uploading-cancel-button{
+    @apply self-start;
+}
+.uploaded-check-icon{
+    @apply font-bold text-green-600;
 }
 
 
