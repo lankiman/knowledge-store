@@ -3,6 +3,20 @@ const mobileSearchButton = document.querySelector('[data-inr-mb-search-icon]');
 const mobileSearchBar = document.querySelector('[data-inr_mbl_search-bar]');
 const sidebarMenu = document.querySelector("[data-inr_sidebar-menu]")
 
+
+//General Helper Functions
+const sizeConverter = (size) => {
+    let units = ["bytes", "kb", "mb", "gb"];
+    let unitIndex = 0;
+
+    while (size >= 1024 && unitIndex < units.length - 1) {
+        size /= 1024;
+        unitIndex++;
+    }
+    return `${size.toFixed(2)} ${units[unitIndex]}`;
+};
+
+
 function toggleElement(element) {
     if (element.classList.contains("hidden")) {
         element.classList.remove("hidden");
@@ -110,9 +124,11 @@ const fileHandler = (function () {
     function updateUiOnFileAdded() {
         if (selectedFiles.length>1) {
             videoFileDropZone.classList.add("hidden")
+            videoFileDropZone.classList.remove("flex")
             uploadingFilesContainer.classList.remove("hidden")
             uploadingFilesContainer.classList.add("flex")
-            uploadingFilesContainer.classList.add("md:w-1/2", "self-center", "items-center", "justify-center")
+            uploadingFilesContainer.classList.add("uploading-contianer-visible")
+            uploadingFilesContainer.classList.remove("uploading-contianer-visible-width")
         }
 
         if (selectedFiles.length === 1) {
@@ -120,17 +136,17 @@ const fileHandler = (function () {
             uploadingFilesContainer.classList.remove("hidden")
             uploadingFilesContainer.classList.add("flex")
             lessonDetailsForm.classList.remove("hidden")
-            lessonDetailsForm.classList.add("flex")
-            uploadingFilesContainer.classList.remove("md:w-1/2", "self-center", "items-center", "justify-center")
+            uploadingFilesContainer.classList.remove("uploading-contianer-visible")
+            uploadingFilesContainer.classList.add("uploading-contianer-visible-width")
         }
     }
 
     function updateUiOnFileRemoved() {
         if (selectedFiles.length === 0) {
             videoFileDropZone.classList.remove("hidden")
+            videoFileDropZone.classList.add("flex")
             uploadingFilesContainer.classList.add("hidden")
             uploadingFilesContainer.classList.remove("flex")
-            lessonDetailsForm.classList.remove("flex")
             lessonDetailsForm.classList.add("hidden")
         }
     }
@@ -175,12 +191,191 @@ const fileHandler = (function () {
 
 fileHandler.init();
 
-//actual vidoe uploading logic
-const uploadVideoButton = document.querySelector("[data-files-upload-button]")
 
-uploadVideoButton.addEventListener("click", () => {
-    alert("do not leave or refresh the page while video uploads go on")
+//Thumbnail choosing logic
+const selectThumbnailIcon = document.querySelector("[data-select-thumbnail-icon]")
+const selectThubmnailFileInuput = document.querySelector("[data-select-thumbnail-input]")
+const thumbnailPreviewImage = document.querySelector("[data-thumbnail-preview-image]")
+const thumbnailSpinner = document.querySelector("[data-thumbnail-preview-spinner]")
+const removeThumbnailIcon = document.querySelector("[data-remove-thumbnail-icon]")
+function readFile(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = (e) => reject(new Error('Error reading file',e));
+        reader.readAsDataURL(file);
+    });
+}
+
+selectThumbnailIcon.addEventListener("click", () => {
+    selectThubmnailFileInuput.click();
+    
 })
+removeThumbnailIcon.addEventListener("click", () => {
+    selectThubmnailFileInuput.value = "";
+    thumbnailPreviewImage.classList.add("hidden")
+    thumbnailSpinner.classList.add("hidden")
+    selectThumbnailIcon.classList.remove("!hidden")
+})
+
+selectThubmnailFileInuput.addEventListener("change", (e) => {
+
+    const thubmnailImage = e.target.files[0];
+    //const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'] 
+
+    //if (thumbnailImage && !validImageTypes.includes(thubmnailImage.type)) {
+    //    alert("only .jpg, .png or .gif files are allowed")
+    //    return;
+    //}
+    thumbnailSpinner.classList.remove("hidden")
+
+    if (thubmnailImage) {
+        readFile(thubmnailImage).then((result) => {
+            if (result) {
+                thumbnailPreviewImage.src = `${result}`
+                thumbnailPreviewImage.classList.remove("hidden")
+                thumbnailSpinner.classList.add("hidden")
+                selectThumbnailIcon.classList.add("!hidden")
+            }
+        })
+    }
+})
+
+
+//actual videe uploading logic
+//IIFE
+
+const uploadHandling = (function () {
+    const uploadVideoButton = document.querySelector("[data-files-upload-button]")
+    const filesUploadingContainer = document.querySelector("[data-files-uploading-container]")
+    const filesUploadingList = document.querySelector("[data-files-uploading-list]")
+    const filesToUploadList = document.querySelector("[data-files-upload-part]")
+
+    function updateUIonUploadStart() {
+        filesToUploadList.classList.replace("flex", "hidden")
+        filesUploadingContainer.classList.replace("hidden", "flex")
+    }
+
+    function updateUploadProgress(progress, file) {
+        const progressBar = filesUploadingList.querySelector(`[data-file-uploading-list-section="${file.name}"]`)
+            ?.querySelector('[data-file-uploading-progress]');
+        if (progressBar) {
+            progressBar.value = progress;
+        }
+        const progressBarText = filesUploadingList.querySelector(`[data-file-uploading-list-section="${file.name}"]`)
+            ?.querySelector('[data-file-upload-progress-text]');
+        if (progressBarText) {
+            progressBarText.textContent=`${Math.trunc(progress)}% of ${sizeConverter(file.size)}`
+        }
+    }
+
+    function replaceCancelButtonWithCheck(file) {
+        const cancelButton = filesUploadingList.querySelector(`[data-file-uploading-list-section="${file.name}"]`)
+            ?.querySelector('[data-file-uploading-cancel-button]');
+        console.log(cancelButton);
+        if (cancelButton) {
+            cancelButton.innerHTML =`
+            <span class="material-symbols-outlined uploaded-check-icon">
+                check
+            </span>
+            `
+            cancelButton.setAttribute("disabled", true)
+        }
+    }
+
+    
+
+     function createFileUploadListItem(file) {
+        const li = document.createElement("li")
+        li.classList.add("files-uploading-list-item")
+        li.setAttribute("data-files-uploading-list-item", true)
+         li.innerHTML = `
+        <p data-file-uploading-name class="file-uploading-name">${file.name}</p>
+        <div data-file-uploading-list-section="${file.name}" class="file-uploading-list-section">
+            <div data-file-upload-progress-container class=file-upload-progress-container>
+                <progress
+                data-file-uploading-progress
+                class="file-uploading-progress"
+                low="10"
+                high="90"
+                max="100"
+                value="0">
+                </progress>
+                <span data-file-upload-progress-text class=file-upload-progress-text>
+                    wating to Upload
+                </span>
+            </div>
+            <button data-file-uploading-cancel-button class="file-uploading-cancel-button" type="button">
+                <span class="material-symbols-outlined text-accent-dark_gray hover:text-accent">
+                    close
+                </span>
+            </button>
+        </div>`
+
+        const button = li.querySelector("[data-file-uploading-cancel-button]")
+        button.addEventListener("click", () => {
+            removeFile(file.name)
+        })
+        return li;
+    }
+
+    function addFileUploadingtoList(file) {
+        const li = createFileUploadListItem(file)
+        filesUploadingList.appendChild(li)
+    }
+  
+    function uploadFile(file) {
+        const req = new XMLHttpRequest();
+        req.open("POST", "/Instructor/UploadLessonVideo", true)
+        const formData = new FormData();
+        formData.append("file",file)
+
+        req.onload = function () {
+            if (this.status === 200) {
+                console.log(this.response)
+                replaceCancelButtonWithCheck(file)
+            }
+        }
+
+        req.upload.onprogress = function (e) {
+            if (e.lengthComputable) {
+                const progress = (e.loaded / e.total) * 100;
+                console.log(progress)
+                updateUploadProgress(progress, file)
+               
+            }
+        };
+        
+
+        req.onerror = function () {
+            console.log(this.response)
+        }
+
+        req.send(formData)
+    }
+
+    function uploadFiles(files) {
+        updateUIonUploadStart()
+          for (let file of files) {
+             addFileUploadingtoList(file)
+        }
+        for (let file of files) {
+            uploadFile(file)
+        }
+
+    }
+    
+    if (uploadVideoButton) {
+        uploadVideoButton.addEventListener("click", () => {
+            const filesToUpload = fileHandler.getSelectedFiles();
+            if (filesToUpload.length > 0) {
+                alert("do not leave or refresh the page while video uploads go on")
+                uploadFiles(filesToUpload)
+            }    
+        })
+    }
+})();
 
 
 

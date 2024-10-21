@@ -17,7 +17,6 @@ namespace e_learning.ViewModels
 
 
         [Required(ErrorMessage = "Please choose Acess type")]
-
         public AcessType LessonAcessType { get; set; }
 
         [CustomFileExtensionValidation([".png", ".jpg", ".gif"])]

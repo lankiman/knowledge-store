@@ -11,6 +11,8 @@ namespace e_learning.Services.Interfaces
 
         public Task<IActionResult> CreateLesson(CreateLessonViewModel model);
 
+        public Task<IActionResult> UploadLessonToTemp(IFormFile file);
+
         public Task<List<LessonDto>> GetInstructorLessons();
     }
 }

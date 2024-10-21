@@ -56,6 +56,27 @@ namespace e_learning.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> UploadLessonVideo(IFormFile file)
+        {
+            var result = await instructorService.UploadLessonToTemp(file);
+
+            switch (result)
+            {
+                case OkObjectResult okResult:
+
+                    return Ok(okResult.Value);
+
+                case ObjectResult objectResult:
+                    return StatusCode(objectResult.StatusCode.Value, objectResult.Value);
+
+                default:
+
+                    return StatusCode(500, new { Message = "An unexpected error occurred." });
+            }
+
+        }
+
+        [HttpPost]
         [RequestSizeLimit(268435456)]
         [RequestFormLimits(MultipartBodyLengthLimit = 268435456)]
         public async Task<IActionResult> CreateLesson(CreateLessonViewModel lessonData)

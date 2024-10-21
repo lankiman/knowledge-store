@@ -1,4 +1,5 @@
-﻿using e_learning.Enums;
+﻿using e_learning.CustomValidations;
+using e_learning.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace e_learning.Views.Instructor.ViewModels
@@ -12,12 +13,14 @@ namespace e_learning.Views.Instructor.ViewModels
         public string? LessonDescription { get; set; }
 
         [Required(ErrorMessage = "Please choose a category")]
-        public LessonCategory LessonCategory { get; set; }
+        public LessonCategory? LessonCategory { get; set; }
 
-        [DataType(DataType.Date)] public string? CreatedAt { get; set; }
 
-        [Required(ErrorMessage = "Please Choose a Video File")]
-        // [CustomFileExtensionValidation]
-        public IFormFile? LessonVideo { get; set; }
+        [Required(ErrorMessage = "Please choose Acess type")]
+        public AcessType? LessonAcessType { get; set; }
+
+        [CustomFileExtensionValidation([".png", ".jpg", ".gif"])]
+        [Required(ErrorMessage = "Please Choose a Thumbnail")]
+        public IFormFile LessonThumbnail { get; set; }
     }
 }
