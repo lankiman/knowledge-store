@@ -25,8 +25,6 @@ html {
     min-height: 100%;
 }
 
-=======
->>>>>>> 2147b7397cc36b9aafc4ac365cecd8dc59fec397
 body {
     margin: 0;
     box-sizing: border-box;
@@ -659,8 +657,7 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
     transition: opacity var(--animation-duration) var(--animation-timing-curve);
 
 }
-=======
-}
+
 .dragover{
     @apply bg-gray-200;
 }
@@ -675,5 +672,3 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
     @apply hover:text-accent;
 }
 
-
->>>>>>> 2147b7397cc36b9aafc4ac365cecd8dc59fec397
