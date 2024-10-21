@@ -688,13 +688,16 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
 
 }
 .files-uploading-list-item {
-    @apply flex flex-col gap-2 bg-gray-50 p-2;
+    @apply flex w-full flex-col gap-2 bg-gray-100 p-2;
 }
 .file-uploading-list-section {
-    @apply flex justify-evenly gap-4 bg-gray-100;
+    @apply flex w-full items-center justify-between gap-4;
 }
 .file-uploading-name {
     @apply w-3/4 break-words;
+}
+.file-uploading-progress {
+    @apply flex-1 h-[1rem] w-full rounded-md border border-[#F18337];
 }
 
 

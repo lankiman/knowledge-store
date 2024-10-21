@@ -3,6 +3,20 @@ const mobileSearchButton = document.querySelector('[data-inr-mb-search-icon]');
 const mobileSearchBar = document.querySelector('[data-inr_mbl_search-bar]');
 const sidebarMenu = document.querySelector("[data-inr_sidebar-menu]")
 
+
+//General Helper Functions
+const sizeConverter = (size) => {
+    let units = ["bytes", "kb", "mb", "gb"];
+    let unitIndex = 0;
+
+    while (size >= 1024 && unitIndex < units.length - 1) {
+        size /= 1024;
+        unitIndex++;
+    }
+    return `${size.toFixed(2)} ${units[unitIndex]}`;
+};
+
+
 function toggleElement(element) {
     if (element.classList.contains("hidden")) {
         element.classList.remove("hidden");
@@ -239,8 +253,16 @@ const uploadHandling = (function () {
     const filesToUploadList = document.querySelector("[data-files-upload-part]")
 
     function updateUIonUploadStart() {
-        filesUploadingList.classList.replace("hidden", "flex")
         filesToUploadList.classList.replace("flex", "hidden")
+        filesUploadingContainer.classList.replace("hidden", "flex")
+    }
+
+    function updateUploadProgress(progress, file) {
+        const progressBar = filesUploadingList.querySelector(`[data-file-uploading-list-section="${file.name}"]`)
+            ?.querySelector('[data-file-uploading-progress]');
+        if (progressBar) {
+            progressBar.value = progress;
+        }
     }
 
      function createFileUploadListItem(file) {
@@ -248,13 +270,8 @@ const uploadHandling = (function () {
         li.classList.add("files-uploading-list-item")
         li.setAttribute("data-files-uploading-list-item", true)
          li.innerHTML = `
-        <div data-file-uploading-list-section class="file-uploading-list-section">
         <p data-file-uploading-name class="file-uploading-name">${file.name}</p>
-        <button data-file-uploading-cancel-button class="file-uploading-cancel-button" type="button">
-            <span class="material-symbols-outlined text-accent-dark_gray hover:text-accent">
-                close
-            </span>
-        </button>
+        <div data-file-uploading-list-section="${file.name}" class="file-uploading-list-section">
         <progress
         data-file-uploading-progress
         class="file-uploading-progress"
@@ -262,8 +279,13 @@ const uploadHandling = (function () {
         high="90"
         max="100"
         value="0">
-        0%
+        0%   of ${sizeConverter(file.size)}
         </progress>
+        <button data-file-uploading-cancel-button class="file-uploading-cancel-button" type="button">
+            <span class="material-symbols-outlined text-accent-dark_gray hover:text-accent">
+                close
+            </span>
+        </button>
         </div>`
 
         const button = li.querySelector("[data-file-uploading-cancel-button]")
@@ -281,6 +303,8 @@ const uploadHandling = (function () {
     function uploadFile(file) {
         const req = new XMLHttpRequest();
         req.open("POST", "/Instructor/UploadLessonVideo", true)
+        const formData = new FormData();
+        formData.append("file",file)
 
         req.onload = function () {
             if (this.status === 200) {
@@ -288,31 +312,43 @@ const uploadHandling = (function () {
             }
         }
 
+        req.upload.onprogress = function (e) {
+            if (e.lengthComputable) {
+                const progress = (e.loaded / e.total) * 100;
+                console.log(progress)
+                updateUploadProgress(progress, file)
+               
+            }
+        };
+        
+
         req.onerror = function () {
             console.log(this.response)
         }
+
+        req.send(formData)
     }
 
-      function uploadFiles(files) {
+    function uploadFiles(files) {
+        updateUIonUploadStart()
+          for (let file of files) {
+             addFileUploadingtoList(file)
+        }
         for (let file of files) {
-             uploadFile(file)
+            uploadFile(file)
         }
 
     }
-
-    const filesToUpload = fileHandler.getSelectedFiles();
-
+    
     if (uploadVideoButton) {
         uploadVideoButton.addEventListener("click", () => {
+            const filesToUpload = fileHandler.getSelectedFiles();
             if (filesToUpload.length > 0) {
                 alert("do not leave or refresh the page while video uploads go on")
-                uploadFiles(file)
-            }
-            
+                uploadFiles(filesToUpload)
+            }    
         })
-
     }
-
 })();
 
 
