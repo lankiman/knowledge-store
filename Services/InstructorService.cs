@@ -145,7 +145,7 @@ namespace e_learning.Services
             }
         }
 
-        private async Task<IActionResult> CompleteLessonVideoDetailsToTempDB(UploadVideoViewModel lessonData, string tempLessonId)
+        private async Task<IActionResult> CompleteLessonVideoDetailsToTempDB(LessonVideoDetailsViewModel lessonData, string tempLessonId)
         {
             try
             {
@@ -237,7 +237,7 @@ namespace e_learning.Services
         }
 
 
-        public async Task<IActionResult> CompleteLessonDetails(UploadVideoViewModel lessonData, string templessonId)
+        public async Task<IActionResult> CompleteLessonDetails(LessonVideoDetailsViewModel lessonData, string templessonId)
         {
 
             var tempThumbnailPath = GetVideoTempThumbnialStorage();

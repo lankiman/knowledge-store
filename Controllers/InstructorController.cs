@@ -13,7 +13,6 @@ namespace e_learning.Controllers
         ILessonService lessonService,
         IInstructorService instructorService) : Controller
     {
-
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             if (User.Identity.IsAuthenticated)
@@ -25,7 +24,6 @@ namespace e_learning.Controllers
             await next();
         }
 
-        // GET:Creator
         public async Task<IActionResult> InstructorDashboard()
         {
             var instructor = await instructorService.GetInstructor();
@@ -44,15 +42,22 @@ namespace e_learning.Controllers
             return View(lessons);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Studio()
+        public IActionResult Studio()
         {
 
-            var activeForm = HttpContext.Session.GetString("activeView") ?? "lesson";
+            var activeForm = HttpContext.Session.GetString("activeStudioView") ?? "lesson";
 
-            var viewModel = new StudioViewModel(activeForm, new UploadVideoViewModel());
+            var viewModel = new StudioViewModel(activeForm);
 
             return View(viewModel);
+        }
+
+        //Ajax Actions
+        [HttpPost]
+        public async Task<IActionResult> SetActiveStudioView(string activeStudioView)
+        {
+            HttpContext.Session.SetString("activeStudioView", activeStudioView);
+            return Ok(activeStudioView);
         }
 
         [HttpPost]
@@ -60,27 +65,20 @@ namespace e_learning.Controllers
         {
             var result = await instructorService.UploadLessonToTempStorage(file);
 
-            switch (result)
+            return result switch
             {
-                case OkObjectResult okResult:
-
-                    return Ok(okResult.Value);
-
-                case ObjectResult objectResult:
-                    return StatusCode(objectResult.StatusCode.Value, objectResult.Value);
-
-                default:
-                    return StatusCode(500, new { Message = "An unexpected error occurred." });
-            }
-
+                OkObjectResult okResult => Ok(okResult.Value),
+                ObjectResult objectResult => StatusCode(objectResult.StatusCode.Value, objectResult.Value),
+                _ => StatusCode(500, new { Message = "An unexpected error occurred." }),
+            };
         }
 
         [HttpPost]
-        public async Task<IActionResult> CompleteLessonDetails(UploadVideoViewModel lessonData, string tempLessonId)
+        public async Task<IActionResult> CompleteLessonDetails(LessonVideoDetailsViewModel lessonData, string Id)
         {
             if (ModelState.IsValid)
             {
-                var result = await instructorService.CompleteLessonDetails(lessonData, tempLessonId);
+                var result = await instructorService.CompleteLessonDetails(lessonData, Id);
                 switch (result)
                 {
                     case OkObjectResult:
@@ -97,27 +95,28 @@ namespace e_learning.Controllers
 
         }
 
-        [HttpPost]
-        [RequestSizeLimit(268435456)]
-        [RequestFormLimits(MultipartBodyLengthLimit = 268435456)]
-        public async Task<IActionResult> CreateLesson(CreateLessonViewModel lessonData)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await instructorService.CreateLesson(lessonData);
+        //    [HttpPost]
+        //    [RequestSizeLimit(268435456)]
+        //    [RequestFormLimits(MultipartBodyLengthLimit = 268435456)]
+        //    public async Task<IActionResult> CreateLesson(CreateLessonViewModel lessonData)
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            var result = await instructorService.CreateLesson(lessonData);
 
-                switch (result)
-                {
-                    case OkObjectResult:
-                        break;
+        //            switch (result)
+        //            {
+        //                case OkObjectResult:
+        //                    break;
 
-                    case ObjectResult { StatusCode: 500 }:
-                        ModelState.AddModelError("", "An Error Occured");
-                        break;
-                }
-            }
+        //                case ObjectResult { StatusCode: 500 }:
+        //                    ModelState.AddModelError("", "An Error Occured");
+        //                    break;
+        //            }
+        //        }
 
-            return View(lessonData);
-        }
+        //        return View(lessonData);
+        //    }
+        //}
     }
 }

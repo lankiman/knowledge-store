@@ -256,8 +256,9 @@ const uploadHandling = (function () {
 
 
     function updateVideoDetailsFormStatus(lessonId) {
-        completeVideoDetailsForm.action = "/Instructor/CompleteLessonDetails?id=" + encodeURIComponent(lessonId);
-        completeVideoDetailsFormButton.setAttribute("disabled",false)
+        completeVideoDetailsForm.action = "/Instructor/CompleteLessonDetails?Id=" + encodeURIComponent(lessonId);
+        completeVideoDetailsFormButton.removeAttribute("disabled")
+        completeVideoDetailsFormButton.classList.remove("disabled")
     }
     function updateUIonUploadStart() {
         filesToUploadList.classList.replace("flex", "hidden")
@@ -280,7 +281,6 @@ const uploadHandling = (function () {
     function replaceCancelButtonWithCheck(file) {
         const cancelButton = filesUploadingList.querySelector(`[data-file-uploading-list-section="${file.name}"]`)
             ?.querySelector('[data-file-uploading-cancel-button]');
-        console.log(cancelButton);
         if (cancelButton) {
             cancelButton.innerHTML =`
             <span class="material-symbols-outlined uploaded-check-icon">
@@ -336,19 +336,25 @@ const uploadHandling = (function () {
         const req = new XMLHttpRequest();
         req.open("POST", "/Instructor/UploadLessonVideo", true)
         const formData = new FormData();
-        formData.append("file",file)
+        formData.append("fle",file)
 
         req.onload = function () {
             if (this.status === 200) {
                 console.log(this.response)
+                const response = JSON.parse(this.response)
+                console.log(response)
                 replaceCancelButtonWithCheck(file)
+                const filesToUpload = fileHandler.getSelectedFiles();
+                if (filesToUpload.length === 1) {
+                    console.log(completeVideoDetailsFormButton)
+                    updateVideoDetailsFormStatus(response.lessonId);
+                }
             }
         }
 
         req.upload.onprogress = function (e) {
             if (e.lengthComputable) {
                 const progress = (e.loaded / e.total) * 100;
-                console.log(progress)
                 updateUploadProgress(progress, file)
                
             }
@@ -372,6 +378,8 @@ const uploadHandling = (function () {
         }
 
     }
+
+    completeVideoDetailsFormButton.addEventListener("click", () => console.log("i was clicked"))
     
     if (uploadVideoButton) {
         uploadVideoButton.addEventListener("click", () => {

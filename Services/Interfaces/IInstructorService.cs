@@ -12,7 +12,7 @@ namespace e_learning.Services.Interfaces
 
         public Task<IActionResult> CreateLesson(CreateLessonViewModel model);
 
-        public Task<IActionResult> CompleteLessonDetails(UploadVideoViewModel lessonData, string tempLessonId);
+        public Task<IActionResult> CompleteLessonDetails(LessonVideoDetailsViewModel lessonData, string tempLessonId);
 
         public Task<IActionResult> UploadLessonToTempStorage(IFormFile file);
 
