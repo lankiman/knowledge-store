@@ -18,6 +18,8 @@ tailwind.extension.json
 
 Elearning_Videos
 
+Elearning_Storage
+
 # These are needed, however, they're generated so don't need/want to track
 css/app.css.map
 css/app.min.css

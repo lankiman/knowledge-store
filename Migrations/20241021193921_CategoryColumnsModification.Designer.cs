@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using e_learning.Data;
 
@@ -11,9 +12,11 @@ using e_learning.Data;
 namespace e_learning.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    partial class ELearningDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241021193921_CategoryColumnsModification")]
+    partial class CategoryColumnsModification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,9 +276,8 @@ namespace e_learning.Migrations
                     b.Property<string>("PlaylistId")
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("PlaylistAcessType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<int>("PlaylistAcessType")
+                        .HasColumnType("int");
 
                     b.Property<string>("PlaylistDescription")
                         .IsRequired()
@@ -350,9 +352,8 @@ namespace e_learning.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("LessonVideoStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<int>("LessonVideoStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("TempLessonUrl")
                         .IsRequired()

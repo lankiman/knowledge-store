@@ -26,6 +26,7 @@ namespace e_learning.Models
         [Required]
         public string LessonOwnerId { get; set; }
 
+        [Column(TypeName = "nvarchar(100)")]
         [Required]
         public LessonVideoStatus LessonVideoStatus { get; set; } = LessonVideoStatus.Draft;
 
