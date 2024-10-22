@@ -3,8 +3,6 @@ using e_learning.DataTransfersObjects;
 using e_learning.Enums;
 using e_learning.Models;
 using e_learning.Services.Interfaces;
-using e_learning.ViewModels;
-using e_learning.Views.Instructor.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -145,7 +143,7 @@ namespace e_learning.Services
             }
         }
 
-        private async Task<IActionResult> CompleteLessonVideoDetailsToTempDB(LessonVideoDetailsViewModel lessonData, string tempLessonId)
+        private async Task<IActionResult> CompleteLessonVideoDetailsToTempDB(Views.Instructor.ViewModels.CreateLessonViewModel lessonData, string tempLessonId)
         {
             try
             {
@@ -237,7 +235,7 @@ namespace e_learning.Services
         }
 
 
-        public async Task<IActionResult> CompleteLessonDetails(LessonVideoDetailsViewModel lessonData, string templessonId)
+        public async Task<IActionResult> CompleteLessonDetails(Views.Instructor.ViewModels.CreateLessonViewModel lessonData, string templessonId)
         {
 
             var tempThumbnailPath = GetVideoTempThumbnialStorage();
@@ -386,7 +384,7 @@ namespace e_learning.Services
 
 
 
-        public Task<IActionResult> CreateLesson(CreateLessonViewModel model)
+        public Task<IActionResult> CreateLesson(ViewModels.CreateLessonViewModel model)
         {
             throw new NotImplementedException();
         }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace e_learning.Views.Instructor.ViewModels
 {
-    public class LessonVideoDetailsViewModel
+    public class CreateLessonViewModel
     {
         [Required(ErrorMessage = "Please Enter Name of Lesson")]
         public string? LessonName { get; set; }

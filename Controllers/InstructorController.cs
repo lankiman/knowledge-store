@@ -74,7 +74,7 @@ namespace e_learning.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CompleteLessonDetails(LessonVideoDetailsViewModel lessonData, string Id)
+        public async Task<IActionResult> CompleteLessonDetails(Views.Instructor.ViewModels.CreateLessonViewModel lessonData, string Id)
         {
             if (ModelState.IsValid)
             {
