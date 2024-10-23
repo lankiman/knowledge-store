@@ -60,7 +60,7 @@
 <div data-file-details-form-container class="file-details-form hidden h-full w-full bg-accent_lightestGray shadow-lg">
     <form data-video-details-form asp-action="CompleteLessonDetails" asp-controller="Instructor" method="post" enctype="multipart/form-data" class="video-details-form block h-full w-full p-4">
         <h1 class="mb-4 text-center text-xl font-bold uppercase text-accent">Video Details</h1>
-        <div data-lesson-details-validation-for="ModelOnly" class="font-bold text-red-700" asp-validation-summary="ModelOnly"></div>
+        <div data-lesson-details-validation-ModelOnly class="font-bold text-red-700" asp-validation-summary="ModelOnly"></div>
 
         <div class="video-details-input-container mb-4 items-center">
             <span data-lesson-details-validation-for="LessonName" asp-validation-for="LessonName" class="text-sm text-red-500"></span>

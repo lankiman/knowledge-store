@@ -69,23 +69,22 @@ namespace e_learning.Controllers
                 var result = await instructorService.CompleteLessonDetails(lessonData, Id);
                 switch (result)
                 {
-                    case OkResult:
-                        return new OkObjectResult(new { Succces = true, Message = "Lesson Videos Details Completed Sucessful" });
+                    case OkObjectResult:
+                        return new OkObjectResult(new { Succces = true, Message = "Lesson Videos Details Completed Sucessful", ModelOnly = true });
 
                     case BadRequestResult:
                         ModelState.AddModelError("Request Error", "An Error Occured");
-                        return new BadRequestObjectResult(new { Success = false, Message = "An Error occurred please try again" });
-                    //case ObjectResult { StatusCode: 500 }:
-                    //    return new ObjectResult(new { Success = false, Message = result }) { StatusCode = 500 };
+                        return new BadRequestObjectResult(new { Success = false, Message = "An Error occurred please try again", ModelOnly = true });
+
                     case ObjectResult objResult when objResult.StatusCode == 500:
-                        return new ObjectResult(new { Success = false, (objResult.Value as dynamic).Message }) { StatusCode = 500 };
+                        return new ObjectResult(new { Success = false, (objResult.Value as dynamic).Message, ModelOnly = true }) { StatusCode = 500 };
 
                 }
 
             }
 
             var errors = ModelState.ToDictionary(model => model.Key, model => model.Value?.Errors.FirstOrDefault()?.ErrorMessage ?? "");
-            return new BadRequestObjectResult(new { Success = false, errors });
+            return new BadRequestObjectResult(new { Success = false, errors, ModelOnly = false });
         }
 
         //    [HttpPost]

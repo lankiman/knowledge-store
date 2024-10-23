@@ -19,7 +19,7 @@ namespace e_learning.Models
         [Required]
         public DateTime UpdatedAt { get; set; }
 
-        [Column(TypeName = "nvarchar(100)")]
+        [Column(TypeName = "nvarchar(1000)")]
         [Required]
         public string TempLessonUrl { get; set; }
 

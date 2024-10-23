@@ -23,7 +23,7 @@ namespace e_learning.Models
         [Required]
         public LessonCategory TemporaryLessonCategory { get; set; }
 
-        [Column(TypeName = "nvarchar(100)")]
+        [Column(TypeName = "nvarchar(1000)")]
         [Required]
         public string? TemporaryLessonThumbnailUrl { get; set; }
 

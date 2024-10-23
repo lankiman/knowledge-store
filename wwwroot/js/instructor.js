@@ -409,16 +409,30 @@ const handleCompleteLesson = (function () {
 
     const completeVideoDetailsForm = document.querySelector("[data-video-details-form]")
     const completeVideoDetailsFormButton = document.querySelector("[data-complete-video-details-button]")
+
+    function displayCompleteLessonDetialsError(response) {
+        const modelOnlyErrorElement = document.querySelector("[data-lesson-details-validation-ModelOnly]")
+       console.log(modelOnlyErrorElement)
+       if (response.modelOnly && !response.success) {
+           modelOnlyErrorElement.textContent= response.Message
+        }
+        if (!response.ModelOnly) {
+
+        }
+    }
     function competeLessonDetials(lessonId) {
         const req = new XMLHttpRequest();
         req.open("POST", "/Instructor/CompleteLessonDetails?Id=" + encodeURIComponent(lessonId), true)
         const formData = new FormData(completeVideoDetailsForm);
 
         req.onload = function () {
+            const response = JSON.parse(this.response)
             if (this.status == 200) {
-                console.log(this.response)
+                console.log(response)
+            } else {
+                console.log(response)
+                displayCompleteLessonDetialsError(response)
             }
-            console.log(this.response)
         }
 
         req.send(formData);

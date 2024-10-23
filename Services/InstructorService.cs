@@ -277,9 +277,8 @@ namespace e_learning.Services
                         var completeLessonDetialsResult = await CompleteLessonVideoDetailsToTempDB(lessonData, templessonId, thumbnailFilePath);
                         if (completeLessonDetialsResult is OkResult)
                         {
-                            return new OkObjectResult(new { Message = "Details Complete Sucessful" });
+                            return new OkObjectResult(new { Message = "Details Completed Sucessful" });
                         }
-                        Console.WriteLine("ERROR HERE", completeLessonDetialsResult);
                         TryDeleteFile(thumbnailFilePath);
                         return new ObjectResult(new { Message = "Server Error Occured While Saving Lesson Details" })
                         { StatusCode = 500 };
