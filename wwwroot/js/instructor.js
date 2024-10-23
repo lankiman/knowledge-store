@@ -409,12 +409,13 @@ const handleCompleteLesson = (function () {
 
     const completeVideoDetailsForm = document.querySelector("[data-video-details-form]")
     const completeVideoDetailsFormButton = document.querySelector("[data-complete-video-details-button]")
+    
 
     function displayCompleteLessonDetialsError(response) {
-        const modelOnlyErrorElement = document.querySelector("[data-lesson-details-validation-ModelOnly]")
+        const modelOnlyErrorElement = completeVideoDetailsForm.querySelector("[data-lesson-details-validation-modelonly]")
        console.log(modelOnlyErrorElement)
        if (response.modelOnly && !response.success) {
-           modelOnlyErrorElement.textContent= response.Message
+           modelOnlyErrorElement.textContent= response.message
         }
         if (!response.ModelOnly) {
 

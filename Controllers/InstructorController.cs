@@ -49,6 +49,8 @@ namespace e_learning.Controllers
         }
 
         [HttpPost]
+        [RequestSizeLimit(268435456)]
+        [RequestFormLimits(MultipartBodyLengthLimit = 268435456)]
         public async Task<IActionResult> UploadLessonVideo(IFormFile file)
         {
             var result = await instructorService.UploadLessonToTempStorage(file);
