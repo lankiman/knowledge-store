@@ -217,6 +217,7 @@ removeThumbnailIcon.addEventListener("click", () => {
     thumbnailPreviewImage.classList.add("hidden")
     thumbnailSpinner.classList.add("hidden")
     selectThumbnailIcon.classList.remove("!hidden")
+    selectThumbnailIcon.style.display = "block"
 })
 
 selectThubmnailFileInuput.addEventListener("change", (e) => {
@@ -237,6 +238,7 @@ selectThubmnailFileInuput.addEventListener("change", (e) => {
                 thumbnailPreviewImage.classList.remove("hidden")
                 thumbnailSpinner.classList.add("hidden")
                 selectThumbnailIcon.classList.add("!hidden")
+                selectThumbnailIcon.style.display="none"
             }
         })
     }
@@ -253,6 +255,8 @@ const uploadHandling = (function () {
     const filesToUploadList = document.querySelector("[data-files-upload-part]")
     const completeVideoDetailsForm = document.querySelector("[data-video-details-form]")
     const completeVideoDetailsFormButton = document.querySelector("[data-complete-video-details-button]")
+
+    let uploadedLessonId = "";
 
 
     function updateVideoDetailsFormStatus(lessonId) {
@@ -348,6 +352,7 @@ const uploadHandling = (function () {
                 if (filesToUpload.length === 1) {
                     console.log(completeVideoDetailsFormButton)
                     updateVideoDetailsFormStatus(response.lessonId);
+                    uploadedLessonId = response.lessonId;
                 }
             }
         }
@@ -379,8 +384,7 @@ const uploadHandling = (function () {
 
     }
 
-    completeVideoDetailsFormButton.addEventListener("click", () => console.log("i was clicked"))
-    
+        
     if (uploadVideoButton) {
         uploadVideoButton.addEventListener("click", () => {
             const filesToUpload = fileHandler.getSelectedFiles();
@@ -390,8 +394,46 @@ const uploadHandling = (function () {
             }    
         })
     }
+
+    return {
+        getUploadedLessonId: function () {
+            return uploadedLessonId;
+        }
+    }
 })();
 
+//IIFE
+//Lesson Video Details Upload
+
+const handleCompleteLesson = (function () {
+
+    const completeVideoDetailsForm = document.querySelector("[data-video-details-form]")
+    const completeVideoDetailsFormButton = document.querySelector("[data-complete-video-details-button]")
+    function competeLessonDetials(lessonId) {
+        const req = new XMLHttpRequest();
+        req.open("POST", "/Instructor/CompleteLessonDetails?Id=" + encodeURIComponent(lessonId), true)
+        const formData = new FormData(completeVideoDetailsForm);
+
+        req.onload = function () {
+            if (this.status == 200) {
+                console.log(this.response)
+            }
+            console.log(this.response)
+        }
+
+        req.send(formData);
+
+        req.onerror = function () {
+            console.log(this.response)
+        }
+    };
+
+    completeVideoDetailsFormButton.addEventListener("click", () => {
+        const lessonId = uploadHandling.getUploadedLessonId();
+        competeLessonDetials(lessonId)
+    })
+
+})();
 
 
 

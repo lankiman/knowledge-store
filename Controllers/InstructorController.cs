@@ -62,25 +62,30 @@ namespace e_learning.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CompleteLessonDetails(Views.Instructor.ViewModels.CreateLessonViewModel lessonData, string Id)
+        public async Task<IActionResult> CompleteLessonDetails(CreateLessonViewModel lessonData, string Id)
         {
             if (ModelState.IsValid)
             {
                 var result = await instructorService.CompleteLessonDetails(lessonData, Id);
                 switch (result)
                 {
-                    case OkObjectResult:
-                        break;
+                    case OkResult:
+                        return new OkObjectResult(new { Succces = true, Message = "Lesson Videos Details Completed Sucessful" });
 
-                    case ObjectResult { StatusCode: 500 }:
-                        ModelState.AddModelError("", "An Error Occured");
-                        break;
+                    case BadRequestResult:
+                        ModelState.AddModelError("Request Error", "An Error Occured");
+                        return new BadRequestObjectResult(new { Success = false, Message = "An Error occurred please try again" });
+                    //case ObjectResult { StatusCode: 500 }:
+                    //    return new ObjectResult(new { Success = false, Message = result }) { StatusCode = 500 };
+                    case ObjectResult objResult when objResult.StatusCode == 500:
+                        return new ObjectResult(new { Success = false, (objResult.Value as dynamic).Message }) { StatusCode = 500 };
 
                 }
 
             }
-            return View(lessonData);
 
+            var errors = ModelState.ToDictionary(model => model.Key, model => model.Value?.Errors.FirstOrDefault()?.ErrorMessage ?? "");
+            return new BadRequestObjectResult(new { Success = false, errors });
         }
 
         //    [HttpPost]

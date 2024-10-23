@@ -3,6 +3,7 @@ using e_learning.DataTransfersObjects;
 using e_learning.Enums;
 using e_learning.Models;
 using e_learning.Services.Interfaces;
+using e_learning.Views.Instructor.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -83,8 +84,27 @@ namespace e_learning.Services
         private string GetVideoTempThumbnialStorage()
         {
             var mainFolder = GetVideoFileStorageDirectory();
-            var tempThumbnailsFolder = Path.Combine(mainFolder, "Thumbnials", "Temp_Thumbnails");
+            var tempThumbnailsFolder = Path.Combine(mainFolder, "Thumbnails", "Temp_Thumbnails");
             return tempThumbnailsFolder;
+        }
+
+        private static void TryDeleteFile(string filePath)
+        {
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+            }
+            catch (IOException)
+            {
+
+            }
+            catch (UnauthorizedAccessException)
+            {
+
+            }
         }
 
         private static async Task<IActionResult> SaveLessonVideoToTempStorage(IFormFile file, string videoFilePath)
@@ -100,7 +120,7 @@ namespace e_learning.Services
             }
             catch (Exception ex)
             {
-                File.Delete(videoFilePath);
+                TryDeleteFile(videoFilePath);
                 return new ObjectResult(new { Message = "Server Error Occured" })
                 { StatusCode = 500 };
             }
@@ -121,7 +141,7 @@ namespace e_learning.Services
 
                 var newLesson = new TemporaryLessonModel
                 {
-                    LessonVideoStatus = Enums.LessonVideoStatus.Draft,
+                    LessonVideoStatus = LessonVideoStatus.Draft,
                     LessonOwnerId = ownerId,
                     TempLessonUrl = videoUrl
                 };
@@ -143,7 +163,7 @@ namespace e_learning.Services
             }
         }
 
-        private async Task<IActionResult> CompleteLessonVideoDetailsToTempDB(Views.Instructor.ViewModels.CreateLessonViewModel lessonData, string tempLessonId)
+        private async Task<IActionResult> CompleteLessonVideoDetailsToTempDB(CreateLessonViewModel lessonData, string tempLessonId, string thumbnailUrl)
         {
             try
             {
@@ -152,7 +172,9 @@ namespace e_learning.Services
                     TemporaryLessonId = tempLessonId,
                     TemporaryLessonCategory = (LessonCategory)lessonData.LessonCategory,
                     TemporaryLessonName = lessonData.LessonName,
-                    TemporaryLessonDescription = lessonData.LessonDescription
+                    TemporaryLessonDescription = lessonData.LessonDescription,
+                    TemporaryLessonAcessType = (AcessType)lessonData.LessonAcessType,
+                    TemporaryLessonThumbnailUrl = thumbnailUrl
                 };
 
                 await eLearningContext.TemporaryLessonsDetails.AddAsync(newTempLessonDetials);
@@ -168,6 +190,7 @@ namespace e_learning.Services
             }
             catch (Exception ex)
             {
+                Console.WriteLine("HERE IS THE EXCEPTION", ex);
                 return new ObjectResult(new { Message = "Server Error Occured" })
                 { StatusCode = 500 };
             }
@@ -175,11 +198,11 @@ namespace e_learning.Services
         }
 
 
-        private static async Task<IActionResult> SaveLessonThumbnailToTempStorage(IFormFile file, string thubmnailFilePath)
+        private static async Task<IActionResult> SaveLessonThumbnailToTempStorage(IFormFile file, string thumbnailFilePath)
         {
             try
             {
-                using (var fileStream = new FileStream(thubmnailFilePath, FileMode.Create))
+                using (var fileStream = new FileStream(thumbnailFilePath, FileMode.Create))
                 {
                     await file.CopyToAsync(fileStream);
                 }
@@ -188,7 +211,7 @@ namespace e_learning.Services
             }
             catch (Exception ex)
             {
-                File.Delete(thubmnailFilePath);
+                TryDeleteFile(thumbnailFilePath);
                 return new ObjectResult(new { Message = "Server Error Occured" })
                 { StatusCode = 500 };
             }
@@ -215,7 +238,7 @@ namespace e_learning.Services
                             var lessonId = result.Value;
                             return new OkObjectResult(new { Message = "Video Upload Sucessful", lessonId });
                         }
-                        File.Delete(videoFilePath);
+                        TryDeleteFile(videoFilePath);
                         return new ObjectResult(new { Message = "Server Error Occured" })
                         { StatusCode = 500 };
                 }
@@ -224,18 +247,18 @@ namespace e_learning.Services
             }
             catch (Exception ex)
             {
-                File.Delete(videoFilePath);
+                TryDeleteFile(videoFilePath);
                 return new ObjectResult(new { Message = "Server Error Occured" })
                 { StatusCode = 500 };
             }
-            File.Delete(videoFilePath);
+            TryDeleteFile(videoFilePath);
             return new ObjectResult(new { Message = "Server Error Occured" })
             { StatusCode = 500 };
 
         }
 
 
-        public async Task<IActionResult> CompleteLessonDetails(Views.Instructor.ViewModels.CreateLessonViewModel lessonData, string templessonId)
+        public async Task<IActionResult> CompleteLessonDetails(CreateLessonViewModel lessonData, string templessonId)
         {
 
             var tempThumbnailPath = GetVideoTempThumbnialStorage();
@@ -251,28 +274,31 @@ namespace e_learning.Services
                 switch (thumbnailSavingResult)
                 {
                     case OkResult:
-                        var completeLessonDetialsResult = await CompleteLessonVideoDetailsToTempDB(lessonData, templessonId);
+                        var completeLessonDetialsResult = await CompleteLessonVideoDetailsToTempDB(lessonData, templessonId, thumbnailFilePath);
                         if (completeLessonDetialsResult is OkResult)
                         {
-                            return new OkObjectResult(new { Message = "Detials Complete Sucessful" });
+                            return new OkObjectResult(new { Message = "Details Complete Sucessful" });
                         }
-                        File.Delete(thumbnailFilePath);
-                        return new ObjectResult(new { Message = "Server Error Occured" })
+                        Console.WriteLine("ERROR HERE", completeLessonDetialsResult);
+                        TryDeleteFile(thumbnailFilePath);
+                        return new ObjectResult(new { Message = "Server Error Occured While Saving Lesson Details" })
                         { StatusCode = 500 };
                 }
 
             }
             catch (Exception ex)
             {
-                File.Delete(thumbnailFilePath);
-                return new ObjectResult(new { Message = "Server Error Occured" })
+                TryDeleteFile(thumbnailFilePath);
+                return new ObjectResult(new { Message = "Server Error" })
                 { StatusCode = 500 };
             }
-            File.Delete(thumbnailFilePath);
-            return new ObjectResult(new { Message = "Server Error Occured" })
+            TryDeleteFile(thumbnailFilePath);
+            return new ObjectResult(new { Message = "An Error Occured" })
             { StatusCode = 500 };
 
         }
+
+
 
         //private async Task<IActionResult> SaveLessonDetailsToDB(CreateLessonViewModel model, string modelVideoUrl)
         //{
