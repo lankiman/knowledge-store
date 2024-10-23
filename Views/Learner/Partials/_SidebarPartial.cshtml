@@ -1,4 +1,4 @@
-﻿@model e_learning.ViewModels.LayoutsViewModel
+﻿@*@model e_learning.ViewModels.LayoutsViewModel
 
 @{
     var currentViewName = ViewData["CurrentViewName"] as string;
@@ -6,8 +6,8 @@
     {
         return currentViewName == viewName ? "active" : "";
 
-    };
-}
+        };
+    }*@
 
 <aside data-inr_sidebar-menu class="inr_sidebar-menu z-10 h-[calc(100dvh - 5rem)] flex-shrink-0 sticky bottom-0 left-0 top-[5rem] flex w-[5rem] flex-col items-center overflow-hidden border-r-accent_lightGray bg-white pt-[1rem] shadow-md">
     <div class="inr_sidebar-top mb-[1rem] flex w-full flex-col items-center gap-2">
@@ -21,7 +21,7 @@
     </div>
     <div class="inr_sidebar-middle flex-1 w-full overflow-y-auto overflow-x-hidden">
         <ul class="inr_sidebar-list m-0 flex flex-col p-0">
-            <li class="inr_sidebar-list-item @GetActiveClass("Dashboard")">
+            <li class="inr_sidebar-list-item">
                 <a asp-action="Dashboard" asp-controller="Learner" class="inr_sidebar-link"></a>
                 <span class="material-symbols-outlined inr_custom-icon-class">
                     dashboard

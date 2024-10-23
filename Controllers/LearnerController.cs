@@ -9,7 +9,6 @@ namespace e_learning.Controllers
     {
         public IActionResult Dashboard()
         {
-
             return View();
         }
     }

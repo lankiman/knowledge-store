@@ -4,7 +4,6 @@ const mobileBurger = document.querySelector("#mobileBurger");
 const mobileBurgerOpen = document.querySelector("#sidebar-burger-open");
 const mobileBurgerClose = document.querySelector("#sidebar-burger-close");
 
-
 function genericToggle(element) {
     if (element.classList.contains("hidden")) {
         element.classList.remove("hidden");
@@ -15,7 +14,6 @@ function genericToggle(element) {
         element.classList.remove("flex");
         element.classList.add("hidden");
     }
-    
 }
 
 profilePicBurger.addEventListener("click", () => { genericToggle(profileBurger) });
@@ -29,4 +27,3 @@ mobileBurgerClose.addEventListener("click", () => {
     mobileBurger.classList.toggle("-translate-x-full");
     mobileBurger.classList.toggle('translate-x-0');
 });
-
