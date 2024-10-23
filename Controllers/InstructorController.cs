@@ -1,29 +1,17 @@
 ﻿using e_learning.Services.Interfaces;
-using e_learning.ViewModels;
 using e_learning.Views.Instructor.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 
 
 namespace e_learning.Controllers
 {
     [Authorize(Roles = "Instructor")]
     public class InstructorController(
+        IUserDetailsService userDetailsService,
         ILessonService lessonService,
-        IInstructorService instructorService) : Controller
+        IInstructorService instructorService) : BaseController(userDetailsService)
     {
-        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var userDetails = await instructorService.GetUserDetails();
-                context.HttpContext.Items["InstructorDetails"] = new LayoutsViewModel(userDetails);
-            }
-
-            await next();
-        }
-
         public async Task<IActionResult> InstructorDashboard()
         {
             var instructor = await instructorService.GetInstructor();
