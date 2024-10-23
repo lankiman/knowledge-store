@@ -3,5 +3,6 @@
     public class StudioViewModel(string activeView)
     {
         public string ActiveView { get; set; } = activeView;
+        public CreateLessonViewModel CreateLessonView = new CreateLessonViewModel();
     }
 }

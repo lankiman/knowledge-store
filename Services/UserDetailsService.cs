@@ -22,6 +22,16 @@ namespace e_learning.Services
             return user;
         }
 
+        public async Task<UserDto?> GetUserDetails()
+        {
+            var user = await GetUser();
+            if (user == null)
+            {
+                return null;
+            }
+            return new UserDto(user);
+        }
+
         public async Task<UserDto?> GetUserDetails(string userId)
         {
             var userDetails = await userManager!.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();

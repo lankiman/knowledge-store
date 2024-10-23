@@ -1,10 +1,10 @@
 ﻿@*@model e_learning.ViewModels.LayoutsViewModel
 
-    @{
-        var currentViewName = ViewData["CurrentViewName"] as string;
-        string GetActiveClass(string viewName)
-        {
-            return currentViewName == viewName ? "active" : "";
+@{
+    var currentViewName = ViewData["CurrentViewName"] as string;
+    string GetActiveClass(string viewName)
+    {
+        return currentViewName == viewName ? "active" : "";
 
         };
     }*@

@@ -336,7 +336,7 @@ const uploadHandling = (function () {
         const req = new XMLHttpRequest();
         req.open("POST", "/Instructor/UploadLessonVideo", true)
         const formData = new FormData();
-        formData.append("fle",file)
+        formData.append("file",file)
 
         req.onload = function () {
             if (this.status === 200) {
