@@ -64,7 +64,7 @@ const fileHandler = (function () {
         }
         videoFilesInput.value = "";
         updateUiOnFileAdded();
-        console.log(selectedFiles)
+        
           }
 
 
@@ -218,20 +218,23 @@ removeThumbnailIcon.addEventListener("click", () => {
     thumbnailSpinner.classList.add("hidden")
     selectThumbnailIcon.classList.remove("!hidden")
     selectThumbnailIcon.style.display = "block"
+
+    selectThubmnailFileInuput.dispatchEvent(new Event("change"))
+
 })
 
 selectThubmnailFileInuput.addEventListener("change", (e) => {
 
     const thubmnailImage = e.target.files[0];
-    //const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'] 
+    //const validImageTypes = ['image/jpeg', 'image/png', 'image/gif']
 
     //if (thumbnailImage && !validImageTypes.includes(thubmnailImage.type)) {
     //    alert("only .jpg, .png or .gif files are allowed")
     //    return;
     //}
-    thumbnailSpinner.classList.remove("hidden")
-
+   
     if (thubmnailImage) {
+        thumbnailSpinner.classList.remove("hidden")
         readFile(thubmnailImage).then((result) => {
             if (result) {
                 thumbnailPreviewImage.src = `${result}`
@@ -410,22 +413,71 @@ const handleCompleteLesson = (function () {
     const completeVideoDetailsForm = document.querySelector("[data-video-details-form]")
     const completeVideoDetailsFormButton = document.querySelector("[data-complete-video-details-button]")
 
-
-    function populateLessonErrorFields(errors) {
+    function populateAndUpdateLessonErrorFields(errors) {
         const errorArray = Object.entries(errors)
-
         errorArray.forEach(([fieldName, fieldError]) => {
             const validationSpan = completeVideoDetailsForm.querySelector(`[data-lesson-details-validation-for="${fieldName}"]`)
-            const validationInput = completeVideoDetailsForm.querySelector(`[data-lesson-details-validation-for="${fieldName}"]`)
-            if (validationInput && fieldError != "") {
-                validationInput.classList.add("error")
+            const validationInputContainer = completeVideoDetailsForm.querySelector(`[data-lesson-details-input-for="${fieldName}"]`)
+            if (validationInputContainer && fieldError != "") {
+                validationInputContainer.classList.add("input-error")
             }
-            if (validationSpan) {
+            if (validationSpan && fieldError!="") {
                 validationSpan.textContent=fieldError
             }
+        
+            if (validationInputContainer) {
+                const input = validationInputContainer.children[0]
+                if (input.type !== "file") {
+                    input.addEventListener("input", (e) => {
+                        if (fieldError != "") {
+                            if (e.target.value.trim() === "") {
+                                validationSpan.textContent = fieldError
+                                validationInputContainer.classList.add("input-error")
+                            } else {
+                                validationSpan.textContent = ""
+                                validationInputContainer.classList.remove("input-error")
+                            }
+                        }
+                    })
+                }
+                if (input.type === "file") {
+                    
+                    input.addEventListener("change", (e) => {
+                        
+                        if (fieldError != "") {
+                            if (!e.target.files || e.target.files.length === 0 || e.target.value=="") {
+                                validationSpan.textContent = fieldError
+                            } else {
+                                validationSpan.textContent = ""
+                            }
+                        }
+                    })
 
+                }
+
+            }
         })
     }
+
+   
+    //function clearErrorFieldsOnChange() {
+    //    const inputFields = completeVideoDetailsForm.querySelectorAll("[data-video-details-input-container]")
+    //    inputFields.forEach((field) => {
+    //        const fieldInput = field.children[0]
+    //        const fieldName = fieldInput.name
+    //        const validationSpan = completeVideoDetailsForm.querySelector(`[data-lesson-details-validation-for="${fieldName}"]`)
+    //        fieldInput.addEventListener("click", () => {
+    //            console.log("change")
+    //            if (validationSpan && validationSpan.textContent != "") {
+    //                validationSpan.textContent = ""
+    //                field.classList.remove("input-error")
+    //            }
+    //        })
+
+    //    })
+    //}
+
+    
     
 
     function displayCompleteLessonDetialsError(response) {
@@ -435,7 +487,7 @@ const handleCompleteLesson = (function () {
            modelOnlyErrorElement.textContent= response.message
         }
         if (!response.ModelOnly && !response.success && response.errors) {
-            populateLessonErrorFields(response.errors)
+            populateAndUpdateLessonErrorFields(response.errors)
         }
     }
     function competeLessonDetials(lessonId) {
