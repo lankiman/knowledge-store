@@ -1,7 +1,11 @@
-﻿const sidebarMenuButton = document.querySelector('[data-inr_sidebar-menu-icon]');
+﻿import toastHandler from './toastContainer.js';
+
+const sidebarMenuButton = document.querySelector('[data-inr_sidebar-menu-icon]');
 const mobileSearchButton = document.querySelector('[data-inr-mb-search-icon]');
 const mobileSearchBar = document.querySelector('[data-inr_mbl_search-bar]');
 const sidebarMenu = document.querySelector("[data-inr_sidebar-menu]")
+
+console.log(toastHandler)
 
 
 //General Helper Functions
@@ -15,6 +19,8 @@ const sizeConverter = (size) => {
     }
     return `${size.toFixed(2)} ${units[unitIndex]}`;
 };
+
+const toastMessageHandler= 
 
 
 function toggleElement(element) {
@@ -153,7 +159,7 @@ const fileHandler = (function () {
 
 
     return {
-        init: function() {
+        init: function () {
             videoFileDropZone.addEventListener("dragover", (e) => {
                 e.preventDefault();
                 updateDropZoneBackground("dragover", "bg-white")
@@ -441,9 +447,7 @@ const handleCompleteLesson = (function () {
                     })
                 }
                 if (input.type === "file") {
-                    
                     input.addEventListener("change", (e) => {
-                        
                         if (fieldError != "") {
                             if (!e.target.files || e.target.files.length === 0 || e.target.value=="") {
                                 validationSpan.textContent = fieldError
@@ -501,6 +505,7 @@ const handleCompleteLesson = (function () {
                 console.log(response)
             } else {
                 console.log(response)
+                toastHandler.showToast("failed","error", document.body)
                 displayCompleteLessonDetialsError(response)
             }
         }
