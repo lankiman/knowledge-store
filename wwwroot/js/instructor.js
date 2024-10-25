@@ -409,6 +409,23 @@ const handleCompleteLesson = (function () {
 
     const completeVideoDetailsForm = document.querySelector("[data-video-details-form]")
     const completeVideoDetailsFormButton = document.querySelector("[data-complete-video-details-button]")
+
+
+    function populateLessonErrorFields(errors) {
+        const errorArray = Object.entries(errors)
+
+        errorArray.forEach(([fieldName, fieldError]) => {
+            const validationSpan = completeVideoDetailsForm.querySelector(`[data-lesson-details-validation-for="${fieldName}"]`)
+            const validationInput = completeVideoDetailsForm.querySelector(`[data-lesson-details-validation-for="${fieldName}"]`)
+            if (validationInput && fieldError != "") {
+                validationInput.classList.add("error")
+            }
+            if (validationSpan) {
+                validationSpan.textContent=fieldError
+            }
+
+        })
+    }
     
 
     function displayCompleteLessonDetialsError(response) {
@@ -417,8 +434,8 @@ const handleCompleteLesson = (function () {
        if (response.modelOnly && !response.success) {
            modelOnlyErrorElement.textContent= response.message
         }
-        if (!response.ModelOnly) {
-
+        if (!response.ModelOnly && !response.success && response.errors) {
+            populateLessonErrorFields(response.errors)
         }
     }
     function competeLessonDetials(lessonId) {

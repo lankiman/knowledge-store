@@ -89,28 +89,5 @@ namespace e_learning.Controllers
             return new BadRequestObjectResult(new { Success = false, errors, ModelOnly = false });
         }
 
-        //    [HttpPost]
-        //    [RequestSizeLimit(268435456)]
-        //    [RequestFormLimits(MultipartBodyLengthLimit = 268435456)]
-        //    public async Task<IActionResult> CreateLesson(CreateLessonViewModel lessonData)
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            var result = await instructorService.CreateLesson(lessonData);
-
-        //            switch (result)
-        //            {
-        //                case OkObjectResult:
-        //                    break;
-
-        //                case ObjectResult { StatusCode: 500 }:
-        //                    ModelState.AddModelError("", "An Error Occured");
-        //                    break;
-        //            }
-        //        }
-
-        //        return View(lessonData);
-        //    }
-        //}
     }
 }
