@@ -5,16 +5,16 @@
 
  
     
-    <template data-toast-template>
-            <div data-toast-container class="z-40 fixed right-[1rem] top-[2rem] flex h-24 w-24 flex-col bg-red-600">
-                <div data-toast-message-container class="flex h-full w-full">
-                    <p data-toast-message class="font-bold"></p>
-                    <span data-toast-icon class="material-symbols-outlined text-2xl">
+    <div data-toast-template>
+            <div data-toast-container class="fixed right-[1rem] top-[2rem] z-50 flex h-[6rem] w-full flex-col items-center bg-white shadow-md md:w-[22rem]">
+                <div data-toast-message-container class="flex h-full w-full justify-between p-4">
+                    <p data-toast-message class="text-md font-bold"></p>
+                    <span data-toast-icon class="material-symbols-outlined text-3xl">
                     </span>
                 </div>
-                <hr data-toast-line />
+                <hr class="border-t-4 w-full self-end" data-toast-line />
             </div>
-    </template>
+    </div>
     <script type="module" defer src="~/js/toastContainer.js" asp-append-version="true"></script>
 
 
