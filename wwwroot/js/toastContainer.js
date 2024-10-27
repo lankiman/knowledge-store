@@ -1,35 +1,58 @@
 ﻿ const toastHandler = (function () {
      const toastTemplate = document.querySelector("[data-toast-template]")
+     const toastPlaceholder = document.querySelector("[data-toast-placeholder]")
 
-     console.log(toastTemplate)
-    
-    const templateContentNode = toastTemplate.content.cloneNode(true);
+     function updateState(element, removeStyle, addStyle) {
+         element.classList.remove(removeStyle)
+         element.classList.add(addStyle)
+     }
+     
 
-    const toastMessage = templateContentNode.querySelector("[data-toast-message]")
+     function showToast(message, type) {
+         const toastTemplateContent = toastTemplate.content.cloneNode(true)
 
-    const toastMessageIcon = templateContentNode.querySelector("[data-toast-icon]")
-
-    const toastMessageLine = templateContentNode.querySelector("[data-toast-line]")
-
+         console.log(toastTemplateContent)
 
 
-     function showToast(message, type, element) {
+         const toastMessage = toastTemplateContent.querySelector("[data-toast-message]")
 
-         console.log(element)
-         console.log("i have been called")
-         console.log(templateContentNode)
+         const toastMessageIcon = toastTemplateContent.querySelector("[data-toast-icon]")
+
+         const toastMessageLine = toastTemplateContent.querySelector("[data-toast-line]")
         
-        element.appendChild(templateContentNode)
+         toastPlaceholder.appendChild(toastTemplateContent)
+
+         if (toastPlaceholder.children.length > 0) {
+             toastPlaceholder.classList.replace("hidden", "flex")
+         }
+
         toastMessage.textContent = message
         if (type == "error") {
-            toastMessageIcon.textContent="error"
+            toastMessageIcon.textContent = "error"
+            updateState(toastMessageIcon, "toast-icon-success", "toast-icon-error")
+            updateState(toastMessageLine, "toast-line-success", "toast-line-error")
+            updateState(toastMessage, "toast-message-success", "toast-message-error")
+
         }
         if (type == "success") {
-            toastMessageIcon.textContent="task_alt"
-        }
+            toastMessageIcon.textContent = "task_alt"
+            updateState(toastMessageIcon, "toast-icon-error", "toast-icon-success")
+            updateState(toastMessageLine, "toast-line-error", "toast-line-success")
+            updateState(toastMessage, "toast-message-error", "toast-message-success")
+         }
+         const appendedToast = toastPlaceholder.lastElementChild;
+         setTimeout(() => {
+             updateState(appendedToast, "toastIn", "toastOut")
+             appendedToast.addEventListener("animationend", () => {
+                 toastPlaceholder.removeChild(appendedToast);
+                 if (toastPlaceholder.children.length <1) {
+                     toastPlaceholder.classList.add("hidden");
+                 }
+             });
+         }, 4200)
+
+         
     }
-
-
 
     return {
         showToast:showToast

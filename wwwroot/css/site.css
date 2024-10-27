@@ -779,3 +779,62 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
 }*/
 
 
+.toast-line-error{
+    @apply border-red-600;
+}
+.toast-line-success{
+    @apply border-green-600;
+}
+.toast-icon-error{
+    @apply text-red-600;
+}
+.toast-icon-success{
+    @apply text-green-600;
+}
+.toast-message-error{
+    @apply text-red-600;
+}
+.toast-message-success{
+    @apply text-green-600;
+}
+
+@keyframes toastLine{
+    from {
+        @apply w-full;
+    }
+    to {
+        @apply w-0;   
+    }
+}
+
+@keyframes toastFadeIn {
+    0% {
+        right: -100%; /* Off-screen to the left */
+        opacity: 0.5; /* Fully transparent */
+    }
+
+    100% {
+        right: 0; /* Move to the left edge of the container */
+        opacity: 1; /* Fully opaque */
+    }
+}
+
+@keyframes toastFadeOut {
+    0% {
+        right:0; /* Off-screen to the left */
+        opacity: 1; /* Fully transparent */
+    }
+
+    100% {
+        right: -100%; /* Move to the left edge of the container */
+        opacity: 0.5; /* Fully opaque */
+    }
+}
+
+.toastIn {
+    @apply animate-[toastFadeIn_1s_linear_forwards];
+}
+
+.toastOut {
+    @apply animate-[toastFadeOut_1s_linear_forwards];
+}

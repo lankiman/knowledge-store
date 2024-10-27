@@ -5,7 +5,7 @@ const mobileSearchButton = document.querySelector('[data-inr-mb-search-icon]');
 const mobileSearchBar = document.querySelector('[data-inr_mbl_search-bar]');
 const sidebarMenu = document.querySelector("[data-inr_sidebar-menu]")
 
-console.log(toastHandler)
+
 
 
 //General Helper Functions
@@ -20,7 +20,7 @@ const sizeConverter = (size) => {
     return `${size.toFixed(2)} ${units[unitIndex]}`;
 };
 
-const toastMessageHandler= 
+
 
 
 function toggleElement(element) {
@@ -155,6 +155,12 @@ const fileHandler = (function () {
             uploadingFilesContainer.classList.remove("flex")
             lessonDetailsForm.classList.add("hidden")
         }
+        
+        if (selectedFiles.length === 1) {
+            lessonDetailsForm.classList.remove("hidden")
+            uploadingFilesContainer.classList.remove("uploading-contianer-visible")
+            uploadingFilesContainer.classList.add("uploading-contianer-visible-width")
+        }
     }
 
 
@@ -191,6 +197,17 @@ const fileHandler = (function () {
         },
         getSelectedFiles: function () {
             return [...selectedFiles];
+        },
+        clearUi: function () {
+            videoFileDropZone.classList.remove("hidden")
+            videoFileDropZone.classList.add("flex")
+            uploadingFilesContainer.classList.add("hidden")
+            uploadingFilesContainer.classList.remove("flex")
+            lessonDetailsForm.classList.add("hidden")
+            selectedFilesList.innerHTML=""
+        },
+        clearSelectedFiles: function () {
+            selectedFiles=[]
         }
     }
 })();
@@ -204,6 +221,17 @@ const selectThubmnailFileInuput = document.querySelector("[data-select-thumbnail
 const thumbnailPreviewImage = document.querySelector("[data-thumbnail-preview-image]")
 const thumbnailSpinner = document.querySelector("[data-thumbnail-preview-spinner]")
 const removeThumbnailIcon = document.querySelector("[data-remove-thumbnail-icon]")
+
+
+function clearThumbnial() {
+    selectThubmnailFileInuput.value = "";
+    thumbnailPreviewImage.classList.add("hidden")
+    thumbnailSpinner.classList.add("hidden")
+    selectThumbnailIcon.classList.remove("!hidden")
+    selectThumbnailIcon.style.display = "block"
+
+    selectThubmnailFileInuput.dispatchEvent(new Event("change"))
+}
 function readFile(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -219,15 +247,11 @@ selectThumbnailIcon.addEventListener("click", () => {
     
 })
 removeThumbnailIcon.addEventListener("click", () => {
-    selectThubmnailFileInuput.value = "";
-    thumbnailPreviewImage.classList.add("hidden")
-    thumbnailSpinner.classList.add("hidden")
-    selectThumbnailIcon.classList.remove("!hidden")
-    selectThumbnailIcon.style.display = "block"
-
-    selectThubmnailFileInuput.dispatchEvent(new Event("change"))
+  clearThumbnial()
 
 })
+
+
 
 selectThubmnailFileInuput.addEventListener("change", (e) => {
 
@@ -267,6 +291,18 @@ const uploadHandling = (function () {
 
     let uploadedLessonId = "";
 
+    let uploadQueue = []
+    let isUploading = false;
+    let currentReq = null;
+    let currentFile = null;
+
+
+    function updateUiOnComplete() {
+        filesUploadingList.innerHTML = ""
+        filesToUploadList.classList.replace("hidden", "flex")
+        filesUploadingContainer.classList.replace("flex", "hidden")
+    }
+
 
     function updateVideoDetailsFormStatus(lessonId) {
         completeVideoDetailsForm.action = "/Instructor/CompleteLessonDetails?Id=" + encodeURIComponent(lessonId);
@@ -277,6 +313,7 @@ const uploadHandling = (function () {
         filesToUploadList.classList.replace("flex", "hidden")
         filesUploadingContainer.classList.replace("hidden", "flex")
     }
+
 
     function updateUploadProgress(progress, file) {
         const progressBar = filesUploadingList.querySelector(`[data-file-uploading-list-section="${file.name}"]`)
@@ -304,6 +341,27 @@ const uploadHandling = (function () {
         }
     }
 
+    function abortUploadReq(fileName) {
+        if (currentFile.name === fileName && currentReq) {
+            currentReq.abort()
+        }
+    }
+
+    function cancelFileUPload(fileName) {
+        const index = uploadQueue.findIndex(file => file.name === fileName);
+        if (index !== -1) {
+            selectedFiles.splice(index, 1);
+            const listItems = filesToUploadList.querySelectorAll('[data-files-uploading-list-item]');
+            if (listItems[index]) {
+                listItems[index].remove();
+            }
+        }
+        abortUploadReq(fileName);
+        console.log("aborted",file.name)
+        
+    }
+
+
     
 
      function createFileUploadListItem(file) {
@@ -326,7 +384,7 @@ const uploadHandling = (function () {
                     wating to Upload
                 </span>
             </div>
-            <button data-file-uploading-cancel-button class="file-uploading-cancel-button" type="button">
+            <button data-file-uploading-cancel-button data-file-cancel-button-for="${file.name}" class="file-uploading-cancel-button" type="button">
                 <span class="material-symbols-outlined text-accent-dark_gray hover:text-accent">
                     close
                 </span>
@@ -335,7 +393,7 @@ const uploadHandling = (function () {
 
         const button = li.querySelector("[data-file-uploading-cancel-button]")
         button.addEventListener("click", () => {
-            removeFile(file.name)
+            cancelFileUPload(file.name)
         })
         return li;
     }
@@ -344,54 +402,114 @@ const uploadHandling = (function () {
         const li = createFileUploadListItem(file)
         filesUploadingList.appendChild(li)
     }
-  
+
+
+    
+
+
     function uploadFile(file) {
-        const req = new XMLHttpRequest();
-        req.open("POST", "/Instructor/UploadLessonVideo", true)
-        const formData = new FormData();
-        formData.append("file",file)
+        return new Promise((resolve, reject) => {
+            const req = new XMLHttpRequest(); 
+            currentReq = req
+            currentFile = file
+            req.open("POST", "/Instructor/UploadLessonVideo", true);
+            const formData = new FormData();
+            formData.append("file", file);
 
-        req.onload = function () {
-            if (this.status === 200) {
-                console.log(this.response)
-                const response = JSON.parse(this.response)
-                console.log(response)
-                replaceCancelButtonWithCheck(file)
-                const filesToUpload = fileHandler.getSelectedFiles();
-                if (filesToUpload.length === 1) {
-                    console.log(completeVideoDetailsFormButton)
-                    updateVideoDetailsFormStatus(response.lessonId);
-                    uploadedLessonId = response.lessonId;
+            req.onload = function () {
+                if (this.status === 200) {
+                    const response = JSON.parse(this.response);
+                    replaceCancelButtonWithCheck(file);
+                    const filesToUpload = fileHandler.getSelectedFiles();
+                    if (filesToUpload.length === 1) {
+                        updateVideoDetailsFormStatus(response.lessonId);
+                        uploadedLessonId = response.lessonId;
+                    }
+                    resolve();
+                } else {
+                    reject(new Error('Upload failed'));
                 }
-            }
-        }
+            };
 
-        req.upload.onprogress = function (e) {
-            if (e.lengthComputable) {
-                const progress = (e.loaded / e.total) * 100;
-                updateUploadProgress(progress, file)
-               
-            }
-        };
-        
+            req.upload.onprogress = function (e) {
+                if (e.lengthComputable) {
+                    const progress = (e.loaded / e.total) * 100;
+                    updateUploadProgress(progress, file);
+                }
+            };
 
-        req.onerror = function () {
-            console.log(this.response)
-        }
+            req.onerror = function () {
+                console.log(this.response);
+                reject(new Error('Upload failed'));
+            };
 
-        req.send(formData)
+            req.send(formData);
+        });
     }
+
+    //function uploadFile(file) {
+    //    const req = new XMLHttpRequest();
+    //    req.open("POST", "/Instructor/UploadLessonVideo", true)
+    //    const formData = new FormData();
+    //    formData.append("file", file);
+    //    currentReq = req;
+
+    //    let successs = false;
+
+    //    req.onload = function () {
+    //        if (this.status === 200) {
+    //            const response = JSON.parse(this.response)
+    //            successs=true
+    //            replaceCancelButtonWithCheck(file)
+    //            const filesToUpload = fileHandler.getSelectedFiles();
+    //            if (filesToUpload.length === 1) {
+    //                updateVideoDetailsFormStatus(response.lessonId);
+    //                uploadedLessonId = response.lessonId;
+    //            }
+    //        }
+    //    }
+
+    //    req.upload.onprogress = function (e) {
+    //        if (e.lengthComputable) {
+    //            const progress = (e.loaded / e.total) * 100;
+    //            updateUploadProgress(progress, file)
+               
+    //        }
+    //    };
+        
+    //    req.onerror = function () {
+    //        console.log(this.response)
+    //    }
+    //    req.send(formData)
+
+    //    return success;
+    //}
+
+    async function processQueue() {
+        if (!uploadQueue.length || isUploading) return;
+
+        isUploading = true;
+        const file = uploadQueue.shift();
+        try {
+            await uploadFile(file);
+        } catch (error) {
+            console.error('Upload failed:', error);
+        }
+
+        isUploading = false;
+        processQueue(); 
+    }
+
+
 
     function uploadFiles(files) {
         updateUIonUploadStart()
           for (let file of files) {
              addFileUploadingtoList(file)
         }
-        for (let file of files) {
-            uploadFile(file)
-        }
-
-    }
+        uploadQueue.push(...files)
+        processQueue();
+      }
 
         
     if (uploadVideoButton) {
@@ -407,7 +525,8 @@ const uploadHandling = (function () {
     return {
         getUploadedLessonId: function () {
             return uploadedLessonId;
-        }
+        },
+        updateUiOnComplete: updateUiOnComplete
     }
 })();
 
@@ -464,23 +583,16 @@ const handleCompleteLesson = (function () {
     }
 
    
-    //function clearErrorFieldsOnChange() {
-    //    const inputFields = completeVideoDetailsForm.querySelectorAll("[data-video-details-input-container]")
-    //    inputFields.forEach((field) => {
-    //        const fieldInput = field.children[0]
-    //        const fieldName = fieldInput.name
-    //        const validationSpan = completeVideoDetailsForm.querySelector(`[data-lesson-details-validation-for="${fieldName}"]`)
-    //        fieldInput.addEventListener("click", () => {
-    //            console.log("change")
-    //            if (validationSpan && validationSpan.textContent != "") {
-    //                validationSpan.textContent = ""
-    //                field.classList.remove("input-error")
-    //            }
-    //        })
-
-    //    })
-    //}
-
+     function resetUi() {
+        completeVideoDetailsForm.reset();
+        completeVideoDetailsForm.action = ""
+         completeVideoDetailsFormButton.disabled = true;
+        completeVideoDetailsFormButton.classList.add("disabled")
+        fileHandler.clearSelectedFiles();
+        fileHandler.clearUi()
+         uploadHandling.updateUiOnComplete()
+        clearThumbnial()
+    }
     
     
 
@@ -502,10 +614,12 @@ const handleCompleteLesson = (function () {
         req.onload = function () {
             const response = JSON.parse(this.response)
             if (this.status == 200) {
-                console.log(response)
+                toastHandler.showToast("Succesfully completed Lesson details", "success")
+                resetUi();
+                
+             
             } else {
-                console.log(response)
-                toastHandler.showToast("failed","error", document.body)
+                toastHandler.showToast("Failed complete Lesson details","error")
                 displayCompleteLessonDetialsError(response)
             }
         }

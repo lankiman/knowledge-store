@@ -118,6 +118,11 @@ namespace e_learning.Services
 
                 return new OkResult();
             }
+            catch (OperationCanceledException)
+            {
+                TryDeleteFile(videoFilePath);
+                return new ObjectResult(new { Message = "Upload canceled." }) { StatusCode = 499 };
+            }
             catch (Exception ex)
             {
                 TryDeleteFile(videoFilePath);
