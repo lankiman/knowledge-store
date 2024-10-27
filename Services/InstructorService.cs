@@ -109,6 +109,12 @@ namespace e_learning.Services
 
         private static async Task<IActionResult> SaveLessonVideoToTempStorage(IFormFile file, string videoFilePath)
         {
+
+            if (file == null)
+            {
+                TryDeleteFile(videoFilePath);
+                return new ObjectResult(new { Message = "File is null or Upload Canceled" }) { StatusCode = 499 };
+            }
             try
             {
                 using (var fileStream = new FileStream(videoFilePath, FileMode.Create))

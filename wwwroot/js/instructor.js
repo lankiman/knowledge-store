@@ -295,12 +295,18 @@ const uploadHandling = (function () {
     let isUploading = false;
     let currentReq = null;
     let currentFile = null;
+    let uploadedFiles=[]
 
 
     function updateUiOnComplete() {
-        filesUploadingList.innerHTML = ""
+        filesToUploadList.classList.replace("flex", "hidden")
+        filesUploadingContainer.classList.replace("hidden", "flex")
+    }
+
+    function updateUiOnCancel() {
         filesToUploadList.classList.replace("hidden", "flex")
         filesUploadingContainer.classList.replace("flex", "hidden")
+
     }
 
 
@@ -347,17 +353,18 @@ const uploadHandling = (function () {
         }
     }
 
-    function cancelFileUPload(fileName) {
+    function cancelFileUPload(fileName, li) {
         const index = uploadQueue.findIndex(file => file.name === fileName);
         if (index !== -1) {
-            selectedFiles.splice(index, 1);
-            const listItems = filesToUploadList.querySelectorAll('[data-files-uploading-list-item]');
-            if (listItems[index]) {
-                listItems[index].remove();
+            uploadQueue.splice(index, 1);
+            li.remove();
+            console.log(uploadedFiles.length, uploadQueue.length)
+            if (uploadQueue.length === 0 && uploadFiles.length === 0) {
+                updateUiOnCancel();
             }
         }
         abortUploadReq(fileName);
-        console.log("aborted",file.name)
+        
         
     }
 
@@ -368,7 +375,8 @@ const uploadHandling = (function () {
         const li = document.createElement("li")
         li.classList.add("files-uploading-list-item")
         li.setAttribute("data-files-uploading-list-item", true)
-         li.innerHTML = `
+        /*li.setAttribute(`data-files-uploading-list-item-for=${file.name}`, true)*/
+        li.innerHTML = `
         <p data-file-uploading-name class="file-uploading-name">${file.name}</p>
         <div data-file-uploading-list-section="${file.name}" class="file-uploading-list-section">
             <div data-file-upload-progress-container class=file-upload-progress-container>
@@ -393,7 +401,7 @@ const uploadHandling = (function () {
 
         const button = li.querySelector("[data-file-uploading-cancel-button]")
         button.addEventListener("click", () => {
-            cancelFileUPload(file.name)
+            cancelFileUPload(file.name, li)
         })
         return li;
     }
@@ -427,6 +435,7 @@ const uploadHandling = (function () {
                     }
                     resolve();
                 } else {
+                    console.log(this.response)
                     reject(new Error('Upload failed'));
                 }
             };
@@ -443,6 +452,11 @@ const uploadHandling = (function () {
                 reject(new Error('Upload failed'));
             };
 
+            req.onabort = function () {
+                reject(new Error('Upload was aborted')); 
+            };
+
+       
             req.send(formData);
         });
     }
@@ -489,9 +503,11 @@ const uploadHandling = (function () {
         if (!uploadQueue.length || isUploading) return;
 
         isUploading = true;
-        const file = uploadQueue.shift();
+        const file = uploadQueue[0];
         try {
             await uploadFile(file);
+            uploadQueue.shift();
+            uploadedFiles.push(file)
         } catch (error) {
             console.error('Upload failed:', error);
         }
