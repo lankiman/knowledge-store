@@ -720,7 +720,20 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
 
 .file-uploading-progress {
     @apply flex-1 h-[1rem] w-full rounded-md border border-[#F18337];
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
+
+    .file-uploading-progress::-webkit-progress-bar {
+        @apply flex-1 h-[1rem] w-full rounded-md border border-[#F18337];
+        
+        
+    }
+
+    .file-uploading-progress::-webkit-progress-value {
+        @apply rounded-md bg-accent;
+    }
 
 .file-upload-progress-text {
     @apply text-sm font-bold text-[#F18337];

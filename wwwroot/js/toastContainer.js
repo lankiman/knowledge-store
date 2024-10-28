@@ -6,7 +6,8 @@
          element.classList.remove(removeStyle)
          element.classList.add(addStyle)
      }
-     
+
+ 
 
      function showToast(message, type) {
          const toastTemplateContent = toastTemplate.content.cloneNode(true)
