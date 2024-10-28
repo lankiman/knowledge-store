@@ -1,12 +1,5 @@
 ﻿import toastHandler from './toastContainer.js';
 
-const sidebarMenuButton = document.querySelector('[data-inr_sidebar-menu-icon]');
-const mobileSearchButton = document.querySelector('[data-inr-mb-search-icon]');
-const mobileSearchBar = document.querySelector('[data-inr_mbl_search-bar]');
-const sidebarMenu = document.querySelector("[data-inr_sidebar-menu]")
-
-
-
 
 //General Helper Functions
 const sizeConverter = (size) => {
@@ -44,14 +37,53 @@ function customToggleElement(element, classname) {
     }
 }
 
-sidebarMenuButton.addEventListener("click", () => customToggleElement(sidebarMenu, "sidebar-open"));
-mobileSearchButton.addEventListener("click", () => toggleElement(mobileSearchBar));
+function resetFormErrorStatus() {
+    const validationMessageContainers = document.querySelectorAll("[data-lesson-details-validation]")
+    const validationInputs = document.querySelectorAll("[data-video-details-input-container]")
+
+    validationMessageContainers.forEach((element) => element.textContent = "")
+
+    validationInputs.forEach((element) => {
+        element.classList.remove("input-error")
+    })
+}
+
+function resetUi() {
+    handleCompleteLesson.resetLessonDetailsFormStatus();
+    fileHandler.clearSelectedFiles();
+    fileHandler.clearUi()
+    uploadHandling.updateUiOnComplete()
+    thumbnailHandler.clearThumbnial()
+    uploadHandling.resetAfterUploadButtons()
+    resetFormErrorStatus()
+}
+
+
+const layoutHandler = (function () {
+    const sidebarMenuButton = document.querySelector('[data-inr_sidebar-menu-icon]');
+    const mobileSearchButton = document.querySelector('[data-inr-mb-search-icon]');
+    const mobileSearchBar = document.querySelector('[data-inr_mbl_search-bar]');
+    const sidebarMenu = document.querySelector("[data-inr_sidebar-menu]")
+
+    return {
+        init: function () {
+            sidebarMenuButton.addEventListener("click", () => customToggleElement(sidebarMenu, "sidebar-open"));
+            mobileSearchButton.addEventListener("click", () => toggleElement(mobileSearchBar));
+        }
+    }
+    
+
+})()
+layoutHandler.init()
 
 //globals
 const lessonDetailsForm = document.querySelector("[data-file-details-form-container]");
 const uploadingFilesContainer = document.querySelector("[data-uploading-files-container]")
+const filesToUploadList = document.querySelector("[data-files-upload-part]")
+const completeVideoDetailsForm = document.querySelector("[data-video-details-form]")
+const completeVideoDetailsFormButton = document.querySelector("[data-complete-video-details-button]")
 
-//inr_video list functions
+//inr_studoio functions
 //IIFE
 const fileHandler = (function () {
     const videoFilesInput = document.querySelector("[data-file-input]")
@@ -134,6 +166,7 @@ const fileHandler = (function () {
     }
 
     function updateUiOnFileAdded() {
+        filesToUploadList.classList.replace("hidden", "flex")
         if (selectedFiles.length>1) {
             videoFileDropZone.classList.add("hidden")
             videoFileDropZone.classList.remove("flex")
@@ -222,66 +255,76 @@ fileHandler.init();
 
 
 //Thumbnail choosing logic
-const selectThumbnailIcon = document.querySelector("[data-select-thumbnail-icon]")
-const selectThubmnailFileInuput = document.querySelector("[data-select-thumbnail-input]")
-const thumbnailPreviewImage = document.querySelector("[data-thumbnail-preview-image]")
-const thumbnailSpinner = document.querySelector("[data-thumbnail-preview-spinner]")
-const removeThumbnailIcon = document.querySelector("[data-remove-thumbnail-icon]")
+
+const thumbnailHandler = (function () {
+    const selectThumbnailIcon = document.querySelector("[data-select-thumbnail-icon]")
+    const selectThubmnailFileInuput = document.querySelector("[data-select-thumbnail-input]")
+    const thumbnailPreviewImage = document.querySelector("[data-thumbnail-preview-image]")
+    const thumbnailSpinner = document.querySelector("[data-thumbnail-preview-spinner]")
+    const removeThumbnailIcon = document.querySelector("[data-remove-thumbnail-icon]")
 
 
-function clearThumbnial() {
-    selectThubmnailFileInuput.value = "";
-    thumbnailPreviewImage.classList.add("hidden")
-    thumbnailSpinner.classList.add("hidden")
-    selectThumbnailIcon.classList.remove("!hidden")
-    selectThumbnailIcon.style.display = "block"
+    function clearThumbnial() {
+        selectThubmnailFileInuput.value = "";
+        thumbnailPreviewImage.classList.add("hidden")
+        thumbnailSpinner.classList.add("hidden")
+        selectThumbnailIcon.classList.remove("!hidden")
+        selectThumbnailIcon.style.display = "block"
 
-    selectThubmnailFileInuput.dispatchEvent(new Event("change"))
-}
-function readFile(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onload = (e) => resolve(e.target.result);
-        reader.onerror = (e) => reject(new Error('Error reading file',e));
-        reader.readAsDataURL(file);
-    });
-}
-
-selectThumbnailIcon.addEventListener("click", () => {
-    selectThubmnailFileInuput.click();
-    
-})
-removeThumbnailIcon.addEventListener("click", () => {
-  clearThumbnial()
-
-})
-
-
-
-selectThubmnailFileInuput.addEventListener("change", (e) => {
-
-    const thubmnailImage = e.target.files[0];
-    //const validImageTypes = ['image/jpeg', 'image/png', 'image/gif']
-
-    //if (thumbnailImage && !validImageTypes.includes(thubmnailImage.type)) {
-    //    alert("only .jpg, .png or .gif files are allowed")
-    //    return;
-    //}
-   
-    if (thubmnailImage) {
-        thumbnailSpinner.classList.remove("hidden")
-        readFile(thubmnailImage).then((result) => {
-            if (result) {
-                thumbnailPreviewImage.src = `${result}`
-                thumbnailPreviewImage.classList.remove("hidden")
-                thumbnailSpinner.classList.add("hidden")
-                selectThumbnailIcon.classList.add("!hidden")
-                selectThumbnailIcon.style.display="none"
-            }
-        })
+        selectThubmnailFileInuput.dispatchEvent(new Event("change"))
     }
-})
+    function readFile(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onload = (e) => resolve(e.target.result);
+            reader.onerror = (e) => reject(new Error('Error reading file', e));
+            reader.readAsDataURL(file);
+        });
+    }
+
+    return {
+        init: function () {
+            selectThumbnailIcon.addEventListener("click", () => {
+                selectThubmnailFileInuput.click();
+
+            })
+            removeThumbnailIcon.addEventListener("click", () => {
+                clearThumbnial()
+
+            })
+            selectThubmnailFileInuput.addEventListener("change", (e) => {
+
+                const thubmnailImage = e.target.files[0];
+                //const validImageTypes = ['image/jpeg', 'image/png', 'image/gif']
+
+                //if (thumbnailImage && !validImageTypes.includes(thubmnailImage.type)) {
+                //    alert("only .jpg, .png or .gif files are allowed")
+                //    return;
+                //}
+
+                if (thubmnailImage) {
+                    thumbnailSpinner.classList.remove("hidden")
+                    readFile(thubmnailImage).then((result) => {
+                        if (result) {
+                            thumbnailPreviewImage.src = `${result}`
+                            thumbnailPreviewImage.classList.remove("hidden")
+                            thumbnailSpinner.classList.add("hidden")
+                            selectThumbnailIcon.classList.add("!hidden")
+                            selectThumbnailIcon.style.display = "none"
+                        }
+                    })
+                }
+            })
+
+        },
+        clearThumbnial:clearThumbnial
+    }
+})()
+
+thumbnailHandler.init()
+
+
 
 
 //actual videe uploading logic
@@ -291,12 +334,10 @@ const uploadHandling = (function () {
     const uploadVideoButton = document.querySelector("[data-files-upload-button]")
     const filesUploadingContainer = document.querySelector("[data-files-uploading-container]")
     const filesUploadingList = document.querySelector("[data-files-uploading-list]")
-    const filesToUploadList = document.querySelector("[data-files-upload-part]")
-    const completeVideoDetailsForm = document.querySelector("[data-video-details-form]")
-    const completeVideoDetailsFormButton = document.querySelector("[data-complete-video-details-button]")
     const afterUploadButtonsContainer = document.querySelector("[data-after-upload-buttons-container]")
+    const goBackAfterUploadButton = document.querySelector("[data-return-after-upload]")
 
-    /*let uploadedLessonId = "";*/
+    
     let uploadQueue = []
     let isUploading = false;
     let currentReq = null;
@@ -314,8 +355,8 @@ const uploadHandling = (function () {
     }
 
     function updateUiOnComplete() {
-        filesToUploadList.classList.replace("flex", "hidden")
-        filesUploadingContainer.classList.replace("hidden", "flex")
+        filesUploadingList.innerHTML=""
+        filesUploadingContainer.classList.replace("flex", "hidden")
     }
 
     function updateUiOnCancel() {
@@ -324,7 +365,7 @@ const uploadHandling = (function () {
     }
 
     function showLessonDetailsFormOnCancel() {
-        if (uploadQueue.length === 1 && originalQueue>1) {
+        if ((uploadQueue.length === 1 || uploadQueue.length===0) && originalQueue>1) {
             lessonDetailsForm.classList.remove("hidden")
             uploadingFilesContainer.classList.remove("uploading-contianer-visible")
             uploadingFilesContainer.classList.add("uploading-contianer-visible-width")
@@ -332,7 +373,7 @@ const uploadHandling = (function () {
     }
 
     function updateLessonDetailsFormOnAction() {
-        if (uploadQueue.length === 0 && originalQueue > 1 && uploadFiles.length===1 && upLoadedLessonsIdsArray.length===1) {
+        if ((uploadQueue.length === 1 || uploadQueue.length === 0) && originalQueue > 1 && uploadFiles.length===1 && upLoadedLessonsIdsArray.length===1) {
             updateVideoDetailsFormStatus(upLoadedLessonsIdsArray[0])
         }
     }
@@ -386,6 +427,7 @@ const uploadHandling = (function () {
             uploadQueue.splice(index, 1);
             li.remove();
             showLessonDetailsFormOnCancel()
+            updateLessonDetailsFormOnAction()
             if (uploadQueue.length === 0 && uploadedFiles.length === 0) {
                 updateUiOnCancel();
             }
@@ -397,7 +439,6 @@ const uploadHandling = (function () {
         const li = document.createElement("li")
         li.classList.add("files-uploading-list-item")
         li.setAttribute("data-files-uploading-list-item", true)
-        /*li.setAttribute(`data-files-uploading-list-item-for=${file.name}`, true)*/
         li.innerHTML = `
         <p data-file-uploading-name class="file-uploading-name">${file.name}</p>
         <div data-file-uploading-list-section="${file.name}" class="file-uploading-list-section">
@@ -449,7 +490,6 @@ const uploadHandling = (function () {
                     upLoadedLessonsIdsArray.push(response.lessonId)
                     if (originalQueue === 1) {
                         updateVideoDetailsFormStatus(response.lessonId);
-                        /*uploadedLessonId = response.lessonId;*/
                     }
                     resolve();
                 } else {
@@ -478,8 +518,6 @@ const uploadHandling = (function () {
             req.send(formData);
         });
     }
-
-  
     async function processQueue() {
         if (!uploadQueue.length || isUploading) return;
         isUploading = true;
@@ -498,9 +536,6 @@ const uploadHandling = (function () {
         processQueue(); 
         showAfterUploadButtons();
     }
-
-
-
     function uploadFiles(files) {
         updateUIonUploadStart()
           for (let file of files) {
@@ -509,35 +544,41 @@ const uploadHandling = (function () {
         uploadQueue.push(...files)
         originalQueue=uploadQueue.length
         processQueue();
-      }
+    }
 
-        
-    if (uploadVideoButton) {
-        uploadVideoButton.addEventListener("click", () => {
-            const filesToUpload = fileHandler.getSelectedFiles();
-            if (filesToUpload.length > 0) {
-                alert("do not leave or refresh the page while video uploads go on")
-                uploadFiles(filesToUpload)
-            }    
-        })
+    function resetAfterUploadButtons() {
+        afterUploadButtonsContainer.classList.replace("flex", "hidden")
     }
 
     return {
-        //getUploadedLessonId: function () {
-        //    return uploadedLessonId;
-        //},
-        updateUiOnComplete: updateUiOnComplete
+        init: function () {
+            if (uploadVideoButton) {
+                uploadVideoButton.addEventListener("click", () => {
+                    const filesToUpload = fileHandler.getSelectedFiles();
+                    if (filesToUpload.length > 0) {
+                        alert("do not leave or refresh the page while video uploads go on")
+                        uploadFiles(filesToUpload)
+                    }
+                })
+            }
+
+            if (goBackAfterUploadButton) {
+                goBackAfterUploadButton.addEventListener("click", () => {
+                    resetUi();
+
+                })
+            }
+        },
+        updateUiOnComplete: updateUiOnComplete,
+       resetAfterUploadButtons:resetAfterUploadButtons
     }
 })();
+uploadHandling.init();
 
 //IIFE
 //Lesson Video Details Upload
 
 const handleCompleteLesson = (function () {
-
-    const completeVideoDetailsForm = document.querySelector("[data-video-details-form]")
-    const completeVideoDetailsFormButton = document.querySelector("[data-complete-video-details-button]")
-
     function populateAndUpdateLessonErrorFields(errors) {
         const errorArray = Object.entries(errors)
         errorArray.forEach(([fieldName, fieldError]) => {
@@ -575,30 +616,21 @@ const handleCompleteLesson = (function () {
                             }
                         }
                     })
-
                 }
-
             }
         })
     }
 
-   
-     function resetUi() {
+    function resetLessonDetailsFormStatus() {
         completeVideoDetailsForm.reset();
         completeVideoDetailsForm.action = ""
-         completeVideoDetailsFormButton.disabled = true;
+        completeVideoDetailsFormButton.disabled = true;
         completeVideoDetailsFormButton.classList.add("disabled")
-        fileHandler.clearSelectedFiles();
-        fileHandler.clearUi()
-         uploadHandling.updateUiOnComplete()
-        clearThumbnial()
     }
-    
-    
-
+  
     function displayCompleteLessonDetialsError(response) {
         const modelOnlyErrorElement = completeVideoDetailsForm.querySelector("[data-lesson-details-validation-modelonly]")
-       console.log(modelOnlyErrorElement)
+       
        if (response.modelOnly && !response.success) {
            modelOnlyErrorElement.textContent= response.message
         }
@@ -632,11 +664,18 @@ const handleCompleteLesson = (function () {
         }
     };
 
-    completeVideoDetailsFormButton.addEventListener("click", () => {
-        competeLessonDetials()
-    })
+   
+    return {
+        init: function () {
+            completeVideoDetailsFormButton.addEventListener("click", () => {
+                competeLessonDetials()
+            })
+ },
+        resetLessonDetailsFormStatus: resetLessonDetailsFormStatus
+    }
 
 })();
+handleCompleteLesson.init();
 
 
 
