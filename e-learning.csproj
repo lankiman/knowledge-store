@@ -32,6 +32,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="wwwroot\css\dashboardStyleSheet.css" />
 	  <_ContentIncludedByDefault Remove="wwwroot\js\DashboardScript.js" />
 	</ItemGroup>
 

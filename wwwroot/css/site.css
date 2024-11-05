@@ -730,9 +730,11 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
 .uploaded-check-icon {
     @apply font-bold text-green-600;
 }
+
 .complete-video-details-button {
     @apply cursor-pointer bg-black text-white hover:bg-white hover:text-accent;
 }
+
     .complete-video-details-button.disabled {
         @apply cursor-none bg-gray-100 text-gray-400 hover:bg-gray-100;
     }
