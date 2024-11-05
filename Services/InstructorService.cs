@@ -420,7 +420,7 @@ namespace e_learning.Services
 
 
 
-        public Task<IActionResult> CreateLesson(ViewModels.CreateLessonViewModel model)
+        public Task<IActionResult> CreateLesson(CreateLessonViewModel model)
         {
             throw new NotImplementedException();
         }
