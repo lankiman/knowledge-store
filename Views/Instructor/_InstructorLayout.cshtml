@@ -10,25 +10,31 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> @ViewData["Title"] </title>
-    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />*@
     @*<link rel="preload" href="~/css/output.css" as="style" onload="this.onload=null;this.rel='stylesheet'" asp-append-version="true" />
-    <noscript><link rel="stylesheet" href="~/css/output.css" asp-append-version="true" /></noscript>*@
+        <noscript><link rel="stylesheet" href="~/css/output.css" asp-append-version="true" /></noscript>*@
     @* <link rel="stylesheet" href="fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,ROND@0..1,100&icon_names=dashboard,menu_open&display=block"/> *@
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add_photo_alternate,analytics,animated_images,cancel,category,check,close,dashboard,delete,description,forum,license,menu_open,movie_edit,paid,search,settings,title,upload,vr180_create2d" rel="stylesheet" />
+
+
+
 </head>
 <body class="font-primary min-h-svh overflow-auto">
+
     <!--Header-->
     <partial name="Partials/_HeaderPartial.cshtml" />
     <!--Main Body-->
     <div class="flex h-full w-full">
         <!--Side Bar-->
         <partial name="Partials/_SidabarPartial.cshtml" model="@instructorDetails" />
+
         <!--Main Content-->
         <main role="main" class="flex-1 overflow-y-auto bg-accent_lightestGray p-4">
             @RenderBody()
         </main>
     </div>
-    <script src="~/js/instructor.js" asp-append-version="true"></script>
+
+    <partial name="~/Views/Shared/Partials/_ToastContainerPartial.cshtml" />
+    <script type="module" defer src="~/js/instructor.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

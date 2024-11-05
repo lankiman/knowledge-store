@@ -28,12 +28,12 @@ namespace e_learning.Models
 
         public int LessonLikes { get; set; }
 
-        [Column(TypeName = "nvarchar(100)")]
+        [Column(TypeName = "nvarchar(1000)")]
         [Required]
         public string? LessonVideoUrl { get; set; }
 
 
-        [Column(TypeName = "nvarchar(100)")]
+        [Column(TypeName = "nvarchar(1000)")]
         [Required]
         public string? LessonThumbnailUrl { get; set; }
 

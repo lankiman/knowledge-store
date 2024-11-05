@@ -60,30 +60,29 @@
 <div data-file-details-form-container class="file-details-form hidden h-full w-full bg-accent_lightestGray shadow-lg">
     <form data-video-details-form asp-action="CompleteLessonDetails" asp-controller="Instructor" method="post" enctype="multipart/form-data" class="video-details-form block h-full w-full p-4">
         <h1 class="mb-4 text-center text-xl font-bold uppercase text-accent">Video Details</h1>
+        <div data-lesson-details-validation-modelonly class="text-sm font-bold text-red-700"></div>
 
-        <div class="font-bold text-red-700" asp-validation-summary="ModelOnly"></div>
-
-        <div class="video-details-input-container mb-4 items-center">
-            <span asp-validation-for="LessonName" class="text-sm text-red-500"></span>
-            <input asp-for="LessonName" class="peer h-[3rem] w-full rounded-md bg-inherit pl-8 placeholder:font-bold placeholder:italic" id="lesson-tittle" placeholder="Enter Lesson Tittle" type="text" aria-describedby="tittle" />
+        <span data-lesson-details-validation data-lesson-details-validation-for="LessonName" class="ml-2 block text-sm text-red-500"></span>
+        <div data-video-details-input-container data-lesson-details-input-for="LessonName" class="video-details-input-container group mb-4 items-center">
+            <input name="LessonName" asp-for="LessonName" class="group-[.input-error]:focus:outline-none peer h-[3rem] w-full rounded-md bg-inherit pl-8 placeholder:font-bold placeholder:italic" id="lesson-tittle" placeholder="Enter Lesson Tittle" type="text" aria-describedby="tittle" />
             <span class="material-symbols-outlined video-details-input-icons peer-focus:text-accent">
                 title
             </span>
             <label class="video-details-input-label -top-2.5 left-6 hidden peer-focus:block" for="lesson-tittle">Tittle</label>
         </div>
 
-        <div class="video-details-input-container mb-2">
-            <span asp-validation-for="LessonDescription" class="text-sm text-red-500"></span>
-            <textarea asp-for="LessonDescription" class="peer h-[10rem] w-full rounded-md bg-inherit pl-8 pt-4 placeholder:font-bold placeholder:italic" id="lesson-description" placeholder="Enter Lesson Description"></textarea>
+        <span data-lesson-details-validation data-lesson-details-validation-for="LessonDescription" class="ml-2 block text-sm text-red-500"></span>
+        <div data-video-details-input-container data-lesson-details-input-for="LessonDescription" class="video-details-input-container group mb-2">
+            <textarea name="LessonDescription" asp-for="LessonDescription" class="group-[.input-error]:focus:outline-none peer h-[10rem] w-full rounded-md bg-inherit pl-8 pt-4 placeholder:font-bold placeholder:italic" id="lesson-description" placeholder="Enter Lesson Description"></textarea>
             <span class="material-symbols-outlined video-details-input-icons top-3 peer-focus:text-accent">
                 description
             </span>
             <label class="video-details-input-label -top-2.5 left-6 hidden peer-focus:block" for="lesson-description">Description</label>
         </div>
 
-        <div class="video-details-input-container items-center has-[:focus]:border-accent">
-            <span asp-validation-for="LessonCategory" class="text-sm text-red-500"></span>
-            <select asp-for="LessonCategory" asp-items="@Html.GetEnumSelectList(typeof(e_learning.Enums.LessonCategory))" class="peer h-[3rem] w-full rounded-md bg-inherit pl-8">
+        <span data-lesson-details-validation data-lesson-details-validation-for="LessonCategory" class="ml-2 mt-4 block text-sm text-red-500"></span>
+        <div data-video-details-input-container data-lesson-details-input-for="LessonCategory" class="video-details-input-container group items-center has-[:focus]:border-accent">
+            <select name="LessonCategory" asp-for="LessonCategory" asp-items="@Html.GetEnumSelectList(typeof(e_learning.Enums.LessonCategory))" class="group-[.input-error]:focus:outline-none peer h-[3rem] w-full rounded-md bg-inherit pl-8">
                 <option selected disabled class="font-bold italic text-accent_lightestGray" value="">Select Lesson Category</option>
             </select>
             <span class="material-symbols-outlined video-details-input-icons top-3 peer-focus:text-accent">
@@ -92,9 +91,9 @@
             <label class="video-details-input-label -top-2.5 left-6 hidden peer-focus:block" for="lesson-category">Category</label>
         </div>
 
-        <div class="video-details-input-container mt-2.5 items-center has-[:focus]:border-accent">
-            <span asp-validation-for="LessonAcessType" class="text-sm text-red-500"></span>
-            <select asp-for="LessonAcessType" asp-items="@Html.GetEnumSelectList(typeof(e_learning.Enums.AcessType))" class="peer h-[3rem] w-full rounded-md bg-inherit pl-8">
+        <span data-lesson-details-validation data-lesson-details-validation-for="LessonAcessType" class="ml-2 mt-4 block text-sm text-red-500"></span>
+        <div data-video-details-input-container data-lesson-details-input-for="LessonAcessType" class="video-details-input-container group mt-1.5 items-center has-[:focus]:border-accent">
+            <select name="LessonAcessType" asp-for="LessonAcessType" asp-items="@Html.GetEnumSelectList(typeof(e_learning.Enums.AcessType))" class="group-[.input-error]:focus:outline-none peer h-[3rem] w-full rounded-md bg-inherit pl-8">
                 <option selected disabled class="font-bold italic text-accent_lightestGray" value="">Select Lesson Access</option>
             </select>
             <span class="material-symbols-outlined video-details-input-icons top-3 peer-focus:text-accent">
@@ -104,10 +103,10 @@
         </div>
 
         <div class="relative mt-4 flex h-fit w-full">
-            <div class="relative flex w-fit flex-col">
-                <span asp-validation-for="LessonThumbnail" class="text-sm text-red-500"></span>
+            <div data-video-details-input-container data-lesson-details-input-for="LessonThumbnail" class="relative flex w-fit flex-col">
+                <input name="LessonThumbnail" asp-for="LessonThumbnail" accept=".png, .jpg, .gif" data-select-thumbnail-input class="hidden" type="file" />
+                <span data-lesson-details-validation data-lesson-details-validation-for="LessonThumbnail" class="ml-2 block text-sm text-red-500"></span>
                 <label for="lesson-thumbnail" class="ml-1.5 text-xs font-bold text-accent">Choose Thumbnail<span class="text-md text-red-600">*</span><span>(.jpg, .png, .gif)</span></label>
-                <input asp-for="LessonThumbnail" accept=".png, .jpg, .gif" data-select-thumbnail-input class="hidden" type="file" />
                 <span data-select-thumbnail-icon class="material-symbols-outlined select-thumbnail-icon">
                     add_photo_alternate
                 </span>
@@ -122,7 +121,7 @@
             @*<fieldset class="video-access-type"></fieldset>*@
         </div>
 
-        <button data-complete-video-details-button disabled type="submit" class="complete-video-details-button disabled ml-auto block px-6 py-2 font-bold shadow-md">Complete</button>
+        <button data-complete-video-details-button disabled type="button" class="complete-video-details-button disabled ml-auto block px-6 py-2 font-bold shadow-md">Complete</button>
     </form>
 </div>
 

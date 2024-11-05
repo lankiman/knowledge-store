@@ -676,7 +676,10 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
 .video-details-input-container {
     @apply border-2 relative inset-2 flex h-fit w-full rounded-md border-accent_lightGray;
 }
-
+.video-details-input-container.input-error {
+    @apply border-red-600;
+}
+  
 .video-details-input-label {
     @apply absolute bg-accent_lightestGray px-2 font-bold text-accent;
 }
@@ -717,7 +720,20 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
 
 .file-uploading-progress {
     @apply flex-1 h-[1rem] w-full rounded-md border border-[#F18337];
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
+
+    .file-uploading-progress::-webkit-progress-bar {
+        @apply flex-1 h-[1rem] w-full rounded-md border border-[#F18337];
+        
+        
+    }
+
+    .file-uploading-progress::-webkit-progress-value {
+        @apply rounded-md bg-accent;
+    }
 
 .file-upload-progress-text {
     @apply text-sm font-bold text-[#F18337];
@@ -776,3 +792,64 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
 .video-details-input-container > input:focus ~ label {
     @apply block;
 }*/
+
+
+.toast-line-error{
+    @apply border-red-600;
+}
+.toast-line-success{
+    @apply border-green-600;
+}
+.toast-icon-error{
+    @apply text-red-600;
+}
+.toast-icon-success{
+    @apply text-green-600;
+}
+.toast-message-error{
+    @apply text-red-600;
+}
+.toast-message-success{
+    @apply text-green-600;
+}
+
+@keyframes toastLine{
+    from {
+        @apply w-full;
+    }
+    to {
+        @apply w-0;   
+    }
+}
+
+@keyframes toastFadeIn {
+    0% {
+        right: -100%; /* Off-screen to the left */
+        opacity: 0.5; /* Fully transparent */
+    }
+
+    100% {
+        right: 0; /* Move to the left edge of the container */
+        opacity: 1; /* Fully opaque */
+    }
+}
+
+@keyframes toastFadeOut {
+    0% {
+        right:0; /* Off-screen to the left */
+        opacity: 1; /* Fully transparent */
+    }
+
+    100% {
+        right: -100%; /* Move to the left edge of the container */
+        opacity: 0.5; /* Fully opaque */
+    }
+}
+
+.toastIn {
+    @apply animate-[toastFadeIn_1s_linear_forwards];
+}
+
+.toastOut {
+    @apply animate-[toastFadeOut_1s_linear_forwards];
+}
