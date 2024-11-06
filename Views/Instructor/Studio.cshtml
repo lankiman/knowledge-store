@@ -5,15 +5,19 @@
 }
 
 <div class="inr_studio h-full w-full">
-
     <nav class="inr_studio-nav flex gap-2">
-        <div  class="w-fit cursor-pointer border p-2 @(Model.ActiveView=="lesson"?"text-accent bg-white shadow-md":"")">Upload Video</div>
-        <div class="w-fit cursor-pointer border p-2 text-accent_lightGray">Create Series</div>
-        
+        <button data-create-lesson-view-button class="w-fit cursor-pointer border p-2 @(Model.ActiveView==ActiveViewType.lesson?"text-accent bg-white shadow-md":"text-accent_lightGray")">Upload Video</button>
+        <button data-create-lesson-playlist-view-button class="w-fit cursor-pointer border p-2 @(Model.ActiveView==ActiveViewType.series?"text-accent bg-white shadow-md":"text-accent_lightGray")">Create Series</button>
+
     </nav>
-    <!--Form Section-->
-    <div class="@(Model.ActiveView=="lesson" ?"":"hidden") mt-2 h-full w-full">
+    <!--Createlesson Section-->
+    <div data-create-lesson-view class="@(Model.ActiveView==ActiveViewType.lesson ?"":"hidden") mt-2 h-full w-full">
         <partial name="Partials/_CreateLessonPartial" model="@Model.CreateLessonView" />
+    </div>
+
+    <!--Create Playlist Section-->
+    <div data-create-lesson-playlist-view class="@(Model.ActiveView==ActiveViewType.series ?"":"hidden") mt-2 h-full w-full">
+        <partial name="Partials/_CreateLessonPlaylistPartial" />
     </div>
 
 </div>

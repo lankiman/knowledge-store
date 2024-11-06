@@ -37,6 +37,72 @@ function customToggleElement(element, classname) {
     }
 }
 
+
+///Instructor Studio
+///This Section is for Code concerning the instructor Studio
+
+
+const studioViewHandler = (function () {
+
+    const createLessonView = document.querySelector("[data-create-lesson-view]")
+    const createLessonPlaylistView = document.querySelector("[data-create-lesson-playlist-view]")
+    const createLessonViewButton = document.querySelector("[data-create-lesson-view-button]")
+    const createLessonPlaylistViewButton = document.querySelector("[data-create-lesson-playlist-view-button]")
+    function updateActiveView(activeView) {
+        return new Promise((resolve, reject) => {
+            const req = new XMLHttpRequest();
+            req.open("POST", `/Instructor/SetActiveStudioView/${activeView}`, true);
+            req.onload = function () {
+                if (this.status == 200);
+                const response = JSON.parse(this.response);
+                resolve(response)
+            }
+            req.onerror = function () {
+                console.error(this.response)
+                reject(new Error(this.response));
+            }
+
+            req.send();
+        });
+    }
+
+    async function createLessonViewAction() {
+        createLessonPlaylistView.classList.add("hidden")
+        createLessonView.classList.remove("hidden")
+        try {
+            var result = await updateActiveView("lesson")
+            console.log(result)
+        }
+        catch (error) {
+            console.error(error)
+        }
+        createLessonViewButton.setAttribute("disabled", "true")
+        createLessonPlaylistViewButton.removeAttribute("disabled")
+    }
+
+    async function createLessonPlaylistViewAction() {
+        createLessonView.classList.add("hidden")
+        createLessonPlaylistView.classList.remove("hidden")
+        try {
+            var result = await updateActiveView("series")
+            console.log(result)
+        }
+        catch (error) {
+            console.error(error)
+        }
+        createLessonViewButton.removeAttribute("disabled")
+        createLessonPlaylistViewButton.setAttribute("disabled", "true") 
+    }
+
+    return {
+        init: function () {
+            createLessonViewButton.addEventListener("click", createLessonViewAction)
+            createLessonPlaylistViewButton.addEventListener("click", createLessonPlaylistViewAction)
+
+        }
+    }
+})();
+studioViewHandler.init();
 function resetFormErrorStatus() {
     const validationMessageContainers = document.querySelectorAll("[data-lesson-details-validation]")
     const validationInputs = document.querySelectorAll("[data-video-details-input-container]")
@@ -57,6 +123,8 @@ function resetUi() {
     uploadHandling.resetAfterUploadButtons()
     resetFormErrorStatus()
 }
+
+
 
 
 const layoutHandler = (function () {
@@ -323,8 +391,6 @@ const thumbnailHandler = (function () {
 })()
 
 thumbnailHandler.init()
-
-
 
 
 //actual videe uploading logic
@@ -676,6 +742,8 @@ const handleCompleteLesson = (function () {
 
 })();
 handleCompleteLesson.init();
+
+///End of Instructor Studio Logic
 
 
 

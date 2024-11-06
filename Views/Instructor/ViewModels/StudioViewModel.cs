@@ -1,8 +1,13 @@
 ﻿namespace e_learning.Views.Instructor.ViewModels
 {
-    public class StudioViewModel(string activeView)
+    public enum ActiveViewType
     {
-        public string ActiveView { get; set; } = activeView;
+        lesson,
+        series
+    }
+    public class StudioViewModel(ActiveViewType activeView)
+    {
+        public ActiveViewType ActiveView { get; set; } = activeView;
         public CreateLessonViewModel CreateLessonView = new CreateLessonViewModel();
     }
 }

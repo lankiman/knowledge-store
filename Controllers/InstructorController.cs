@@ -32,8 +32,9 @@ namespace e_learning.Controllers
 
         public IActionResult Studio()
         {
+            var activeFormString = HttpContext.Session.GetString("activeStudioView") ?? "lesson";
 
-            var activeForm = HttpContext.Session.GetString("activeStudioView") ?? "lesson";
+            Enum.TryParse<ActiveViewType>(activeFormString, true, out var activeForm);
 
             var viewModel = new StudioViewModel(activeForm);
 
@@ -41,8 +42,14 @@ namespace e_learning.Controllers
         }
 
         //Ajax Actions
+        public IActionResult GetActiveStudioView()
+        {
+            var result = HttpContext.Session.GetString("activeStudioNav");
+            return Ok(result);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> SetActiveStudioView(string activeStudioView)
+        public IActionResult SetActiveStudioView(string activeStudioView)
         {
             HttpContext.Session.SetString("activeStudioView", activeStudioView);
             return Ok(activeStudioView);
