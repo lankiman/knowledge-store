@@ -4,10 +4,10 @@
     ViewData["Title"] = "Studio";
 }
 
-<div class="inr_studio h-full w-full">
+<div data-instructor-studio-view class="inr_studio h-full w-full">
     <nav class="inr_studio-nav flex gap-2">
-        <button data-create-lesson-view-button class="w-fit cursor-pointer border p-2 @(Model.ActiveView==ActiveViewType.lesson?"text-accent bg-white shadow-md":"text-accent_lightGray")">Upload Video</button>
-        <button data-create-lesson-playlist-view-button class="w-fit cursor-pointer border p-2 @(Model.ActiveView==ActiveViewType.series?"text-accent bg-white shadow-md":"text-accent_lightGray")">Create Series</button>
+        <button data-create-lesson-view-button class="w-fit cursor-pointer border p-2 disabled:cursor-none @(Model.ActiveView==ActiveViewType.lesson?"inr-active-studio-view-button":"inr-inactive-studio-view-button")">Upload Video</button>
+        <button data-create-lesson-playlist-view-button class="w-fit cursor-pointer border p-2 disabled:cursor-none @(Model.ActiveView==ActiveViewType.series?"inr-active-studio-view-button":"inr-inactive-studio-view-button")">Create Series</button>
 
     </nav>
     <!--Createlesson Section-->
@@ -20,4 +20,5 @@
         <partial name="Partials/_CreateLessonPlaylistPartial" />
     </div>
 
+    <partial name="Partials/_FloatingUploadPartial"/>
 </div>

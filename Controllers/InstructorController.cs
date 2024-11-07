@@ -45,14 +45,18 @@ namespace e_learning.Controllers
         public IActionResult GetActiveStudioView()
         {
             var result = HttpContext.Session.GetString("activeStudioNav");
-            return Ok(result);
+            if (result == null)
+            {
+                return Ok("lesson");
+            }
+            return View(result);
         }
 
         [HttpPost]
         public IActionResult SetActiveStudioView(string activeStudioView)
         {
             HttpContext.Session.SetString("activeStudioView", activeStudioView);
-            return Ok(activeStudioView);
+            return Ok("sucessful");
         }
 
         [HttpPost]

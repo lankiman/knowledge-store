@@ -853,3 +853,11 @@ inr_sidebar-menu.sidebar-open .inr_sidebar-mobile-overlay {
 .toastOut {
     @apply animate-[toastFadeOut_1s_linear_forwards];
 }
+
+.inr-active-studio-view-button {
+    @apply disabled bg-white text-accent shadow-md;
+}
+.inr-inactive-studio-view-button {
+    @apply text-accent_lightGray;
+}
+

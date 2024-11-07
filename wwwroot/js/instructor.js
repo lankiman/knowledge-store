@@ -41,68 +41,14 @@ function customToggleElement(element, classname) {
 ///Instructor Studio
 ///This Section is for Code concerning the instructor Studio
 
+//studio globals
 
-const studioViewHandler = (function () {
+const lessonDetailsForm = document.querySelector("[data-file-details-form-container]");
+const uploadingFilesContainer = document.querySelector("[data-uploading-files-container]")
+const filesToUploadList = document.querySelector("[data-files-upload-part]")
+const completeVideoDetailsForm = document.querySelector("[data-video-details-form]")
+const completeVideoDetailsFormButton = document.querySelector("[data-complete-video-details-button]")
 
-    const createLessonView = document.querySelector("[data-create-lesson-view]")
-    const createLessonPlaylistView = document.querySelector("[data-create-lesson-playlist-view]")
-    const createLessonViewButton = document.querySelector("[data-create-lesson-view-button]")
-    const createLessonPlaylistViewButton = document.querySelector("[data-create-lesson-playlist-view-button]")
-    function updateActiveView(activeView) {
-        return new Promise((resolve, reject) => {
-            const req = new XMLHttpRequest();
-            req.open("POST", `/Instructor/SetActiveStudioView/${activeView}`, true);
-            req.onload = function () {
-                if (this.status == 200);
-                const response = JSON.parse(this.response);
-                resolve(response)
-            }
-            req.onerror = function () {
-                console.error(this.response)
-                reject(new Error(this.response));
-            }
-
-            req.send();
-        });
-    }
-
-    async function createLessonViewAction() {
-        createLessonPlaylistView.classList.add("hidden")
-        createLessonView.classList.remove("hidden")
-        try {
-            var result = await updateActiveView("lesson")
-            console.log(result)
-        }
-        catch (error) {
-            console.error(error)
-        }
-        createLessonViewButton.setAttribute("disabled", "true")
-        createLessonPlaylistViewButton.removeAttribute("disabled")
-    }
-
-    async function createLessonPlaylistViewAction() {
-        createLessonView.classList.add("hidden")
-        createLessonPlaylistView.classList.remove("hidden")
-        try {
-            var result = await updateActiveView("series")
-            console.log(result)
-        }
-        catch (error) {
-            console.error(error)
-        }
-        createLessonViewButton.removeAttribute("disabled")
-        createLessonPlaylistViewButton.setAttribute("disabled", "true") 
-    }
-
-    return {
-        init: function () {
-            createLessonViewButton.addEventListener("click", createLessonViewAction)
-            createLessonPlaylistViewButton.addEventListener("click", createLessonPlaylistViewAction)
-
-        }
-    }
-})();
-studioViewHandler.init();
 function resetFormErrorStatus() {
     const validationMessageContainers = document.querySelectorAll("[data-lesson-details-validation]")
     const validationInputs = document.querySelectorAll("[data-video-details-input-container]")
@@ -124,8 +70,100 @@ function resetUi() {
     resetFormErrorStatus()
 }
 
+const studioViewHandler = (function () {
 
+    const createLessonView = document.querySelector("[data-create-lesson-view]")
+    const createLessonPlaylistView = document.querySelector("[data-create-lesson-playlist-view]")
+    const createLessonViewButton = document.querySelector("[data-create-lesson-view-button]")
+    const createLessonPlaylistViewButton = document.querySelector("[data-create-lesson-playlist-view-button]")
+    function updateSessionActiveView(activeView) {
+        return new Promise((resolve, reject) => {
+            const req = new XMLHttpRequest();
+            req.open("POST", `/Instructor/SetActiveStudioView`, true);
+            /*req.setRequestHeader("Content-Type", "application/json");*/
+            /*const body = JSON.stringify({activeStudioView:activeView})*/
 
+            const data = new FormData()
+            data.append("activeStudioView", activeView)
+            
+            req.onload = function () {
+                if (this.status == 200);
+                const response = this.response;
+                resolve(response)
+            }
+            req.onerror = function () {
+                console.error(this.response)
+                reject(new Error(this.response));
+            }
+
+            req.send(data);
+            
+        });
+    }
+
+    async function createLessonViewAction() {
+        createLessonPlaylistView.classList.add("hidden")
+        createLessonView.classList.remove("hidden")
+        createLessonViewButton.setAttribute("disabled", "true")
+        createLessonPlaylistViewButton.removeAttribute("disabled")
+        updateState(createLessonViewButton, "inr-inactive-studio-view-button", "inr-active-studio-view-button")
+        updateState(createLessonPlaylistViewButton, "inr-active-studio-view-button", "inr-inactive-studio-view-button")
+        floatingUploadHanlder.hide();
+
+        try {
+            var result = await updateSessionActiveView("lesson")
+            console.log(result)
+        }
+        catch (error) {
+            console.error(error)
+        }
+        
+    }
+
+    async function createLessonPlaylistViewAction() {
+        createLessonView.classList.add("hidden")
+        createLessonPlaylistView.classList.remove("hidden")
+        createLessonViewButton.removeAttribute("disabled")
+        createLessonPlaylistViewButton.setAttribute("disabled", "true") 
+        updateState(createLessonViewButton, "inr-active-studio-view-button", "inr-inactive-studio-view-button")
+        updateState(createLessonPlaylistViewButton, "inr-inactive-studio-view-button", "inr-active-studio-view-button")
+        floatingUploadHanlder.show();
+
+        try {
+            var result = await updateSessionActiveView("series")
+            console.log(result)
+        }
+        catch (error) {
+            console.error(error)
+        }
+
+        
+    }
+
+    function getActiveStudioView() {
+        const req = new XMLHttpRequest();
+        req.open("GET", `/Instructor/GetActiveStudioView`, true);
+        req.onload = function () {
+            if (this.status == 200);
+            const response = this.response;
+            return response;
+        }
+        req.onerror = function () {
+            console.error(this.response)
+            return this.response
+        }
+        req.send();
+    }
+
+    return {
+        init: function () {
+            createLessonViewButton.addEventListener("click", createLessonViewAction)
+            createLessonPlaylistViewButton.addEventListener("click", createLessonPlaylistViewAction)
+
+        }
+    }
+})();
+studioViewHandler.init();
 
 const layoutHandler = (function () {
     const sidebarMenuButton = document.querySelector('[data-inr_sidebar-menu-icon]');
@@ -143,13 +181,6 @@ const layoutHandler = (function () {
 
 })()
 layoutHandler.init()
-
-//globals
-const lessonDetailsForm = document.querySelector("[data-file-details-form-container]");
-const uploadingFilesContainer = document.querySelector("[data-uploading-files-container]")
-const filesToUploadList = document.querySelector("[data-files-upload-part]")
-const completeVideoDetailsForm = document.querySelector("[data-video-details-form]")
-const completeVideoDetailsFormButton = document.querySelector("[data-complete-video-details-button]")
 
 //inr_studoio functions
 //IIFE
@@ -411,9 +442,6 @@ const uploadHandling = (function () {
     let uploadedFiles = []
     let originalQueue = null;
     let upLoadedLessonsIdsArray = [];
-
-
-
     function showAfterUploadButtons() {
         if (uploadQueue.length < 1 && uploadedFiles.length > 0) {
             updateState(afterUploadButtonsContainer, "hidden", "flex")
@@ -428,6 +456,10 @@ const uploadHandling = (function () {
     function updateUiOnCancel() {
         filesToUploadList.classList.replace("hidden", "flex")
         filesUploadingContainer.classList.replace("flex", "hidden")
+        lessonDetailsForm.classList.add("hidden")
+        uploadingFilesContainer.classList.add("uploading-contianer-visible")
+        uploadingFilesContainer.classList.remove("uploading-contianer-visible-width")
+        floatingUploadHanlder.hide();
     }
 
     function showLessonDetailsFormOnCancel() {
@@ -635,11 +667,71 @@ const uploadHandling = (function () {
                 })
             }
         },
+        getUploadStatusNumbers: function () {
+            return {
+                uploadQueue: uploadQueue.length,
+                uploadedFiles: uploadFiles.length,
+                originalQueue:originalQueue
+            }
+        },
+        getUploadingStatus: function () {
+            return isUploading || uploadQueue.length > 0
+        },
         updateUiOnComplete: updateUiOnComplete,
-       resetAfterUploadButtons:resetAfterUploadButtons
+        resetAfterUploadButtons: resetAfterUploadButtons,
+        filesUploadingList: filesUploadingList,
+        filesUploadingContainer:filesUploadingContainer
+
     }
 })();
 uploadHandling.init();
+
+//floating upload handler
+const floatingUploadHanlder = (function () {
+    const floatingTemplate = document.querySelector("[data-floating-upload-template]")
+    const instructorStudioView = document.querySelector("[data-instructor-studio-view]")
+    const filesUploadingList = uploadHandling.filesUploadingList;
+    const filesUploadingListContainer = uploadHandling.filesUploadingContainer;
+    
+
+    function showFloatingUpload() {
+        const floatingTemplateContent = floatingTemplate.content.cloneNode(true)
+        const floatingContentContainer = floatingTemplateContent.querySelector("[data-floating-upload-container]")
+        const floatingUploadCloseButton = floatingTemplateContent.querySelector("[data-floating-close-button]")
+
+        const isUploading = uploadHandling.getUploadingStatus();
+        if (!isUploading) {
+            console.log(isUploading)
+            return;
+        }
+        floatingUploadCloseButton.addEventListener("click", hideFloatingUpload)
+        console.log(floatingTemplateContent)
+        console.log(floatingContentContainer)
+        console.log(isUploading)
+        floatingContentContainer.appendChild(filesUploadingList);
+        instructorStudioView.appendChild(floatingTemplateContent)
+        console.log(instructorStudioView)
+    }
+
+    function hideFloatingUpload() {
+        const isUploading = uploadHandling.getUploadingStatus();
+        const floatContainer = instructorStudioView.querySelector("[data-floating-upload-container]")
+        if (floatContainer) {
+            instructorStudioView.removeChild(floatContainer)
+        }
+        if (!isUploading) {
+            console.log(isUploading)
+            return;
+        }
+        filesUploadingListContainer.appendChild(filesUploadingList)
+       
+    }
+
+    return {
+        show: showFloatingUpload,
+        hide: hideFloatingUpload
+    }
+})()
 
 //IIFE
 //Lesson Video Details Upload
