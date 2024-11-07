@@ -69,7 +69,20 @@ function resetUi() {
     uploadHandling.resetAfterUploadButtons()
     resetFormErrorStatus()
 }
+const layoutHandler = (function () {
+    const sidebarMenuButton = document.querySelector('[data-inr_sidebar-menu-icon]');
+    const mobileSearchButton = document.querySelector('[data-inr-mb-search-icon]');
+    const mobileSearchBar = document.querySelector('[data-inr_mbl_search-bar]');
+    const sidebarMenu = document.querySelector("[data-inr_sidebar-menu]")
 
+    return {
+        init: function () {
+            sidebarMenuButton.addEventListener("click", () => customToggleElement(sidebarMenu, "sidebar-open"));
+            mobileSearchButton.addEventListener("click", () => toggleElement(mobileSearchBar));
+        }
+    }
+})()
+layoutHandler.init()
 const studioViewHandler = (function () {
 
     const createLessonView = document.querySelector("[data-create-lesson-view]")
@@ -157,30 +170,17 @@ const studioViewHandler = (function () {
 
     return {
         init: function () {
-            createLessonViewButton.addEventListener("click", createLessonViewAction)
-            createLessonPlaylistViewButton.addEventListener("click", createLessonPlaylistViewAction)
-
+            if (createLessonViewButton) {
+                createLessonViewButton.addEventListener("click", createLessonViewAction)
+            }
+            if (createLessonPlaylistViewButton) {
+                createLessonPlaylistViewButton.addEventListener("click", createLessonPlaylistViewAction)
+            }
         }
     }
 })();
 studioViewHandler.init();
 
-const layoutHandler = (function () {
-    const sidebarMenuButton = document.querySelector('[data-inr_sidebar-menu-icon]');
-    const mobileSearchButton = document.querySelector('[data-inr-mb-search-icon]');
-    const mobileSearchBar = document.querySelector('[data-inr_mbl_search-bar]');
-    const sidebarMenu = document.querySelector("[data-inr_sidebar-menu]")
-
-    return {
-        init: function () {
-            sidebarMenuButton.addEventListener("click", () => customToggleElement(sidebarMenu, "sidebar-open"));
-            mobileSearchButton.addEventListener("click", () => toggleElement(mobileSearchBar));
-        }
-    }
-    
-
-})()
-layoutHandler.init()
 
 //inr_studoio functions
 //IIFE
@@ -208,8 +208,7 @@ const fileHandler = (function () {
         videoFilesInput.value = "";
         updateUiOnFileAdded();
         
-          }
-
+    }
 
     function updateFileListItem(file, index) {
         const listItems = selectedFilesList.querySelectorAll('[data-selected-files-list-item]');
@@ -304,34 +303,32 @@ const fileHandler = (function () {
 
     return {
         init: function () {
-            videoFileDropZone.addEventListener("dragover", (e) => {
-                e.preventDefault();
-                updateDropZoneBackground("dragover", "bg-white")
-            })
-            videoFileDropZone.addEventListener("dragleave", (e) => {
-                e.preventDefault();
-                updateDropZoneBackground("bg-white", "dragover")
-            })
-            videoFileDropZone.addEventListener("drop", (e) => {
-                e.preventDefault();
-                updateDropZoneBackground("bg-white", "dragover")
-                const valid = validateFileType(e.dataTransfer.files);
-
-                if (!valid) {
-                    return;
-                }
-                
-                videoFilesInput.files = e.dataTransfer.files;
-                
-                videoFilesInput.dispatchEvent(new Event("change"));
-            })
-            selectFilesButton.addEventListener("click", () => {
-                videoFilesInput.click();
-            })
-
-            videoFilesInput.addEventListener("change", (e) => {
-                handleFileSelection(e.target.files)
-            })
+            if (videoFileDropZone) {
+                videoFileDropZone.addEventListener("dragover", (e) => {
+                    e.preventDefault();
+                    updateDropZoneBackground("dragover", "bg-white")
+                })
+                videoFileDropZone.addEventListener("dragleave", (e) => {
+                    e.preventDefault();
+                    updateDropZoneBackground("bg-white", "dragover")
+                })
+                videoFileDropZone.addEventListener("drop", (e) => {
+                    e.preventDefault();
+                    updateDropZoneBackground("bg-white", "dragover")
+                    const valid = validateFileType(e.dataTransfer.files);
+                    if (!valid) {
+                        return;
+                    }
+                    videoFilesInput.files = e.dataTransfer.files;
+                    videoFilesInput.dispatchEvent(new Event("change"));
+                })
+                selectFilesButton.addEventListener("click", () => {
+                    videoFilesInput.click();
+                })
+                videoFilesInput.addEventListener("change", (e) => {
+                    handleFileSelection(e.target.files)
+                })
+            }
         },
         getSelectedFiles: function () {
             return [...selectedFiles];
@@ -384,38 +381,39 @@ const thumbnailHandler = (function () {
 
     return {
         init: function () {
-            selectThumbnailIcon.addEventListener("click", () => {
-                selectThubmnailFileInuput.click();
+            if (selectThumbnailIcon) {
+                selectThumbnailIcon.addEventListener("click", () => {
+                    selectThubmnailFileInuput.click();
 
-            })
-            removeThumbnailIcon.addEventListener("click", () => {
-                clearThumbnial()
+                })
+                removeThumbnailIcon.addEventListener("click", () => {
+                    clearThumbnial()
 
-            })
-            selectThubmnailFileInuput.addEventListener("change", (e) => {
+                })
+                selectThubmnailFileInuput.addEventListener("change", (e) => {
 
-                const thubmnailImage = e.target.files[0];
-                //const validImageTypes = ['image/jpeg', 'image/png', 'image/gif']
+                    const thubmnailImage = e.target.files[0];
+                    //const validImageTypes = ['image/jpeg', 'image/png', 'image/gif']
 
-                //if (thumbnailImage && !validImageTypes.includes(thubmnailImage.type)) {
-                //    alert("only .jpg, .png or .gif files are allowed")
-                //    return;
-                //}
+                    //if (thumbnailImage && !validImageTypes.includes(thubmnailImage.type)) {
+                    //    alert("only .jpg, .png or .gif files are allowed")
+                    //    return;
+                    //}
 
-                if (thubmnailImage) {
-                    thumbnailSpinner.classList.remove("hidden")
-                    readFile(thubmnailImage).then((result) => {
-                        if (result) {
-                            thumbnailPreviewImage.src = `${result}`
-                            thumbnailPreviewImage.classList.remove("hidden")
-                            thumbnailSpinner.classList.add("hidden")
-                            selectThumbnailIcon.classList.add("!hidden")
-                            selectThumbnailIcon.style.display = "none"
-                        }
-                    })
-                }
-            })
-
+                    if (thubmnailImage) {
+                        thumbnailSpinner.classList.remove("hidden")
+                        readFile(thubmnailImage).then((result) => {
+                            if (result) {
+                                thumbnailPreviewImage.src = `${result}`
+                                thumbnailPreviewImage.classList.remove("hidden")
+                                thumbnailSpinner.classList.add("hidden")
+                                selectThumbnailIcon.classList.add("!hidden")
+                                selectThumbnailIcon.style.display = "none"
+                            }
+                        })
+                    }
+                })
+            }
         },
         clearThumbnial:clearThumbnial
     }
@@ -825,9 +823,12 @@ const handleCompleteLesson = (function () {
    
     return {
         init: function () {
-            completeVideoDetailsFormButton.addEventListener("click", () => {
-                competeLessonDetials()
-            })
+            if (completeVideoDetailsFormButton) {
+                completeVideoDetailsFormButton.addEventListener("click", () => {
+                    competeLessonDetials()
+                })
+            }
+            
  },
         resetLessonDetailsFormStatus: resetLessonDetailsFormStatus
     }
