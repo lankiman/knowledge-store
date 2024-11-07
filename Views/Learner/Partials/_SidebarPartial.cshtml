@@ -19,7 +19,7 @@
             <p class="hidden-sidebar font-bold text-accent_lightGray">@Model.User.Firstname @Model.User.Lastname</p>
         </div>
     </div>
-    <div class="inr_sidbar-middle flex-1 w-full overflow-y-auto overflow-x-hidden">
+    <div class="inr_sidbar-middle flex-1 w-full overflow-x-hidden">
         <ul class="inr_sidebar-list m-0 flex flex-col p-0">
             <li class="inr_sidebar-list-item @GetActiveClass("Dashboard")">
                 <a asp-action="Dashboard" asp-controller="Learner" class="inr_sidebar-link">
@@ -33,7 +33,7 @@
             </li>
 
             <li class="inr_sidebar-list-item">
-                <a  class="inr_sidebar-link">
+                <a class="inr_sidebar-link">
                     <span class="material-symbols-outlined inr_custom-icon-class">
                         library_books
                     </span>
@@ -41,7 +41,7 @@
                         Courses
                     </span>
                 </a>
-               
+
             </li>
 
             <li class="inr_sidebar-list-item">
@@ -56,7 +56,6 @@
             </li>
         </ul>
     </div>
-
     <div class="inr_sidebar-bottom flex w-full flex-col">
         <ul class="inr_sidebar-list m-0 flex flex-col p-0">
             <li class="inr_sidebar-list-item">
