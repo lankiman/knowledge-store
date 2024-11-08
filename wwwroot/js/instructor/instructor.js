@@ -1,5 +1,4 @@
-﻿import toastHandler from './toastContainer.js';
-
+﻿import toastHandler from '../shared/toast.js';
 
 //General Helper Functions
 const sizeConverter = (size) => {
@@ -19,8 +18,6 @@ function updateState(element, removeStyle, addStyle) {
     element.classList.add(addStyle)
 }
 
-
-
 function toggleElement(element) {
     if (element.classList.contains("hidden")) {
         element.classList.remove("hidden");
@@ -36,8 +33,6 @@ function customToggleElement(element, classname) {
         element.classList.add(classname);
     }
 }
-
-
 ///Instructor Studio
 ///This Section is for Code concerning the instructor Studio
 
@@ -69,22 +64,7 @@ function resetUi() {
     uploadHandling.resetAfterUploadButtons()
     resetFormErrorStatus()
 }
-const layoutHandler = (function () {
-    const sidebarMenuButton = document.querySelector('[data-inr_sidebar-menu-icon]');
-    const mobileSearchButton = document.querySelector('[data-inr-mb-search-icon]');
-    const mobileSearchBar = document.querySelector('[data-inr_mbl_search-bar]');
-    const sidebarMenu = document.querySelector("[data-inr_sidebar-menu]")
-
-    return {
-        init: function () {
-            sidebarMenuButton.addEventListener("click", () => customToggleElement(sidebarMenu, "sidebar-open"));
-            mobileSearchButton.addEventListener("click", () => toggleElement(mobileSearchBar));
-        }
-    }
-})()
-layoutHandler.init()
 const studioViewHandler = (function () {
-
     const createLessonView = document.querySelector("[data-create-lesson-view]")
     const createLessonPlaylistView = document.querySelector("[data-create-lesson-playlist-view]")
     const createLessonViewButton = document.querySelector("[data-create-lesson-view-button]")

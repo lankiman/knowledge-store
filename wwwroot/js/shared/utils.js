@@ -16,6 +16,8 @@ function updateState(element, removeStyle, addStyle) {
     element.classList.add(addStyle)
 }
 
+
+
 function toggleElement(element) {
     if (element.classList.contains("hidden")) {
         element.classList.remove("hidden");
@@ -31,22 +33,3 @@ function customToggleElement(element, classname) {
         element.classList.add(classname);
     }
 }
-
-const layoutHandler = (function () {
-    const sidebarMenuButton = document.querySelector('[data-sidebar-menu-icon]');
-    const mobileSearchButton = document.querySelector('[data-mobile-search-icon]');
-    const mobileSearchBar = document.querySelector('[data-mobile-search-bar]');
-    const sidebarMenu = document.querySelector("[data-sidebar-menu]")
-
-    return {
-        init: function () {
-            if (sidebarMenuButton && sidebarMenu) {
-                sidebarMenuButton.addEventListener("click", () => customToggleElement(sidebarMenu, "sidebar-open"));
-            }
-            if (mobileSearchButton && mobileSearchBar) {
-                mobileSearchButton.addEventListener("click", () => toggleElement(mobileSearchBar));
-            }  
-        }
-    }
-})()
-layoutHandler.init()

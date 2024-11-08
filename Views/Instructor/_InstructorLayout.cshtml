@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> @ViewData["Title"] </title>
-    </head>
+</head>
 <body class="font-primary min-h-svh overflow-auto">
 
     <!--Header-->
@@ -26,7 +26,7 @@
     </div>
 
     <partial name="~/Views/Shared/Partials/_ToastContainerPartial.cshtml" />
-    <script type="module" defer src="~/js/instructor.js" asp-append-version="true"></script>
+    <script type="module" defer src="~/js/instructor/instructor.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

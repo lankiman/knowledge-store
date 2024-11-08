@@ -1,7 +1,7 @@
 ﻿@using e_learning.ViewModels;
 
 @{
-    var instructorDetails = Context.Items["UserDetails"] as LayoutsViewModel;
+    var learnerDetails = Context.Items["UserDetails"] as LayoutsViewModel;
 
 }
 
@@ -12,26 +12,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] </title>
-    <link rel="preload" href="~/css/output.css" as="style" onload="this.onload=null;this.rel='stylesheet'" asp-append-version="true" />
-    <noscript><link rel="stylesheet" href="~/css/output.css" asp-append-version="true" /></noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add_photo_alternate,analytics,animated_images,bookmarks,cancel,category,check,close,dashboard,delete,description,forum,library_books,license,logout,menu_open,movie_edit,paid,search,settings,title,upload,vr180_create2d" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/dashboardStyleSheet.css">
+   
 </head>
 <body class="font-primary min-h-svh overflow-auto">
     <partial name="Partials/_HeaderPartial.cshtml" />
-    <div class="flex h-full w-full overflow-y-auto">
+    <div class="flex h-full w-full">
         <!--Side Bar-->
-        <partial name="Partials/_SidebarPartial.cshtml" model="@instructorDetails" />
+        <partial name="Partials/_SidebarPartial.cshtml" model="@learnerDetails" />
         <!--Main Content-->
-        <main role="main" class="flex-1 bg-accent_lightestGray p-4">
+        <main role="main" class="flex-1 h-full overflow-y-auto bg-accent_lightestGray p-4">
             @RenderBody()
         </main>
     </div>
-
     
-
-    <script src="~/js/dashboardScript.js" asp-append-version="true"></script>
-    <script src="~/js/script.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
