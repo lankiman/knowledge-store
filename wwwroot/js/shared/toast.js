@@ -8,7 +8,6 @@
      }
 
  
-
      function showToast(message, type) {
          const toastTemplateContent = toastTemplate.content.cloneNode(true)
 

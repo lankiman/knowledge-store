@@ -9,90 +9,90 @@
     };
 }
 
-<aside data-inr_sidebar-menu class="inr_sidebar-menu z-10 h-[calc(100dvh-5rem)] flex-shrink-0 sticky bottom-0 left-0 top-[5rem] flex w-[5rem] flex-col items-center overflow-hidden border-r border-r-accent_lightGray bg-white pt-[1rem] shadow-md">
-    <div class="inr_sidebar-top mb-[1rem] flex w-full flex-col items-center gap-2">
+<aside data-sidebar-menu class="sidebar-menu z-10 h-[calc(100dvh-5rem)] flex-shrink-0 sticky bottom-0 left-0 top-[5rem] flex w-[5rem] flex-col items-center overflow-hidden border-r border-r-accent_lightGray bg-white pt-[1rem] shadow-md">
+    <div class="sidebar-top mb-[1rem] flex w-full flex-col items-center gap-2">
         <a>
-            <img class="inr_sidebar-profile-image" src="~/images/profile-pic.png" alt="proile_pic" />
+            <img class="sidebar-profile-image" src="~/images/profile-pic.png" alt="proile_pic" />
         </a>
-        <div class="inr_sidebar-top-text text-center">
+        <div class="sidebar-top-text text-center">
             <p class="hidden-sidebar">Your Teaching Hub </p>
             <p class="hidden-sidebar font-bold text-accent_lightGray">@Model.User.Firstname @Model.User.Lastname</p>
         </div>
     </div>
-    <div class="inr_sidbar-middle flex-1 w-full overflow-y-auto overflow-x-hidden">
-        <ul class="inr_sidebar-list m-0 flex flex-col p-0">
-            <li class="inr_sidebar-list-item @GetActiveClass("InstructorDashboard")">
-                <a asp-action="InstructorDashboard" asp-controller="Instructor" class="inr_sidebar-link">
-                    <span class="material-symbols-outlined inr_custom-icon-class">
+    <div class="sidebar-middle flex-1 w-full overflow-y-auto overflow-x-hidden">
+        <ul class="sidebar-list m-0 flex flex-col p-0">
+            <li class="sidebar-list-item @GetActiveClass("InstructorDashboard")">
+                <a asp-action="InstructorDashboard" asp-controller="Instructor" class="sidebar-link">
+                    <span class="material-symbols-outlined custom-icon-class">
                         dashboard
                     </span>
-                    <span class="hidden-sidebar inr_sidebar-link-text">
+                    <span class="hidden-sidebar sidebar-link-text">
                         Dashboard
                     </span>
                 </a>
             </li>
 
-            <li class="inr_sidebar-list-item @GetActiveClass("Content")">
-                <a class="inr_sidebar-link">
-                    <span class="material-symbols-outlined inr_custom-icon-class">
+            <li class="sidebar-list-item @GetActiveClass("Content")">
+                <a class="sidebar-link">
+                    <span class="material-symbols-outlined custom-icon-class">
                         animated_images
                     </span>
-                    <span class="hidden-sidebar inr_sidebar-link-text">
+                    <span class="hidden-sidebar sidebar-link-text">
                         Content
                     </span>
                 </a>
             </li>
-            <li class="inr_sidebar-list-item @GetActiveClass("Studio")">
-                <a asp-action="Studio" asp-controller="Instructor" class="inr_sidebar-link">
-                    <span class="material-symbols-outlined inr_custom-icon-class">
+            <li class="sidebar-list-item @GetActiveClass("Studio")">
+                <a asp-action="Studio" asp-controller="Instructor" class="sidebar-link">
+                    <span class="material-symbols-outlined custom-icon-class">
                         vr180_create2d
                     </span>
-                    <span class="hidden-sidebar inr_sidebar-link-text">
+                    <span class="hidden-sidebar sidebar-link-text">
                         Studio
                     </span>
                 </a>
             </li>
 
-            <li class="inr_sidebar-list-item @GetActiveClass("Analytics")">
-                <a class="inr_sidebar-link">
-                    <span class="material-symbols-outlined inr_custom-icon-class">
+            <li class="sidebar-list-item @GetActiveClass("Analytics")">
+                <a class="sidebar-link">
+                    <span class="material-symbols-outlined custom-icon-class">
                         analytics
                     </span>
-                    <span class="hidden-sidebar inr_sidebar-link-text">
+                    <span class="hidden-sidebar sidebar-link-text">
                         Analytics
                     </span>
                 </a>
             </li>
-            <li class="inr_sidebar-list-item @GetActiveClass("Analytics")">
-                <a class="inr_sidebar-link">
-                    <span class="material-symbols-outlined inr_custom-icon-class">
+            <li class="sidebar-list-item @GetActiveClass("Analytics")">
+                <a class="sidebar-link">
+                    <span class="material-symbols-outlined custom-icon-class">
                         forum
                     </span>
-                    <span class="hidden-sidebar inr_sidebar-link-text">
+                    <span class="hidden-sidebar sidebar-link-text">
                         Comments
                     </span>
                 </a>
             </li>
-            <li class="inr_sidebar-list-item @GetActiveClass("Analytics")">
-                <a class="inr_sidebar-link">
-                    <span class="material-symbols-outlined inr_custom-icon-class">
+            <li class="sidebar-list-item @GetActiveClass("Analytics")">
+                <a class="sidebar-link">
+                    <span class="material-symbols-outlined custom-icon-class">
                         paid
                     </span>
-                    <span class="hidden-sidebar inr_sidebar-link-text">
+                    <span class="hidden-sidebar sidebar-link-text">
                         Earnings
                     </span>
                 </a>
             </li>
         </ul>
     </div>
-    <div class="inr_sidebar-bottom flex w-full flex-col">
-        <ul class="inr_sidebar-list m-0 flex flex-col p-0">
-            <li class="inr_sidebar-list-item">
-                <a class="inr_sidebar-link">
-                    <span class="material-symbols-outlined inr_custom-icon-class">
+    <div class="sidebar-bottom flex w-full flex-col">
+        <ul class="sidebar-list m-0 flex flex-col p-0">
+            <li class="sidebar-list-item">
+                <a class="sidebar-link">
+                    <span class="material-symbols-outlined custom-icon-class">
                         settings
                     </span>
-                    <span class="hidden-sidebar inr_sidebar-link-text">
+                    <span class="hidden-sidebar sidebar-link-text">
                         Settings
                     </span>
                 </a>
@@ -101,4 +101,4 @@
     </div>
 </aside>
 
-<div data-inr_sidebar-mobile-overlay class="inr_sidebar-mobile-overlay fixed h-[100svh] w-full overflow-hidden bg-black opacity-70"></div>
+<div data-sidebar-mobile-overlay class="sidebar-mobile-overlay fixed h-[100svh] w-full overflow-hidden bg-black opacity-70"></div>

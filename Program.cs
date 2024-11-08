@@ -39,7 +39,12 @@ builder.Services.AddSession(options =>
        options.Cookie.IsEssential = true;
    });
 
+builder.WebHost.UseWebRoot("wwwroot");
+builder.WebHost.UseStaticWebAssets();
+
+
 var app = builder.Build();
+app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

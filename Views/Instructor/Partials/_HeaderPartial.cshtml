@@ -1,31 +1,26 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
+﻿
 <header class="z-20 sticky top-0">
     <nav class="flex h-[5rem] w-full items-center bg-white p-6 drop-shadow-md">
         <div class="mr-4 flex w-fit items-center rounded pr-4">
-            <span data-inr_sidebar-menu-icon class="material-symbols-outlined inr_sidebar-menu-icon cursor-pointer text-medium_gray hover:text-dark_gray">
+            <span data-sidebar-menu-icon class="material-symbols-outlined sidebar-menu-icon cursor-pointer text-medium_gray hover:text-dark_gray">
                 menu_open
             </span>
             <img  src="~/images/logo_e-lesson.png" alt="logo"/>
             <h1 class="ml-2 hidden font-bold uppercase text-accent md:flex">Instructor</h1>
         </div>
-        <div class="inr_search-container relative ml-auto min-w-fit md:m-auto">
-            <div class="inr_dsk_search-bar hidden h-[3rem] w-[24rem] items-center md:flex">
+        <div class="search-container relative ml-auto min-w-fit md:m-auto">
+            <div class="desktop-search-bar hidden h-[3rem] w-[24rem] items-center md:flex">
                 <span class="material-symbols-outlined absolute left-1 text-medium_gray">
                     search
                 </span>
                 <input type="text" placeholder="Search accross your dashboard" class="h-full w-full rounded-lg bg-accent_lightestGray pl-8 outline-accent focus:outline-2"/>
             </div>
 
-            <div class="inr_mbl_search-container relative flex items-center md:hidden">
-                <span data-inr-mb-search-icon class="material-symbols-outlined inr_mbl-search-icon cursor-pointer text-medium_gray">
+            <div class="mobile-search-container relative flex items-center md:hidden">
+                <span data-mobile-search-icon class="material-symbols-outlined mobile-search-icon cursor-pointer text-medium_gray">
                     search
                 </span>
-                <div data-inr_mbl_search-bar class="inr_mbl_search-bar absolute -right-[100px] top-[2rem] hidden h-[3rem] w-[20rem] items-center md:flex">
+                <div data-mobile-search-bar class="mobile-search-bar absolute -right-[100px] top-[2rem] hidden h-[3rem] w-[20rem] items-center md:flex">
                     <input type="text" placeholder="Search accross your dashboard" class="h-full w-full rounded-lg bg-accent_lightestGray pl-6 outline-accent focus:outline-2" />
                 </div>
             </div>

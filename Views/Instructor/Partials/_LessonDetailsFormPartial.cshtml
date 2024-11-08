@@ -1,61 +1,4 @@
 ﻿@model e_learning.Views.Instructor.ViewModels.CreateLessonViewModel
-@*<div data-file-details-form-container class="file-details-form hidden h-full w-full bg-accent_lightestGray shadow-lg">
-    <form data-video-details-form class="video-details-form block h-full w-full p-4">
-        <h1 class="mb-4 text-center text-xl font-bold uppercase text-accent">Video Details</h1>
-        <div class="video-details-input-container mb-4 items-center">
-            <input class="peer h-[3rem] w-full rounded-md bg-inherit pl-8 placeholder:font-bold placeholder:italic" id="lesson-tittle" name="lesson-tittle" placeholder="Enter Lesson Tittle" type="text" aria-describedby="tittle" />
-            <span class="material-symbols-outlined video-details-input-icons peer-focus:text-accent">
-                title
-            </span>
-            <label class="video-details-input-label -top-2.5 left-6 hidden peer-focus:block" for="lesson-tittle">Tittle</label>
-        </div>
-        <div class="video-details-input-container mb-2">
-            <textarea class="peer h-[10rem] w-full rounded-md bg-inherit pl-8 pt-4 placeholder:font-bold placeholder:italic" id="lesson-description" name="lesson-description" placeholder="Enter Lesson Description"></textarea>
-            <span class="material-symbols-outlined video-details-input-icons top-3 peer-focus:text-accent">
-                description
-            </span>
-            <label class="video-details-input-label -top-2.5 left-6 hidden peer-focus:block" for="lesson-description">Description</label>
-        </div>
-        <div class="video-details-input-container items-center has-[:focus]:border-accent">
-            <select class="peer h-[3rem] w-full rounded-md bg-inherit pl-8" asp-for="LessonCategory" asp-items="@Html.GetEnumSelectList(typeof(e_learning.Enums.LessonCategory))">
-                <option selected disabled class="font-bold italic text-accent_lightestGray" value="">Select Lesson Category</option>
-            </select>
-            <span class="material-symbols-outlined video-details-input-icons top-3 peer-focus:text-accent">
-                category
-            </span>
-            <label class="video-details-input-label -top-2.5 left-6 hidden peer-focus:block" for="lesson-category">Category</label>
-        </div>
-        <div class="video-details-input-container mt-2.5 items-center has-[:focus]:border-accent">
-            <select class="peer h-[3rem] w-full rounded-md bg-inherit pl-8" asp-for="LessonAcessType" asp-items="@Html.GetEnumSelectList(typeof(e_learning.Enums.AcessType))">
-                <option selected disabled class="font-bold italic text-accent_lightestGray" value="">Select Lesson Access</option>
-            </select>
-            <span class="material-symbols-outlined video-details-input-icons top-3 peer-focus:text-accent">
-                license
-            </span>
-            <label class="video-details-input-label -top-2.5 left-6 hidden peer-focus:block" for="lesson-access-type">Access</label>
-        </div>
-
-        <div class="relative mt-4 flex h-fit w-full">
-            <div class="relative flex w-fit flex-col">
-                <label for="lesson-thumbnail" class="ml-1.5 text-xs font-bold text-accent">Choose Thumbnail<span class="text-md text-red-600">*</span><span>(.jpg, .png, .gif)</span></label>
-                <input accept=".png, .jpg, .gif" data-select-thumbnail-input class="hidden" type="file" />
-                <span data-select-thumbnail-icon class="material-symbols-outlined select-thumbnail-icon">
-                    add_photo_alternate
-                </span>
-                <div class="relative mt-1 w-fit has-[.hidden]:hidden">
-                    <img data-thumbnail-preview-image class="ml-1 mt-1 hidden size-[5.5rem] rounded-lg object-cover" />
-                    <span data-remove-thumbnail-icon class="material-symbols-outlined remove-thumbnail-icon absolute -right-1 -top-1 cursor-pointer rounded-md bg-white text-accent hover:text-black">
-                        cancel
-                    </span>
-                </div>
-                <span data-thumbnail-preview-spinner class="thumbnail-preview-spinner border-t-2 absolute left-8 top-1/3 hidden h-8 w-8 animate-spin rounded-full border-accent_lightGray"></span>
-            </div>
-<fieldset class="video-access-type"></fieldset>
-</div>
-
-        <button type="submit" class="ml-auto block bg-black px-6 py-2 font-bold text-white shadow-md hover:bg-white hover:text-accent">Complete</button>
-    </form>
-</div>*@
 
 <div data-file-details-form-container class="file-details-form hidden h-full w-full bg-accent_lightestGray shadow-lg">
     <form data-video-details-form asp-action="CompleteLessonDetails" asp-controller="Instructor" method="post" enctype="multipart/form-data" class="video-details-form block h-full w-full p-4">
@@ -124,6 +67,3 @@
         <button data-complete-video-details-button disabled type="button" class="complete-video-details-button disabled ml-auto block px-6 py-2 font-bold shadow-md">Complete</button>
     </form>
 </div>
-
-
-

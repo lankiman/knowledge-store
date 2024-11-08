@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "tailwind.config.js",
   "scripts": {
-    "watch-tailwind": "npx tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/output.css --watch",
-    "build-tailwind": "npx tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/output.css",
+    "clean": "rm -f ./wwwroot/css/output.css",
+    "watch-tailwind": "npx postcss ./wwwroot/css/site.css -o ./wwwroot/css/output.css --watch",
+    "build-tailwind": "npm run clean && npx postcss ./wwwroot/css/site.css -o ./wwwroot/css/output.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,7 +13,11 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "autoprefixer": "^10.4.20",
     "eslint": "^9.4.0",
+    "postcss": "^8.4.47",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.1.0",
     "tailwindcss": "^3.4.14"
   }
 }
