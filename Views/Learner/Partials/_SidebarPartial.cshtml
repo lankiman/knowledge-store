@@ -17,7 +17,7 @@
         <div class="inr_sidebar-top-text text-center">
             <p class="hidden-sidebar">Welcome to E-LESSSON</p>
             <p class="hidden-sidebar font-bold text-accent_lightGray">@Model.User.Firstname @Model.User.Lastname</p>
-            <div class="hidden-sidebar flex w-fit cursor-pointer items-center justify-center gap-1 md:p-2 md: md:border-accent_lightestGray md:hover:bg-accent_lightestGray">
+            <div class="hidden-sidebar mb-2 flex w-fit cursor-pointer items-center justify-center gap-1 md:p-2 md: md:border-accent_lightestGray md:hover:bg-accent_lightestGray">
                 <span class="material-symbols-outlined text-medium_gray">
                     logout
                 </span>
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="inr_sidbar-middle flex-1 w-full overflow-x-hidden">
+    <div class="inr_sidbar-middle flex-1 w-full gap-2 overflow-x-hidden">
         <ul class="inr_sidebar-list m-0 flex flex-col p-0">
             <li class="inr_sidebar-list-item @GetActiveClass("Dashboard")">
                 <a asp-action="Dashboard" asp-controller="Learner" class="inr_sidebar-link">
