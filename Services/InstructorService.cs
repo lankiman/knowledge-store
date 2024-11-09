@@ -16,8 +16,6 @@ namespace e_learning.Services
         : BaseService(eLearningContext, webHostEnvironment, userDetailsService), IInstructorService
     {
         private readonly string _contentRoot = webHostEnvironment.ContentRootPath;
-
-
         public async Task<UserDto> GetUserDetails()
         {
             var user = await UserDetailsService.GetUser();
@@ -50,19 +48,9 @@ namespace e_learning.Services
 
         private string GetVideoFileStorageDirectory()
         {
-            //var eLearningVideosFolder = Path.Combine(_contentRoot, "ELearning_Storage");
-            //Directory.CreateDirectory(eLearningVideosFolder);
-
-            //var e = new DirectoryInfo(eLearningVideosFolder);
-            //e.CreateSubdirectory("Videos");
-            //e.CreateSubdirectory("Thumbnails");
-            //e.CreateSubdirectory("Profile_Pics");
-            //return eLearningVideosFolder;
 
             var mainFolder = Path.Combine(_contentRoot, "ELearning_Storage");
             Directory.CreateDirectory(mainFolder);
-
-
             Directory.CreateDirectory(Path.Combine(mainFolder, "Videos"));
             Directory.CreateDirectory(Path.Combine(mainFolder, "Videos", "Temp_Videos"));
             Directory.CreateDirectory(Path.Combine(mainFolder, "Videos", "Published_Videos"));
@@ -136,9 +124,6 @@ namespace e_learning.Services
                 { StatusCode = 500 };
             }
         }
-
-
-
         private async Task<IActionResult> SaveLessonVideoDetailsToTempDB(string videoUrl)
         {
             try
@@ -268,17 +253,13 @@ namespace e_learning.Services
 
         }
 
-
         public async Task<IActionResult> CompleteLessonDetails(CreateLessonViewModel lessonData, string templessonId)
         {
-
             var tempThumbnailPath = GetVideoTempThumbnialStorage();
             var tempName = Path.GetRandomFileName();
             var thumbnailExtension = Path.GetExtension(lessonData.LessonThumbnail.FileName);
             var thumbnailName = $"{Path.GetFileNameWithoutExtension(tempName)}{thumbnailExtension}";
             var thumbnailFilePath = Path.Combine(tempThumbnailPath, thumbnailName);
-
-
             try
             {
                 var thumbnailSavingResult = await SaveLessonThumbnailToTempStorage(lessonData.LessonThumbnail, thumbnailFilePath);
@@ -308,77 +289,6 @@ namespace e_learning.Services
 
         }
 
-
-
-        //private async Task<IActionResult> SaveLessonDetailsToDB(CreateLessonViewModel model, string modelVideoUrl)
-        //{
-        //    try
-        //    {
-        //        var ownerId = await UserDetailsService!.GetUserId();
-
-        //        if (ownerId == "")
-        //        {
-        //            return null!;
-        //        }
-
-        //        var newLesson = new LessonModel();
-        //        newLesson.LessonOwnerId = ownerId;
-        //        newLesson.LessonName = model.LessonName;
-        //        newLesson.LessonCategory = model.LessonCategory;
-        //        newLesson.LessonVideoUrl = modelVideoUrl;
-        //        newLesson.LessonDescription = model.LessonDescription;
-
-        //        await eLearningContext.Lessons.AddAsync(newLesson);
-        //        var result = await eLearningContext.SaveChangesAsync();
-
-        //        if (result > 0)
-        //        {
-        //            return new OkResult();
-        //        }
-
-        //        return new BadRequestResult();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new ObjectResult(new { Message = "Server Error Occured" })
-        //        { StatusCode = 500 };
-        //    }
-        //}
-
-
-
-
-        //public async Task<IActionResult> CreateLesson(CreateLessonViewModel model)
-        //{
-        //    var eLearningVideosFolder = CreateVideoFileStorageDirectory();
-
-        //    var tempName = Path.GetRandomFileName();
-
-        //    var videoName = $"{Path.GetFileNameWithoutExtension(tempName)}.mp4";
-
-
-        //    var videoFilePath = Path.Combine(eLearningVideosFolder, videoName);
-
-        //    var videoSavingResult = await SaveLessonVideoToStorage(model, videoFilePath);
-
-        //    switch (videoSavingResult)
-        //    {
-        //        case OkResult:
-        //            var videoDetailsSavingResult = await SaveLessonDetailsToDB(model, videoFilePath);
-        //            if (videoDetailsSavingResult is OkResult)
-        //            {
-        //                return new OkObjectResult("Video Saved Successfully");
-        //            }
-
-        //            File.Delete(videoFilePath);
-        //            return new ObjectResult(new { Message = "Server Error Occured" })
-        //            { StatusCode = 500 };
-        //    }
-
-        //    return new ObjectResult(new { Message = "Server Error Occured" })
-        //    { StatusCode = 500 };
-        //}
-
         public async Task<List<LessonDto>> GetInstructorLessons()
         {
             var instructorId = await UserDetailsService!.GetUserId();
@@ -387,12 +297,6 @@ namespace e_learning.Services
             {
                 return null!;
             }
-
-            // var lessons =
-            //     await eLearningContext.Lessons.Where(lesson => lesson.LessonOwnerId == instructorId)
-            //         .ToListAsync();
-            // return lessons;
-
 
             var inr = await GetInstructor();
 
@@ -414,17 +318,11 @@ namespace e_learning.Services
 
                 lessons.Add(lessonDto);
             }
-
             return lessons;
         }
-
-
-
         public Task<IActionResult> CreateLesson(CreateLessonViewModel model)
         {
             throw new NotImplementedException();
         }
-
-
     }
 }

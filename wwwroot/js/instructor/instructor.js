@@ -1,5 +1,6 @@
 ﻿import toastHandler from '../shared/toast.js';
 
+
 //General Helper Functions
 const sizeConverter = (size) => {
     let units = ["bytes", "kb", "mb", "gb"];
@@ -12,10 +13,13 @@ const sizeConverter = (size) => {
     return `${size.toFixed(2)} ${units[unitIndex]}`;
 };
 
-
 function updateState(element, removeStyle, addStyle) {
-    element.classList.remove(removeStyle)
-    element.classList.add(addStyle)
+    if (element && removeStyle) {
+        element.classList.remove(removeStyle)
+    }
+    if (element && addStyle) {
+        element.classList.add(addStyle)
+    }   
 }
 
 function toggleElement(element) {
@@ -411,6 +415,8 @@ const uploadHandling = (function () {
     const filesUploadingList = document.querySelector("[data-files-uploading-list]")
     const afterUploadButtonsContainer = document.querySelector("[data-after-upload-buttons-container]")
     const goBackAfterUploadButton = document.querySelector("[data-return-after-upload]")
+    const uploadSuccessMessage = document.querySelector("[data-uploading-success-message]")
+    const uploadWarningMessage = document.querySelector("[data-uploading-warning-message]")
 
     
     let uploadQueue = []
@@ -420,9 +426,13 @@ const uploadHandling = (function () {
     let uploadedFiles = []
     let originalQueue = null;
     let upLoadedLessonsIdsArray = [];
-    function showAfterUploadButtons() {
+    function updateUiAfterCompleteUpload() {
         if (uploadQueue.length < 1 && uploadedFiles.length > 0) {
             updateState(afterUploadButtonsContainer, "hidden", "flex")
+            updateState(uploadSuccessMessage, "hidden", "")
+            updateState(uploadWarningMessage, "", "hidden")
+            toastHandler.showToast("Files Sucessfully Uploaded", "success");
+            floatingUploadHanlder.hide()
         }
     }
 
@@ -462,6 +472,8 @@ const uploadHandling = (function () {
     function updateUIonUploadStart() {
         filesToUploadList.classList.replace("flex", "hidden")
         filesUploadingContainer.classList.replace("hidden", "flex")
+        updateState(uploadSuccessMessage, "", "hidden")
+        updateState(uploadWarningMessage, "hidden", "")
     }
 
 
@@ -610,7 +622,7 @@ const uploadHandling = (function () {
 
         isUploading = false;
         processQueue(); 
-        showAfterUploadButtons();
+        updateUiAfterCompleteUpload();
     }
     function uploadFiles(files) {
         updateUIonUploadStart()
@@ -692,17 +704,11 @@ const floatingUploadHanlder = (function () {
     }
 
     function hideFloatingUpload() {
-        const isUploading = uploadHandling.getUploadingStatus();
         const floatContainer = instructorStudioView.querySelector("[data-floating-upload-container]")
         if (floatContainer) {
             instructorStudioView.removeChild(floatContainer)
         }
-        if (!isUploading) {
-            console.log(isUploading)
-            return;
-        }
-        filesUploadingListContainer.appendChild(filesUploadingList)
-       
+        filesUploadingListContainer.appendChild(filesUploadingList)  
     }
 
     return {

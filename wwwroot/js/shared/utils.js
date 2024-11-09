@@ -12,10 +12,13 @@ const sizeConverter = (size) => {
 
 
 function updateState(element, removeStyle, addStyle) {
-    element.classList.remove(removeStyle)
-    element.classList.add(addStyle)
+    if (element && removeStyle) {
+        element.classList.remove(removeStyle)
+    }
+    if (element && addStyle) {
+        element.classList.add(addStyle)
+    }
 }
-
 
 
 function toggleElement(element) {

@@ -30,7 +30,8 @@
                     <button data-return-after-upload class="inset-1 bg-white px-4 py-2 font-bold shadow-md hover:bg-black hover:text-white">Go Back</button>
                     <button data-content-after-upload class="inset-1 bg-white px-4 py-2 font-bold shadow-md hover:bg-black hover:text-white">Go to Content</button>
                 </div>
-                <h1 class="text-md text-center font-bold text-red-600">Files Are Being Uploaded Please Do not Leave Page !!!</h1>
+                <h1 data-uploading-warning-message class="text-md text-center font-bold text-red-600">Files Are Being Uploaded Please Do not Leave Page !!!</h1>
+                <h1 data-uploading-success-message class="text-md hidden text-center font-bold text-green-600">All Files have been successfully uploaded !!!</h1>
                 <ul data-files-uploading-list class="files-uploading-list flex flex-col gap-2 text-sm"></ul>
             </div>
             <partial name="Partials/_LessonDetailsFormPartial" />
