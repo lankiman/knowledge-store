@@ -42,6 +42,11 @@ const layoutHandler = (function () {
     const mobileSearchBar = document.querySelector('[data-mobile-search-bar]');
     const sidebarMenu = document.querySelector("[data-sidebar-menu]")
 
+    window.onload = function () {
+        if (window.innerWidth >= 768) {  
+            sidebarMenu.classList.add('sidebar-open');
+        }
+    }
     return {
         init: function () {
             if (sidebarMenuButton && sidebarMenu) {
